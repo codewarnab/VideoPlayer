@@ -111,7 +111,7 @@ const Navbar3 = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =
     };
 
     return (
-        <nav className="bg-slate-50">
+        <nav className="bg-slate-50 px-3">
             <div className="mx-auto max-w-7xl">
                 <div className="relative flex h-16 items-center justify-between">
                     <div className="flex items-center sm:hidden">
@@ -164,7 +164,7 @@ const Navbar3 = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =
                         <div className=" items-center sm:flex gap-4 mr-3 text-black transition-all duration-300 ease-in-out hidden">
                             {navItems.map((item) => (
                                 <Link key={item.id} to={item.link}>
-                                    <span className={`relative w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-300 after:origin-center ${isActive === item.link ? 'font-semibold border-b-2 border-black ' : ''}`}>
+                                    <span className={`relative w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-black after:w-full after:scale-x-0 after:hover:scale-x-100  hover:border-none pt-1 after:transition after:duration-300 after:origin-center ${isActive === item.link ? 'font-semibold border-b-2  border-black ' : ''}`}>
                                         {item.text}
                                     </span>
                                 </Link>
@@ -177,23 +177,23 @@ const Navbar3 = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =
                                 <AuthLinks isActive={isActive} isSearchExpanded={isSearchExpanded} />
                             ) : (
                                 <>
-                                    {!isSearchExpanded && (
-                                        <div className={`flex  gap-2 ${isSearchExpanded ? 'hidden' : ''} ${isSearchExpanded && 'sm:hidden'}`}>
-                                            <CartDisplay
-                                                cartLength={cartLength}
-                                                cartGeneralLength={cartGeneralLength}
-                                                user={user}
-                                            />
-                                            <ProfileDropDown
-                                                user={user}
-                                                isOpen={isOpen}
-                                                toggleAvatar={toggleAvatar}
-                                                handlelogout={handlelogout}
-                                                handleAdmin={handleAdmin}
-                                                handleUser={handleUser}
-                                            />
-                                        </div>
-                                    )}
+                                    <div className={`flex gap-2 ${isSearchExpanded && 'hidden sm:flex'}`}>
+                                        <CartDisplay
+                                            cartLength={cartLength}
+                                            cartGeneralLength={cartGeneralLength}
+                                            user={user}
+                                        />
+                                        <ProfileDropDown
+                                            user={user}
+                                            isOpen={isOpen}
+                                            toggleAvatar={toggleAvatar}
+                                            handlelogout={handlelogout}
+                                            handleAdmin={handleAdmin}
+                                            handleUser={handleUser}
+                                        />
+                                    </div>
+
+
                                 </>
                             )}
                         </div>

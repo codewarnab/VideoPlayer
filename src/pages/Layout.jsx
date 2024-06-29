@@ -1,6 +1,6 @@
-import React, { Fragment } from "react";
+import React from "react";
 // import Navbar from "../components/Navbar";
-import Footer from "./Footer";
+import Footer from "./shared/Footer";
 
 import Navbar3 from "../components/shared/navbar/Navbar";
 import TopBanner from "../TopScript/TopBanner";

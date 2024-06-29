@@ -14,7 +14,7 @@ const SearchInput = ({ isSearchExpanded, toggleSearchInputVisibility, handleSear
             {isSearchExpanded && (
                 <form
                     onSubmit={handleSearch}
-                    className="nav-search-container relative h-9 w-76  flex items-center rounded-full bg-slate-300 p-1 text-gray-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300 "
+                    className="nav-search-container relative h-9 w-80  flex items-center rounded-full bg-slate-300 p-1 text-gray-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300 "
                     style={{ maxWidth: isSearchExpanded ? '100%' : '0', overflow: 'hidden' }}
                 >
                     <SearchIcon className="h-5 mx-2 " />
