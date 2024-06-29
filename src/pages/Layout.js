@@ -2,18 +2,15 @@ import React, { Fragment } from "react";
 // import Navbar from "../components/Navbar";
 import Footer from "./Footer";
 
-import Navbar3 from "../components/Navbar3";
-import Script from "../TopScript/Script";
+import Navbar3 from "../components/shared/navbar/Navbar";
+import TopBanner from "../TopScript/TopBanner";
 
 const Layout = ({ children, searchTerm, setSearchTerm, setDropdown, cartLength, cartGeneralLength }) => {
   return (
-    <Fragment>
+    <>
       <header
-        className="m-auto"
-        style={{
-          border: "2px solid blue",
-        }}>
-        <Script />
+        className="mx-auto">
+        <TopBanner/>
         <Navbar3
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
@@ -23,8 +20,8 @@ const Layout = ({ children, searchTerm, setSearchTerm, setDropdown, cartLength, 
         />
       </header>
       <main>{children}</main>
-      <Footer />
-    </Fragment>
+      <Footer /> 
+    </>
   );
 };
 
