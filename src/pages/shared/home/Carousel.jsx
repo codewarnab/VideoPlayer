@@ -112,12 +112,12 @@ function Carousel() {
 
       <Slider {...settings}>
         {data.map((course, index) => (
-          <div key={index} className="p-2 text-start">
+          <div key={index} className="p-2  text-start">
             <div className="border rounded-lg shadow-md overflow-hidden h-[350px] flex flex-col  items-center">
               <LazyLoadImage
                 src={course.img}
                 alt={course.title}
-                className="w-full h-40 object-cover rounded-lg shadow-md"
+                className="w-full h-44 object-cover rounded-lg shadow-md"
                 effect="blur"
               />
 

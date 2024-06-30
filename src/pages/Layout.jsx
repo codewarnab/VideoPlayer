@@ -1,6 +1,6 @@
 import React from "react";
 // import Navbar from "../components/Navbar";
-import Footer from "./shared/Footer";
+import Footer from "../components/shared/Footer";
 import Navbar from "../components/shared/navbar/Navbar";
 import TopBanner from "../TopScript/TopBanner";
 

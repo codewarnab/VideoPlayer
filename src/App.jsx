@@ -8,7 +8,7 @@ import Login from "./pages/Login";
 import axios from "axios";
 import ProtectedDashboard from "./components/ProtectedDashboard";
 
-import Dashboard from "./admindashboard/Dashboard";
+import Dashboard from "./pages/user/AllCourses/AllCourses";
 //import CreateDashboard from "./admindashboard/CreateDashboard";
 
 import { useEffect } from "react";
@@ -124,7 +124,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route
               path="/dashboard"
-              element={<Dashboard searchTerm={searchTerm} rie={rie} setItem={setItem} />}
+              element={<Dashboard searchTerm={searchTerm} setSearchTerm={setSearchTerm} rie={rie} setItem={setItem} />}
             />
 
             <Route
