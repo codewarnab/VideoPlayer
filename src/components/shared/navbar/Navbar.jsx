@@ -8,7 +8,7 @@ import SearchInput from "./SearchInput";
 import AuthLinks from "./AuthLinks";
 import CartDisplay from "./CartDisplay";
 
-const Navbar3 = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) => {
+const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) => {
     const navigate = useNavigate();
     const [isActive, setIsActive] = useState("");
     const [navItems, setNavItems] = useState([]);
@@ -111,8 +111,8 @@ const Navbar3 = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =
     };
 
     return (
-        <nav className="bg-slate-50 px-3">
-            <div className="mx-auto max-w-7xl">
+        <nav className="bg-slate-50 px-3 ">
+            <div className="mx-auto max-w-7xl ">
                 <div className="relative flex h-16 items-center justify-between">
                     <div className="flex items-center sm:hidden">
                         <button className="p-1 text-gray-800 hover:text-black focus:outline-none z-[200]" onClick={toggleMobileNav}>
@@ -204,4 +204,4 @@ const Navbar3 = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =
     );
 };
 
-export default Navbar3;
+export default Navbar;

@@ -1,8 +1,7 @@
 import React from "react";
 // import Navbar from "../components/Navbar";
 import Footer from "./shared/Footer";
-
-import Navbar3 from "../components/shared/navbar/Navbar";
+import Navbar from "../components/shared/navbar/Navbar";
 import TopBanner from "../TopScript/TopBanner";
 
 const Layout = ({ children, searchTerm, setSearchTerm, setDropdown, cartLength, cartGeneralLength }) => {
@@ -11,7 +10,7 @@ const Layout = ({ children, searchTerm, setSearchTerm, setDropdown, cartLength, 
       <header
         className="mx-auto">
         <TopBanner/>
-        <Navbar3
+        <Navbar
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           setDropdown={setDropdown}

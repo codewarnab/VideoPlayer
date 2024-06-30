@@ -3,28 +3,21 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'primeicons/primeicons.css';
+import CustomLink from "../../../components/shared/buttons/linkButton";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
-function SampleNextArrow(props) {
+function CusttomeArrow(props) {
   const { className, style, onClick } = props;
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", background: "red" }}
+      style={{ ...style, display: "block", background: "#2563EB" ,borderRadius:'50% '}}
       onClick={onClick}
     />
   );
 }
 
-function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "green" }}
-      onClick={onClick}
-    />
-  );
-}
 
 const data = [
   {
@@ -85,8 +78,8 @@ function Carousel() {
     infinite: true,
     slidesToShow: 3,
     slidesToScroll: 1,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
+    nextArrow: <CusttomeArrow />,
+    prevArrow: <CusttomeArrow />,
     responsive: [
       {
         breakpoint: 1024,
@@ -115,15 +108,20 @@ function Carousel() {
 
   return (
     <div className="slider-container w-[90%] px-2  text-black  lg:px-10">
-      <h2 className="text-center text-3xl font-bold mb-4">Popular Courses</h2>
+      <h2 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Popular Courses</h2>
 
       <Slider {...settings}>
         {data.map((course, index) => (
           <div key={index} className="p-2 text-start">
             <div className="border rounded-lg shadow-md overflow-hidden h-[350px] flex flex-col  items-center">
-              <img src={course.img} alt={course.title} className="w-full h-40 object-cover rounded-lg shadow-md" />
+              <LazyLoadImage
+                src={course.img}
+                alt={course.title}
+                className="w-full h-40 object-cover rounded-lg shadow-md"
+                effect="blur"
+              />
 
-            {/* rating and view icons and details  */}
+              {/* rating and view icons and details  */}
               <div className="text-xs px-2 text-gray-600 pt-2 flex gap-[14rem]">
                 <div className="flex items-center gap-2">
                   <i className="pi pi-star"></i> {course.rating}
@@ -148,6 +146,12 @@ function Carousel() {
           </div>
         ))}
       </Slider>
+      <div className="py-10">
+        <CustomLink to="/dashboard">
+          Explore More Courses
+        </CustomLink>
+      </div>
+
     </div>
   );
 }
