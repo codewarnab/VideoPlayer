@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/shared/home/Home";
+import Home from "./pages/shared/home/HomeMain";
 import Layout from "./pages/Layout";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import axios from "axios";
 import ProtectedDashboard from "./components/ProtectedDashboard";
-
+import AuthFront from "./pages/shared/auth/AuthFront";
 import Dashboard from "./pages/user/AllCourses/AllCourses";
 //import CreateDashboard from "./admindashboard/CreateDashboard";
 
@@ -144,7 +144,7 @@ const App = () => {
               />}
             />
 
-
+             <Route element={<AuthFront/>} path="/new" ></Route>      
 
             <Route element={<ProtectedAdmin />}>
               <Route path="/admin" element={<AdminDashboard />} />

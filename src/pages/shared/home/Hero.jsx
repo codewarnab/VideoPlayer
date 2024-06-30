@@ -24,13 +24,13 @@ const HeroSection = () => {
             <div className="flex flex-col lg:w-1/2 p-4 lg:p-5 relative mb-8  lg:mb-0">
                 <div className="lg:absolute lg:top-[10rem] left-0 lg:left-8 flex flex-col gap-6 lg:gap-9 text-start">
                     <h1 className="text-black font-extrabold text-3xl lg:text-4xl break-words whitespace-pre-wrap max-w-full lg:max-w-[90%] relative">
-                        WELCOME TO PCS GLOBAL <span className="text-xs  text-blue-500 font-semibold"> 360</span>
+                        WELCOME TO PCS GLOBAL<span className="text-xs  text-blue-500 font-semibold"> 360</span>
                         <div className="hidden lg:flex ">
                         <span style={style} />
                         </div>
                     </h1>
                     <h2 className="whitespace-pre-wrap max-w-full lg:max-w-[80%] text-gray-600 leading-snug font-poppins text-sm lg:text-base">
-                        <b>"</b>The House I have built where every unplaced <b>fresher</b>, who are suffering multiple problems with their career, can get a peaceful shelter to rebuild a massive career<b>"</b>
+                        <b>"</b>The House I have built where every unplaced <b>fresher</b>, who are suffering multiple problems with their career, can get a peaceful shelter to rebuild a massive career<b>"</b> ~ <i><b>Alok Halder</b></i>
                     </h2>
                     <div className="w-full lg:w-[70%]">
                         <CustomLink to="https://www.youtube.com/@PCSGlobalPrivateLimited" external>
@@ -49,7 +49,7 @@ const HeroSection = () => {
                         className="rounded-2xl object-cover w-full h-auto max-h-[25rem] lg:w-[90%] lg:h-[25rem]"
                         effect="blur"
                     />
-                    <div className="w-full flex flex-wrap justify-center lg:justify-evenly pt-4 text-black text-sm lg:text-base">
+                    <div className="w-full flex flex-wrap justify-center lg:justify-evenly pt-4 lg:w-[90%] text-black text-sm lg:text-base">
                         <span className="px-2 py-1">Educator</span>
                         <span className="px-2 py-1">Mentor</span>
                         <span className="px-2 py-1">Software Engineer</span>

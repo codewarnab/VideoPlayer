@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import TotalCount from "../../../components/TotalCount";
 import MultiFilter from "./MultiFilter";
+import CourseCard from "./CourseCard";
 
 const Dashboard = ({ searchTerm, setSearchTerm, setItem }) => {
   const [AllCourses, setAllCourses] = useState([]);
@@ -22,6 +23,7 @@ const Dashboard = ({ searchTerm, setSearchTerm, setItem }) => {
         );
         if (!searchTerm) setAllCourses(res.data.dashboards);
         settempCourses(res.data.dashboards); // Initially set tempCourses with all courses
+        console.log(res.data.dashboards)
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -49,27 +51,7 @@ const Dashboard = ({ searchTerm, setSearchTerm, setItem }) => {
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 my-4">
           {tempCourses?.length > 0 &&
             tempCourses?.map((item) => (
-              <div key={item._id} className="relative">
-                <Link to="/description" onClick={() => setItem(item)}>
-                  <div className="lg:w-[300px] lg:h-[250px] h-[300px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:-translate-y-2 duration-200 hover:shadow-[#6260607a] hover:shadow-xl">
-                    <img
-                      className="rounded-t-lg"
-                      src={item?.image}
-                      alt=""
-                      style={{ width: "300px", height: "140px" }}
-                    />
-                    <div className="p-5">
-                      <h5 className="mb-2 text-base lg:text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-                        {item?.courseName.slice(0, 28)} <br />
-                        {item?.courseName.slice(28)}
-                      </h5>
-                      <div className="lg:flex justify-evenly items-center">
-                        <h4>{<TotalCount listId={item?.listId} />}</h4>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              </div>
+              <CourseCard key={item._id} item={item} setItem={setItem} />
             ))}
         </div>
       </div>
