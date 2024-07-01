@@ -31,6 +31,7 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
 
     useEffect(() => {
         setIsActive(location.pathname);
+        
     }, [location.pathname]);
 
     const handlelogout = () => {
@@ -111,7 +112,7 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
     };
 
     return (
-        <nav className="bg-slate-50 px-3 ">
+        <nav className="bg-slate-50 px-3">
             <div className="mx-auto max-w-7xl ">
                 <div className="relative flex h-16 items-center justify-between">
                     <div className="flex items-center sm:hidden">
@@ -174,7 +175,7 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
                         {/* AuthLinks or Profile/Cart icons based on user login */}
                         <div className="flex items-center justify-end space-x-3 mr-2 sm:space-x-4">
                             {!localStorage.getItem("token") ? (
-                                <AuthLinks isActive={isActive} isSearchExpanded={isSearchExpanded} />
+                                <AuthLinks isActive={isActive} isSearchExpanded={isSearchExpanded} location={isActive} />
                             ) : (
                                 <>
                                     <div className={`flex gap-2 ${isSearchExpanded && 'hidden sm:flex'}`}>

@@ -3,11 +3,8 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/shared/home/HomeMain";
 import Layout from "./pages/Layout";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
 import axios from "axios";
 import ProtectedDashboard from "./components/ProtectedDashboard";
-import AuthFront from "./pages/shared/auth/AuthFront";
 import Dashboard from "./pages/user/AllCourses/AllCourses";
 //import CreateDashboard from "./admindashboard/CreateDashboard";
 
@@ -20,16 +17,17 @@ import ProtectedAdmin from "./components/ProtectedAdmin";
 import PageNotFound from "./pages/PageNotFound";
 import { Toaster } from "react-hot-toast";
 //import AdminCategory from "./admindashboard/AdminCategory";
-import Help from "./help/Help";
+import Help from "./pages/shared/help/Help";
 import DropDashboard from "./dropdown/DropDashboard";
 import Forgetpassword from "./pages/Forget-password";
 import ResetPassword from "./pages/ResetPassword";
 import MyCourse from "./pcsPages/MyCourse";
 import ProtectedUser from "./components/ProtectedUser";
 import UserDashboard from "./userDashboard/UserDashboard";
-import SignUpComponent from "./pcsPages/SignUpComponent";
-import SignInComponent from "./pcsPages/SignInComponent";
-import RegisterPCS from "./pcsPages/RegisterPCS";
+// import SignUpComponent from "./pcsPages/SignUpComponent";
+import SignUp from "./pages/shared/auth/SiignUp";
+import SignIn from "./pages/shared/auth/SignIn";
+// import RegisterPCS from "./pcsPages/RegisterPCS";
 import LoginPCS from "./pcsPages/LoginPCS";
 import ForgetpasswordPCS from "./pcsPages/ForgetPasswordPCS";
 import ResetPasswordPCS from "./pcsPages/ResetPasswordPCS";
@@ -144,7 +142,7 @@ const App = () => {
               />}
             />
 
-             <Route element={<AuthFront/>} path="/new" ></Route>      
+                  
 
             <Route element={<ProtectedAdmin />}>
               <Route path="/admin" element={<AdminDashboard />} />
@@ -175,16 +173,16 @@ const App = () => {
 
             </Route>
 
-            <Route path="/authSignup" element={<SignUpComponent />} />
-            <Route path="/authSignin" element={<SignInComponent />} />
-            <Route path="/register-pcs" element={<RegisterPCS setUserId={setUserId} />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/signin" element={<SignIn />} />
+            {/* <Route path="/register-pcs" element={<RegisterPCS setUserId={setUserId} />} /> */}
             {userId && <Route path="/employee" element={<EmployeeInformation userId={userId} />} />}
             {/* <Route path="/employee" element={<EmployeeInformation userId={userId} />} /> */}
 
             <Route path="/login-pcs" element={<LoginPCS />} />
             {/* <Route path="/user/:_id" element={<UserPCSDetails />} /> */}
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<SignUp />} />
+            <Route path="/login" element={<SignIn />} />
             <Route path="/forgot-password" element={<Forgetpassword />} />
             <Route
               path="/forgot-password-pcs"

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Lottie from 'react-lottie';
-import animationData from '../images/LoginAnimation.json';
+import animationData from '../../../images/helpAnimation.json';
 
 export default class LottieControl extends Component {
     constructor(props) {
@@ -22,7 +22,7 @@ export default class LottieControl extends Component {
             <div>
                 <Lottie
                     options={defaultOptions}
-                    style={{ marginLeft: "100px", height: "auto", width: "auto", objectFit: "cover" }}
+                    style={{ height: "450px", width: "550px", objectFit: "cover" }}
 
                     isStopped={this.state.isStopped}
                     isPaused={this.state.isPaused}

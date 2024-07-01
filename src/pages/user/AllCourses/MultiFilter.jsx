@@ -4,7 +4,7 @@ const MultiFilter = ({ AllCourses, settempCourses, setSearchTerm, categories }) 
   const [selectedCategories, setSelectedCategories] = useState([]);
 
   useEffect(() => {
-    setSearchTerm('');
+    // setSearchTerm('');
 
     // Filter courses based on selected categories
     if (selectedCategories.length > 0) {

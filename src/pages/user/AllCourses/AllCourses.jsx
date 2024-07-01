@@ -21,8 +21,10 @@ const Dashboard = ({ searchTerm, setSearchTerm, setItem }) => {
             ? `/maincourse/get-dashboard?search=${searchTerm}`
             : "/maincourse/get-dashboard"
         );
-        if (!searchTerm) setAllCourses(res.data.dashboards);
-        settempCourses(res.data.dashboards); // Initially set tempCourses with all courses
+        if (!searchTerm){
+          setAllCourses(res.data.dashboards);
+        }
+        settempCourses(res.data.dashboards); 
         console.log(res.data.dashboards)
       } catch (error) {
         console.error("Error fetching data:", error);

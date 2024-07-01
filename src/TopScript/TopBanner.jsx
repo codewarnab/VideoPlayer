@@ -78,7 +78,7 @@ const TopBanner = () => {
     return (
         <>
             {loading ? (
-                <p className="text-gray-400 sm:min-h-14 lg:min-h-16 flex justify-center items-center ">Loading...</p>
+                <p className="text-gray-400 bg-gray-800 sm:min-h-14 lg:min-h-16 flex justify-center items-center ">Loading...</p>
             ) : (
                 <div className='bg-gray-800 flex justify-center lg:gap-4 lg:py-1 items-center'>
                     <div className={`text-${textColor} font-semibold leading-none`}>

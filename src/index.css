@@ -48,16 +48,7 @@ code {
   pointer-events: none;
 }
 
-@media (max-width: 990px) {
-  .center .slick-center .project {
-    transform: scale(1);
-  }
 
-  .center .project {
-    opacity: 1;
-    pointer-events: all;
-  }
-}
 
 /* scroll bar style  */
 ::-webkit-scrollbar {
@@ -89,4 +80,7 @@ code {
     transform: translateY(0);
     opacity: 1;
   }
+}
+:root{
+  background-color: white;
 }

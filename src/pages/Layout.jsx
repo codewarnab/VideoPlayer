@@ -8,7 +8,7 @@ const Layout = ({ children, searchTerm, setSearchTerm, setDropdown, cartLength, 
   return (
     <>
       <header
-        className="mx-auto">
+        className="mx-auto ">
         <TopBanner/>
         <Navbar
           searchTerm={searchTerm}
