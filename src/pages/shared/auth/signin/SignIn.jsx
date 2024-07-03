@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import signinright from '../../../images/signupright.png';
 import axios from 'axios';
 import { toast } from "react-hot-toast";
 import { useNavigate } from 'react-router-dom';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-
+import LoginAnimation from '../../../../images/LoginAnimation.json'
+import Lottie from "lottie-react";
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -89,14 +88,9 @@ const SignIn = () => {
                 </div>
                 {/* right section */}
                 <div className="hidden lg:flex justify-center items-center lg:w-1/2">
-                    <div className=" rounded-full  w-[85%] h-[100%] shadow-md pr-2 overflow-hidden object-cover   bg-blue-50 bg-opacity-20 backdrop-filter backdrop-blur-lg">
+                    <div className=" rounded-lg  w-[85%] h-[100%] shadow-sm pr-2 overflow-hidden object-cover   bg-blue-50 bg-opacity-20 backdrop-filter backdrop-blur-lg">
 
-                        <LazyLoadImage
-                            src={signinright}
-                            alt="A Boy Standing Holding a Book"
-                            effect="blur"
-                            className=" relative top-[18px]      pb-3 pr-2 object-cover   h-[30rem]"
-                        />
+                        <Lottie animationData={LoginAnimation} />
                     </div>
                 </div>
             </div>

@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
-import signupright from '../../../images/signupright.png';
 import { useNavigate, Link } from 'react-router-dom';
-import registerHandler from '../../../utils/shared/registerHandler';
+import registerHandler from '../../../../utils/shared/registerHandler';
+import Lottie from "lottie-react";
+import registerAnimation from './SignUpAnimation.json'
+import userInterFaceAnimation from './employee.json'
+
 
 const SignUp = () => {
-  const data = ['User', 'Administrator'];
+
   const [showFront, setShowFront] = useState(true);
   const [userType, setUserType] = useState('');
   const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
-     employee : '',
+    employee: '',
     email: '',
     name: '',
     password: '',
@@ -78,25 +79,45 @@ const SignUp = () => {
   };
 
   return (
-    <div className="w-full bg-gradient-to-b from-slate-50 to-[#C1C5F2] flex justify-center flex-col gap-4 items-center min-h-auto py-14">
+    <div className="w-full bg-gradient-to-b from-slate-50 to-[#C1C5F2]  overflow-hidden flex justify-center flex-col gap-4 items-center min-h-auto py-14">
       {showFront && (
         <>
-          <h1 className="lg:text-6xl text-3xl font-extrabold relative md:text-4xl text-black text-center">Who Are You?</h1>
-          <div className="flex flex-col sm:flex-row gap-4 mt-6 lg:h-44 mb-11">
-            {data.map((d, index) => (
-              <div key={index} className="relative inline-flex items-center justify-center">
-                <div
-                  className="px-4 py-3 md:px-6 md:py-4 lg:text-2xl lg:px-10 lg:py-4 text-2xl font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-300 shadow-lg hover:shadow-sm cursor-pointer"
-                  onClick={() => {
-                    setShowFront(false);
-                    setUserType(d);
-                  }}
-                >
-                  {d}
+          <div className="flex flex-col sm:flex-row gap-4  items-center  mt-6 min-h-[28rem] lg:h-44 mb-11 w-svw">
+            <div className=' w-full lg:w-1/2 '>
+              <h1 className="lg:text-3xl text-3xl font-extrabold relative md:text-3xl text-black text-center">
+                Sign Up and Start Learning <br className="md:hidden" /><span className="text-sm font-semibold text-blue-500">As</span>
+              </h1>
+
+              <div className="flex flex-col md:flex-row p-4 md:p-16 justify-evenly lg:pr-24">
+                <div className="flex flex-col items-center">
+                  <img src={require("../../../../images/pcs logo.png")} alt="Pcsglobal360" className="h-40 mx-3 mt-5 w-40" />
+                  <button
+                    className="mt-3 px-6 py-3 text-lg font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-300"
+                    onClick={() => {
+                      setUserType('Administrator');
+                      setShowFront(false);
+                    }}
+                  >
+                    PCS Employee
+                  </button>
                 </div>
-                {index !== data.length - 1 && <br className="sm:hidden lg:block" />}
+                <div className="flex flex-col items-center mt-8 p-4 pt-5 md:mt-0 md:ml-6">
+                  <img src={require("../../../../images/User.png")} alt="Pcsglobal360" className="h-40 mx-3 w-40" />
+                  <button
+                    className="mt-3 px-6 py-3 text-lg font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-300"
+                    onClick={() => {
+                      setUserType('User');
+                      setShowFront(false);
+                    }}
+                  >
+                    General User
+                  </button>
+                </div>
               </div>
-            ))}
+            </div>
+            <div className=' w-1/2 pb-11 hidden lg:flex '>
+              <Lottie animationData={userInterFaceAnimation} />
+            </div>
           </div>
         </>
       )}
@@ -179,13 +200,8 @@ const SignUp = () => {
           </div>
           {/* right section */}
           <div className="hidden lg:flex justify-center items-center lg:w-1/2">
-            <div className="rounded-full w-[85%] h-[100%] shadow-md pr-2 overflow-hidden object-cover bg-blue-50 bg-opacity-20 backdrop-filter backdrop-blur-lg">
-              <LazyLoadImage
-                src={signupright}
-                alt="A Boy Standing Holding a Book"
-                effect="blur"
-                className="relative top-[18px] pb-3 pr-2 object-cover h-[30rem]"
-              />
+            <div className="rounded-full w-[85%] h-[100%] shadow-sm pr-2 overflow-hidden object-cover bg-blue-50 bg-opacity-20 backdrop-filter backdrop-blur-lg">
+              <Lottie animationData={registerAnimation} />
             </div>
           </div>
         </div>

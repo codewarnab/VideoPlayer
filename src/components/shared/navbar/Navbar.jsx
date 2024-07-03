@@ -7,6 +7,10 @@ import ProfileDropDown from "./ProfileDropDown";
 import SearchInput from "./SearchInput";
 import AuthLinks from "./AuthLinks";
 import CartDisplay from "./CartDisplay";
+import DropDownLg from "./DropDowns/DropDownLg";
+import axios from 'axios'
+import DropDownSm from "./DropDowns/DropDownSm";
+
 
 const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) => {
     const navigate = useNavigate();
@@ -15,7 +19,11 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
     const [place, setPlace] = useState('Search For Anything');
     const [isOpen, setIsOpen] = useState(false);
     const [isSearchExpanded, setIsSearchExpanded] = useState(false);
-    const [isMobileNavOpen, setIsMobileNavOpen] = useState(false); // State for mobile navigation menu
+    const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+    const [categories, setCategories] = useState(null);
+    const [categoryloading, setcategoryLoading] = useState(true);
+    const [isCategoryOpen, setCategoryOpen] = useState(false);
+
     let location = useLocation();
 
     useEffect(() => {
@@ -27,11 +35,27 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
         }
     }, []);
 
+    useEffect(() => {
+        const fetchcategoryData = async () => {
+            try {
+                const res = await axios.get('/category/getCategory'); 
+                if (res.data.success) {
+                    setCategories(res.data.categories);
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            } finally {
+                setcategoryLoading(false);
+            }
+        };
+
+        fetchcategoryData();
+    }, []);
+
     const user = JSON.parse(localStorage.getItem("user"));
 
     useEffect(() => {
         setIsActive(location.pathname);
-        
     }, [location.pathname]);
 
     const handlelogout = () => {
@@ -59,8 +83,6 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
         navigate("/user");
         setIsOpen(!isOpen);
     };
-
-
 
     const toggleSearchInputVisibility = () => {
         setIsSearchExpanded(!isSearchExpanded);
@@ -112,11 +134,11 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
     };
 
     return (
-        <nav className="bg-slate-50 px-3">
+        <nav className="bg-slate-50 px-3 ">
             <div className="mx-auto max-w-7xl ">
                 <div className="relative flex h-16 items-center justify-between">
                     <div className="flex items-center sm:hidden">
-                        <button className="p-1 text-gray-800 hover:text-black focus:outline-none z-[200]" onClick={toggleMobileNav}>
+                        <button className="p-1 text-gray-800 hover:text-black focus:outline-none z-[99]" onClick={toggleMobileNav}>
                             <Hamburger size={20} toggled={isMobileNavOpen} toggle={toggleMobileNav} />
                         </button>
                     </div>
@@ -126,7 +148,8 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
                         <Link to='/' className="flex-shrink-0 items-center hidden lg:flex">
                             <img className="h-23 w-24" src={images} alt="PcsGlobal360" />
                         </Link>
-                        <div >
+                        <div className="flex gap-10">
+                            <DropDownLg loading={categoryloading} categories={categories} />
                             <SearchInput
                                 isSearchExpanded={isSearchExpanded}
                                 toggleSearchInputVisibility={toggleSearchInputVisibility}
@@ -141,7 +164,7 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
                     {/* Mobile nav list */}
                     {
                         isMobileNavOpen &&
-                        <div className={`bg-white h-auto w-[15rem] rounded-lg absolute top-0 left-0 p-5 z-50 shadow-md transition-transform transform ${isMobileNavOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+                        <div className={`bg-white h-auto w-[15rem] flex items-start flex-col   rounded-lg absolute top-0 left-0 p-5 py-10  z-50 shadow-md transition-transform transform ${isMobileNavOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                             {navItems.map((item) => (
                                 <Link
                                     key={item.id}
@@ -155,9 +178,18 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
                                     </span>
                                 </Link>
                             ))}
+                            <h1 className="text-black underline decoration-dashed underline-offset-4 " onClick={() => {
+                                setIsMobileNavOpen(prevState => !prevState);
+                                setCategoryOpen(prevState => !prevState);
+                            }
+                            }>categories</h1>
                         </div>
 
                     }
+
+                    <DropDownSm categories={categories} isCategoryOpen ={isCategoryOpen} loading={categoryloading} setCategoryOpen={setCategoryOpen}  setIsMobileNavOpen={setIsMobileNavOpen} />
+
+
 
                     {/* Regular nav list */}
                     <div className="flex ">
@@ -193,8 +225,6 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
                                             handleUser={handleUser}
                                         />
                                     </div>
-
-
                                 </>
                             )}
                         </div>

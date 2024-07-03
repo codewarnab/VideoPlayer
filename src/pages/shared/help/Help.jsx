@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { Send } from 'lucide-react';
-import HelpAnimation from './HelpAnimation';
+import HelpAnimation from './helpAnimation.json';
+import Lottie from "lottie-react";
 
 const Help = () => {
   const [formData, setFormData] = useState({
@@ -133,7 +134,7 @@ const Help = () => {
             </form>
           </div>
           <div className="lg:w-1/2 w-[100%]  flex justify-center items-center ">
-            <HelpAnimation />
+            <Lottie animationData={HelpAnimation}/>
           </div>
         </div>
       </div>

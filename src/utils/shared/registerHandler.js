@@ -11,7 +11,7 @@ const PASSWORD_REGEX = {
     hasSpecialChar: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/
 };
 
-const EMPLOYEE_ID_REGEX = /^\d{4}$/;
+const EMPLOYEE_ID_REGEX = /^\d{1,4}$/;
 
 const validatePasswordStrength = (password) => {
     if (password.length < PASSWORD_REGEX.minLength) {

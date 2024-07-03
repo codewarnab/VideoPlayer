@@ -21,6 +21,7 @@
     "axios": "^1.6.7",
     "hamburger-react": "^2.5.1",
     "jquery": "^3.7.1",
+    "lottie-react": "^2.4.0",
     "lottie-web": "^5.12.2",
     "lucide-react": "^0.399.0",
     "path-browserify": "^1.0.1",

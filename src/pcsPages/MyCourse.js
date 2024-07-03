@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const MyCourse = ({ searchTerm }) => {
   const user = JSON.parse(localStorage.getItem("user"));
-
+  console.log(user)
   const [myCourses, setMyCourses] = useState([]);
 
   useEffect(() => {

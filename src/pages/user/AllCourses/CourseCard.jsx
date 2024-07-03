@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import TotalCount from "../../../components/TotalCount";
+import TotalCount from "../../../components/TotalCount";
 
 const CourseCard = ({ item, setItem }) => {
     return (
