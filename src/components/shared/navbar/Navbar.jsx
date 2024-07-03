@@ -164,7 +164,7 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
                     {/* Mobile nav list */}
                     {
                         isMobileNavOpen &&
-                        <div className={`bg-white h-auto w-[15rem] flex items-start flex-col   rounded-lg absolute top-0 left-0 p-5 py-10  z-50 shadow-md transition-transform transform ${isMobileNavOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+                        <div className={`bg-white h-auto w-[15rem] lg:hidden  flex  items-start flex-col   rounded-lg absolute top-0 left-0 p-5 py-10  z-50 shadow-md transition-transform transform ${isMobileNavOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                             {navItems.map((item) => (
                                 <Link
                                     key={item.id}

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Plus, Minus, ChevronDown } from 'lucide-react';
+import { Plus, Minus, ChevronDown, ArrowLeft } from 'lucide-react';
 
 const DropDownSm = ({ categories, isCategoryOpen, loading, setCategoryOpen, setIsMobileNavOpen }) => {
   const [openCategory, setOpenCategory] = useState(null);
@@ -19,6 +19,7 @@ const DropDownSm = ({ categories, isCategoryOpen, loading, setCategoryOpen, setI
   const checkOverflow = () => {
     if (contentRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = contentRef.current;
+      console.log(scrollTop,scrollHeight,clientHeight)
       const isOverflowing = scrollHeight > clientHeight;
       const isScrolledToBottom = scrollHeight - scrollTop === clientHeight;
       setShowScrollIndicator(isOverflowing && !isScrolledToBottom);
@@ -41,7 +42,15 @@ const DropDownSm = ({ categories, isCategoryOpen, loading, setCategoryOpen, setI
 
   return (
     <div className={`bg-white text-black max-h-[80svh] min-h-[78svh] w-[70%] md:hidden lg:hidden flex flex-col rounded-lg absolute top-0 left-[-10px] p-5 overflow-hidden py-10 z-[100] shadow-md transition-transform transform ${isCategoryOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-      <h1 className='text-xl mb-4'>Categories</h1>
+      <div className='flex gap-2 mb-4 items-center'>
+        <span onClick={()=>{
+          setCategoryOpen(false);
+          setIsMobileNavOpen(true);
+        }}>
+          <ArrowLeft size={20}/>
+        </span>
+      <h1 className='text-xl '>Categories</h1>
+      </div>
       <div
         ref={contentRef}
         className="w-full flex-grow overflow-y-auto scrollbar-hide relative"
