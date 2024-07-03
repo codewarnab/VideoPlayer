@@ -19,7 +19,6 @@ const DropDownSm = ({ categories, isCategoryOpen, loading, setCategoryOpen, setI
   const checkOverflow = () => {
     if (contentRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = contentRef.current;
-      console.log(scrollTop,scrollHeight,clientHeight)
       const isOverflowing = scrollHeight > clientHeight;
       const isScrolledToBottom = scrollHeight - scrollTop === clientHeight;
       setShowScrollIndicator(isOverflowing && !isScrolledToBottom);

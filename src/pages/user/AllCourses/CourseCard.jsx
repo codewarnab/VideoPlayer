@@ -1,25 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import TotalCount from "../../../components/TotalCount";
-
+import { Eye, Star } from 'lucide-react';
+import { LazyLoadImage } from "react-lazy-load-image-component";
 const CourseCard = ({ item, setItem }) => {
     return (
-        <div key={item._id} className="relative">
-            <Link to="/description" onClick={() => setItem(item)}>
-                <div className="lg:w-[300px] lg:h-[250px] h-[300px] bg-white border border-gray-200 rounded-lg shadow  hover:-translate-y-2 duration-200 hover:shadow-[#6260607a] hover:shadow-xl">
-                    <img
-                        className="rounded-t-lg"
+        <div key={item._id} className="relative ">
+            <Link to="/description" onClick={() => setItem(item)} >
+                <div className="lg:w-[18.5rem] lg:h-[17rem] h-[300px] bg-white border border-gray-200 rounded-lg shadow hover:-translate-y-2 duration-200 hover:shadow-[#6260607a] hover:shadow-xl flex flex-col">
+                    <LazyLoadImage
+                        className="rounded-t-lg w-full h-[140px] object-cover"
                         src={item?.image}
-                        alt=""
-                        style={{ width: "300px", height: "140px" }}
+                        alt="cover image "
+                        effect="blur"
                     />
-                    <div className="p-5">
-                        <h5 className="mb-2 text-base lg:text-lg font-bold tracking-tight text-gray-900 ">
-                            {item?.courseName.slice(0, 28)} <br />
-                            {item?.courseName.slice(28)}
-                        </h5>
-                        <div className="lg:flex justify-evenly items-center">
-                            {/* <h4><TotalCount listId={item?.listId} /></h4> */}
+                    <div className="flex flex-col flex-grow justify-between p-3">
+                        <div className="w-full text-start">
+                            <div className="flex w-full justify-between mb-2">
+                                <div className="flex gap-1 items-center">
+                                    <Star strokeWidth={0} opacity={0.5} fill="#2563EB" size={20} />
+                                    <p className="text-sm text-black">{item?.finalRating ? Number(item.finalRating).toFixed(1) : '5'}</p>
+                                </div>
+                                <div className="flex gap-1 items-center">
+                                    <Eye size={20} color="black" />
+                                    <p className="text-sm text-black">{item?.views}</p>
+                                </div>
+                            </div>
+                            <p className="mb-1 text-base lg:text-md font-bold tracking-tight text-gray-700 text-left line-clamp-2">
+                                {item?.courseName ?? "other"}
+                            </p>
+                        </div>
+                        <div className="w-full">
+                            <h6 className="text-sm py-1 px-2 rounded-lg text-black bg-slate-200 w-fit">{item.category}</h6>
                         </div>
                     </div>
                 </div>

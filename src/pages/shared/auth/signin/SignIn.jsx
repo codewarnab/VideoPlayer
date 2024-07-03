@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,lazy,Suspense} from 'react';
 import axios from 'axios';
 import { toast } from "react-hot-toast";
 import { useNavigate } from 'react-router-dom';
-import LoginAnimation from '../../../../images/LoginAnimation.json'
-import Lottie from "lottie-react";
+import LoginAnimation from './LoginAnimation.json'
+const Lottie = lazy(() => import("lottie-react"));
+
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -90,7 +91,9 @@ const SignIn = () => {
                 <div className="hidden lg:flex justify-center items-center lg:w-1/2">
                     <div className=" rounded-lg  w-[85%] h-[100%] shadow-sm pr-2 overflow-hidden object-cover   bg-blue-50 bg-opacity-20 backdrop-filter backdrop-blur-lg">
 
-                        <Lottie animationData={LoginAnimation} />
+                        <Suspense fallback={<div className='lg:min-h-[100%] lg:min-w-[85%]' ></div>}>
+                            <Lottie animationData={LoginAnimation} />
+                        </Suspense>
                     </div>
                 </div>
             </div>

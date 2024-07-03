@@ -150,6 +150,7 @@ const CourseDescription = ({ item, setSearchTerm }) => {
                                     <h5 className="mt-16 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                                         {savedItem?.courseName?.slice(0, 28)} <br />
                                         {savedItem?.courseName?.slice(28)}
+                                        
                                     </h5>
                                     <div className="flex justify-evenly text-black">
                                         {/* <h4 className="text-2xl ">{renderStars(savedItem?.finalRating)}</h4> */}

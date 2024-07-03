@@ -23,7 +23,7 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
     const [categories, setCategories] = useState(null);
     const [categoryloading, setcategoryLoading] = useState(true);
     const [isCategoryOpen, setCategoryOpen] = useState(false);
-
+    const [categoryFetchError,setcategoryFetchError] = useState(null);
     let location = useLocation();
 
     useEffect(() => {
@@ -43,7 +43,7 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
                     setCategories(res.data.categories);
                 }
             } catch (error) {
-                console.error("Error fetching data:", error);
+                setcategoryFetchError(error.message)
             } finally {
                 setcategoryLoading(false);
             }
@@ -149,7 +149,7 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
                             <img className="h-23 w-24" src={images} alt="PcsGlobal360" />
                         </Link>
                         <div className="flex gap-10">
-                            <DropDownLg loading={categoryloading} categories={categories} />
+                            <DropDownLg loading={categoryloading} categories={categories} categoryFetchError={categoryFetchError} />
                             <SearchInput
                                 isSearchExpanded={isSearchExpanded}
                                 toggleSearchInputVisibility={toggleSearchInputVisibility}

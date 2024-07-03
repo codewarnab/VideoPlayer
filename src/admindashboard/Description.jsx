@@ -13,7 +13,7 @@ export default function Description({ heading, paragraph, leftDescription, right
                 <dl className="divide-y divide-gray-100">
                     <div className="px-4 py-6 text-black sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <div className="text-md font-bold">
-                            This course includes:
+                            This course includes: 
                         </div>
                         <div className="text-sm  flex flex-col gap-1">
                             <div className="flex items-center gap-1">

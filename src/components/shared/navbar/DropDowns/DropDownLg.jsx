@@ -1,12 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const DropDownLg = ({ loading, categories }) => {
+const DropDownLg = ({ loading, categories, categoryFetchError }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [activeCategory, setActiveCategory] = useState(0);
     const [activeSubCategory, setActiveSubCategory] = useState(0);
     const dropdownRef = useRef(null);
-
-
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -20,7 +18,6 @@ const DropDownLg = ({ loading, categories }) => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
-
 
     const handleCategoryMouseEnter = (index) => {
         setActiveCategory(index);
@@ -46,10 +43,14 @@ const DropDownLg = ({ loading, categories }) => {
                 Categories
             </div>
             {isOpen && (
-                <div className="absolute left-0 mt-0 rounded-md flex min-h-[30rem]  bg-white border border-gray-300 shadow-lg z-10 text-black">
+                <div className="absolute left-0 mt-0 rounded-md flex min-h-[30rem] bg-white border border-gray-300 shadow-lg z-10 text-black">
                     <div className="w-64 border-r border-gray-300 flex flex-col justify-center">
-                        {loading ? (
-                            <h1>Loading ...</h1>
+                        {!loading && categoryFetchError ? (
+                            <div className="px-4 py-2 text-red-500">
+                                Error: {categoryFetchError}
+                            </div>
+                        ) : loading ? (
+                            <div className="px-4 py-2">Loading ...</div>
                         ) : (
                             categories && categories.map((category, index) => (
                                 <div

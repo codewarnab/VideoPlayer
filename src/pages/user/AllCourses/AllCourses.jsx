@@ -1,13 +1,14 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import TotalCount from "../../../components/TotalCount";
+import React, {  Suspense, useState, useEffect, lazy } from "react";
+import {  useNavigate } from "react-router-dom";
+// import TotalCount from "../../../components/TotalCount";
 import MultiFilter from "./MultiFilter";
-import CourseCard from "./CourseCard";
+const CourseCard = lazy(() => import('./CourseCard'))
 
 const Dashboard = ({ searchTerm, setSearchTerm, setItem }) => {
   const [AllCourses, setAllCourses] = useState([]);
   const [tempCourses, settempCourses] = useState([]);
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -21,13 +22,16 @@ const Dashboard = ({ searchTerm, setSearchTerm, setItem }) => {
             ? `/maincourse/get-dashboard?search=${searchTerm}`
             : "/maincourse/get-dashboard"
         );
-        if (!searchTerm){
+        if (!searchTerm) {
           setAllCourses(res.data.dashboards);
+
         }
-        settempCourses(res.data.dashboards); 
+        settempCourses(res.data.dashboards);
+        setLoading(false);
         console.log(res.data.dashboards)
       } catch (error) {
         console.error("Error fetching data:", error);
+        setLoading(false)
       }
     };
     fetchData();
@@ -39,23 +43,35 @@ const Dashboard = ({ searchTerm, setSearchTerm, setItem }) => {
 
   return (
     <>
-      <div className="flex flex-col items-center mb-7 h-auto justify-center bg-[#F5F5F5] p-7">
-        <div className="flex items-start w-full">
-          {AllCourses.length > 0 && (
-            <MultiFilter
-              AllCourses={AllCourses}
-              settempCourses={settempCourses}
-              setSearchTerm={setSearchTerm}
-              categories={categories}
-            />
-          )}
-        </div>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 my-4">
-          {tempCourses?.length > 0 &&
-            tempCourses?.map((item) => (
-              <CourseCard key={item._id} item={item} setItem={setItem} />
-            ))}
-        </div>
+      <div className="flex flex-col items-center mb-7 h-auto min-h-svh min-w-svw justify-start bg-[#F5F5F5] p-4">
+        {!loading ? (
+          <>
+            <div className="flex items-start w-full">
+
+              {AllCourses.length > 0 && (
+                <MultiFilter
+                  AllCourses={AllCourses}
+                  settempCourses={settempCourses}
+                  setSearchTerm={setSearchTerm}
+                  categories={categories}
+                />
+              )}
+            </div>
+            <div className="grid grid-cols-1 w-[93%] md:w-full lg:w-full gap-6 md:grid-cols-3 lg:grid-cols-4 my-4">
+              {tempCourses?.length > 0 &&
+                tempCourses?.map((item) => (
+                  <Suspense key={item._id} fallback={<div className="h-[300px] bg-gray-200 rounded-lg animate-pulse"></div>}>
+                    <CourseCard item={item} setItem={setItem} />
+                  </Suspense>
+                ))}
+            </div>
+          </>
+        ) : (
+          <h1 className="text-5xl text-black font-extrabold">Loading....</h1>
+        )
+        }
+
+
       </div>
     </>
   );

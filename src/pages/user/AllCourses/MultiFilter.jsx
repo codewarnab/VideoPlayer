@@ -36,7 +36,7 @@ const MultiFilter = ({ AllCourses, settempCourses, setSearchTerm, categories }) 
         <button
           key={category}
           onClick={() => handleCategoryClick(category)}
-          className={`px-2 py-1 lg:px-3 text-sm rounded-lg focus:outline-none  
+          className={`px-2 py-1 lg:px-3 text-sm rounded-lg focus:outline-none  line-clamp-1 sm:py-[4px] sm:px-[2px] overflow-hidden lg:line-clamp-none md:line-clamp-none
             ${selectedCategories.includes(category)
               ? 'bg-blue-400 text-white hover:bg-blue-300 font-bold'
               : 'bg-gray-200 text-gray-800 hover:bg-gray-300 hover:text-gray-700'
