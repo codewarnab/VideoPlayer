@@ -8,7 +8,7 @@ const ProtectedUser = () => {
   //console.log(admin);
 
   if (!localStorage.getItem("token")) {
-    return navigate("/authSignin");
+    return navigate("/signin");
   }
 
 

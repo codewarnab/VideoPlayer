@@ -28,7 +28,7 @@ const Card = (props) => {
 
 
     if (!token) {
-      navigate("/authSignin");
+      navigate("/signin");
     }
   };
 

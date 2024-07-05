@@ -6,7 +6,7 @@ const ProtectedDashboard = () => {
 
   const pageReload = () => {
     if (!localStorage.getItem("token")) {
-      navigate("/authSignin");
+      navigate("/signin");
     }
   };
   useEffect(() => {

@@ -7,7 +7,7 @@ const ProtectedEnroll = () => {
 
     const pageReload = () => {
         if (!localStorage.getItem("token")) {
-            navigate("/authSignin");
+            navigate("/signin");
         }
     };
     useEffect(() => {
