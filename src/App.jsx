@@ -37,6 +37,7 @@ import EmployeeInformation from "./pcsPages/EmployeeInformation";
 import UserPCSDetails from "./pcsPages/UserPCSDetails";
 import Review from "./Comment/Review";
 import EnrollNow from "./TopScript/EnrollNow";
+import CourseForm from "./pages/user/enlist-course/CourseForm";
 
 // axios.defaults.baseURL = "http://3.212.222.137";
 import Instructor from "./Instructor/Instructor";
@@ -151,6 +152,8 @@ const App = () => {
             <Route element={<ProtectedUser />}>
               <Route path="/user" element={<UserDashboard />} />
             </Route>
+            
+              <Route path="/enlist-course" element={<CourseForm />} />
 
             <Route element={<ProtectedEnroll />}>
               <Route path="/enroll" element={<EnrollmentForm />} />
