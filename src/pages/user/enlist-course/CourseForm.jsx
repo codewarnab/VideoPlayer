@@ -10,19 +10,19 @@ const CourseForm = () => {
         name: "",
         email: "",
         phone: "",
-        imageUrl: "",
+        imageUrl: "",//
         playlistLink: "",
         title: "",
         description: "",
         requirements: "",
         prerequisites: "",
-        category: null,
-        subCategory: null,
-        subSubCategory: null,
-        difficultyLevel: "",
-        language: "",
-        tags: [],
-        expectedtimeFinish: ""
+        category: null,//
+        subCategory: null,//
+        subSubCategory: null,//
+        difficultyLevel: "",//
+        language: "",//
+        tags: [],//
+        expectedtimeFinishNumber: "" //
     });
 
     const [errors, setErrors] = useState({
@@ -98,19 +98,40 @@ const CourseForm = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setErrors(prev => ({ ...prev, [name]: "" }));
+        setErrors("");
         setFormData(prev => ({
             ...prev,
             [name]: value
         }));
+        if (name === 'expectedtimeFinishNumber' && (value <= 0 )) {
+            setErrors(prev => ({ ...prev, [name]: "Value must be greater than zero" }));
+            return;
+        }
     };
 
     const handleSelectChange = (name, selectedOption) => {
-        setFormData(prev => ({
-            ...prev,
-            [name]: selectedOption
-        }));
+        setErrors("");
+        if (name === 'category') {
+            setFormData(prev => ({
+                ...prev,
+                [name]: selectedOption,
+                subCategory: null,
+                subSubCategory: null
+            }));
+        } else if (name === 'subCategory') {
+            setFormData(prev => ({
+                ...prev,
+                [name]: selectedOption,
+                subSubCategory: null
+            }));
+        } else {
+            setFormData(prev => ({
+                ...prev,
+                [name]: selectedOption
+            }));
+        }
     };
+
 
     const handleNextPage = () => {
         if (validatePage(currentPage)) {
@@ -143,8 +164,17 @@ const CourseForm = () => {
                 if (!pageData.requirements) {
                     pageErrors.requirements = "Requirements are required";
                 }
-                if (!pageData.category) {
-                    pageErrors.category = "Category is required";
+                if (!pageData.subCategory || !pageData.subSubCategory || !pageData.category){
+                    pageErrors.category = "All category field must be filled ";
+                }
+                if (!pageData.prerequisites){
+                    pageErrors.prerequisites = "Even if no prereuisites needed explain that you will teach everything from scratch "
+                }
+                if(!pageData.difficultyLevel){
+                    pageErrors.difficultyLevel = "please select difficulty level "
+                }
+                if (!pageData.language){
+                    pageErrors.language = "please select course language "
                 }
                 break;
             default:
@@ -176,6 +206,7 @@ const CourseForm = () => {
                     removeImage={removeImage}
                     formData={formData}
                     handleChange={handleChange}
+                    handleNextPage={handleNextPage}
                 />
             );
             break;

@@ -27,6 +27,13 @@ const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categorie
                         })) || []
                 : [];
 
+        const timeUnitOptions = [
+                { value: 'hours', label: 'Hours' },
+                { value: 'days', label: 'Days' },
+                { value: 'weeks', label: 'Weeks' },
+                { value: 'months', label: 'Months' }
+        ];
+
         const customStyles = {
                 container: (provided) => ({
                         ...provided,
@@ -65,9 +72,9 @@ const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categorie
         };
 
         return (
-                <div className='w-full flex min-h-[20rem]'>
-                        <div className='border w-1/2 h-full bg-white p-5 rounded-xl text-start'>
-                                <div className="flex flex-col gap-4">
+                <div className='w-full flex flex-col gap-5 lg:flex-row min-h-[20rem]'>
+                        <div className='border  w-full lg:w-1/2 h-full bg-white p-7 rounded-xl text-start mb-4 lg:mb-0'>
+                                <div className="flex flex-col ">
                                         <div className='items-start mb-6'>
                                                 <label htmlFor='requirements' className="block text-lg font-medium text-black mb-2">5. Requirements</label>
                                                 <textarea
@@ -79,10 +86,29 @@ const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categorie
                                                         onChange={handleChange}
                                                         className={`p-2 border ${errors.requirements ? 'border-red-400' : 'border-gray-300'} rounded-lg bg-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent font-light font-sans text-black w-full`}
                                                 ></textarea>
-                                                {errors.requirements && <p className="text-red-500 text-sm mt-1">{errors.requirements}</p>}
+                                                {errors.requirements && <p className="text-red-500 text-sm mt-1 absolute">{errors.requirements}</p>}
                                         </div>
-                                        <div className='flex justify-between gap-2'>
-                                                <div className='w-1/3'>
+                                       
+                                        <div className='items-start '>
+                                                <label htmlFor='prerequisites' className="block text-lg font-medium text-black mb-2">7. Prerequisites</label>
+                                                <textarea
+                                                        id='prerequisites'
+                                                        name='prerequisites'
+                                                        placeholder='Enter any prerequisites for this course'
+                                                        rows='3'
+                                                        value={formData.prerequisites}
+                                                        onChange={handleChange}
+                                                        className={`p-2 border ${errors.prerequisites ? 'border-red-400' : 'border-gray-300'} rounded-lg bg-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent font-light font-sans text-black w-full`}
+                                                ></textarea>
+                                                {errors.prerequisites && <p className="text-red-500 text-sm mt-1 absolute">{errors.prerequisites}</p>}
+                                        </div>
+                                </div>
+                        </div>
+
+                        <div className='border w-full lg:w-1/2 h-full bg-white p-5 pl-6 rounded-xl text-start'>
+                                <div className="flex flex-col gap-12">
+                                        <div className='flex flex-col lg:flex-row justify-between gap-2'>
+                                                <div className='w-full lg:w-1/3 mb-4 lg:mb-0'>
                                                         <label className="block text-sm font-medium text-black mb-1">6. Category</label>
                                                         <Select
                                                                 options={categoryOptions}
@@ -92,9 +118,9 @@ const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categorie
                                                                 isLoading={isLoading}
                                                                 styles={customStyles}
                                                         />
-                                                        {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category}</p>}
+                                                        {errors.category && <p className="text-red-500 text-sm mt-1 absolute">{errors.category}</p>}
                                                 </div>
-                                                <div className='w-1/3'>
+                                                <div className='w-full lg:w-1/3 mb-4 lg:mb-0'>
                                                         <label className="block text-sm font-medium text-black mb-1">Subcategory</label>
                                                         <Select
                                                                 options={subcategoryOptions}
@@ -105,7 +131,7 @@ const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categorie
                                                                 styles={customStyles}
                                                         />
                                                 </div>
-                                                <div className='w-1/3'>
+                                                <div className='w-full lg:w-1/3'>
                                                         <label className="block text-sm font-medium text-black mb-1">Sub-subcategory</label>
                                                         <Select
                                                                 options={subSubcategoryOptions}
@@ -117,26 +143,9 @@ const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categorie
                                                         />
                                                 </div>
                                         </div>
-                                </div>
-                        </div>
-                        <div className='border w-1/2 h-full bg-white p-5 rounded-xl text-start'>
-                                <div className="flex flex-col gap-4">
-                                        <div className='items-start mb-6'>
-                                                <label htmlFor='prerequisites' className="block text-lg font-medium text-black mb-2">7. Prerequisites</label>
-                                                <textarea
-                                                        id='prerequisites'
-                                                        name='prerequisites'
-                                                        placeholder='Enter any prerequisites for this course'
-                                                        rows='3'
-                                                        value={formData.prerequisites}
-                                                        onChange={handleChange}
-                                                        className={`p-2 border ${errors.prerequisites ? 'border-red-400' : 'border-gray-300'} rounded-lg bg-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent font-light font-sans text-black w-full`}
-                                                ></textarea>
-                                                {errors.prerequisites && <p className="text-red-500 text-sm mt-1">{errors.prerequisites}</p>}
-                                        </div>
-                                        <div className='flex justify-between gap-2'>
-                                                <div className='w-1/2'>
-                                                        <label htmlFor='difficultyLevel' className="block text-sm font-medium text-black mb-1">8. Difficulty Level</label>
+                                        <div className='flex flex-col lg:flex-row justify-between gap-6'>
+                                                <div className='w-full lg:w-[70%] mb-4 lg:mb-0'>
+                                                        <label htmlFor='difficultyLevel' className="block text-md font-medium text-black mb-1">8. Difficulty Level</label>
                                                         <select
                                                                 id='difficultyLevel'
                                                                 name='difficultyLevel'
@@ -151,8 +160,8 @@ const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categorie
                                                         </select>
                                                         {errors.difficultyLevel && <p className="text-red-500 text-sm mt-1">{errors.difficultyLevel}</p>}
                                                 </div>
-                                                <div className='w-1/2'>
-                                                        <label htmlFor='language' className="block text-sm font-medium text-black mb-1">9. Language</label>
+                                                <div className='w-full lg:w-[70%]'>
+                                                        <label htmlFor='language' className="block text-md font-medium text-black mb-1">9. Language</label>
                                                         <select
                                                                 id='language'
                                                                 name='language'
@@ -162,38 +171,52 @@ const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categorie
                                                         >
                                                                 <option value="">Select Language</option>
                                                                 <option value="English">English</option>
-                                                                <option value="Spanish">Spanish</option>
-                                                                <option value="French">French</option>
+                                                                <option value="Bengali">Bengali </option>
+                                                                <option value="hindi">hindi </option>
+                                                                <option value="other">other </option>
                                                                 {/* Add more language options as needed */}
                                                         </select>
                                                         {errors.language && <p className="text-red-500 text-sm mt-1">{errors.language}</p>}
                                                 </div>
                                         </div>
-                                        <div className='items-start mb-6'>
-                                                <label htmlFor='tags' className="block text-lg font-medium text-black mb-2">10. Tags</label>
-                                                <input
-                                                        type="text"
-                                                        id='tags'
-                                                        name='tags'
-                                                        placeholder='Enter tags (comma separated)'
-                                                        value={formData.tags}
-                                                        onChange={handleChange}
-                                                        className={`p-2 border ${errors.tags ? 'border-red-400' : 'border-gray-300'} rounded-lg bg-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent font-light font-sans text-black w-full`}
-                                                />
-                                                {errors.tags && <p className="text-red-500 text-sm mt-1">{errors.tags}</p>}
-                                        </div>
-                                        <div className='items-start mb-6'>
-                                                <label htmlFor='expectedtimeFinish' className="block text-lg font-medium text-black mb-2">11. Expected Time to Finish</label>
-                                                <input
-                                                        type="text"
-                                                        id='expectedtimeFinish'
-                                                        name='expectedtimeFinish'
-                                                        placeholder='Enter expected time to finish (e.g., 2 weeks, 1 month)'
-                                                        value={formData.expectedtimeFinish}
-                                                        onChange={handleChange}
-                                                        className={`p-2 border ${errors.expectedtimeFinish ? 'border-red-400' : 'border-gray-300'} rounded-lg bg-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent font-light font-sans text-black w-full`}
-                                                />
-                                                {errors.expectedtimeFinish && <p className="text-red-500 text-sm mt-1">{errors.expectedtimeFinish}</p>}
+                                        <div className='flex flex-col justify-center items-center lg:flex-row gap-6 w-full'>
+                                                <div className='w-full lg:w-[70%]'>
+                                                        <label htmlFor='expectedtimeFinish' className="block text-md font-medium text-black mb-1">11. Expected Time to Finish</label>
+                                                        <div className="flex gap-2">
+                                                                <input
+                                                                        type="number"
+                                                                        id='expectedtimeFinishNumber'
+                                                                        name='expectedtimeFinishNumber'
+                                                                        placeholder='Enter number'
+                                                                        value={formData.expectedtimeFinishNumber}
+                                                                        onChange={handleChange}
+                                                                        className={`p-1 border ${errors.expectedtimeFinishNumber ? 'border-red-400' : 'border-gray-300'} rounded-md bg-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent font-light font-sans text-black w-full`}
+                                                                />
+                                                                <Select
+                                                                        options={timeUnitOptions}
+                                                                        value={formData.expectedtimeFinishUnit}
+                                                                        onChange={(selectedOption) => handleSelectChange('expectedtimeFinishUnit', selectedOption)}
+                                                                        placeholder="Select Unit"
+                                                                        styles={customStyles}
+                                                                        className="w-full"
+                                                                />
+                                                        </div>
+                                                        {errors.expectedtimeFinishNumber && <p className="text-red-500 text-sm mt-1">{errors.expectedtimeFinishNumber}</p>}
+                                                </div>
+                                                <div className='w-full lg:w-[70%]'>
+                                                        <label htmlFor='contactNumber' className="block text-md font-medium text-black mb-1">12. Enter contact number </label>
+                                                        <input
+                                                                type="text"
+                                                                id='contactNumber'
+                                                                name='contactNumber'
+                                                                placeholder='Enter Contact  number'
+                                                                value={formData.contactNumber}
+                                                                onChange={handleChange}
+                                                                className={`p-1 border ${errors.contactNumber ? 'border-red-400' : 'border-gray-300'} rounded-md bg-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent font-light font-sans text-black lg:w-[85%] w-full`}
+                                                        />
+                                                        {errors.contactNumber && <p className="text-red-500 text-sm mt-1">{errors.contactNumber}</p>}
+                                                        
+                                                </div>
                                         </div>
                                 </div>
                         </div>
