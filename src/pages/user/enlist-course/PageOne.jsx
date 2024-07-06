@@ -4,9 +4,9 @@ import { Upload, X } from 'lucide-react';
 const PageOne = ({ errors, handleImageUpload, handleDrop, removeImage, formData, handleChange, handleNextPage }) => {
 
     const inputFields = [
-        { id: 'title', label: 'Course Title', placeholder: 'Enter title of the course', type: 'text', error: errors.title },
-        { id: 'playlistLink', label: 'Playlist Link', placeholder: 'Enter link of your YouTube playlist', type: 'text', error: errors.playlistLink },
-        { id: 'description', label: 'Description', placeholder: 'Enter a small description of your course', type: 'textarea', error: errors.description },
+        { id: 'title',index:2, label: '. Course Title', placeholder: 'Enter title of the course', type: 'text', error: errors.title },
+        { id: 'playlistLink', index: 3, label: '. Playlist Link', placeholder: 'Enter link of your YouTube playlist', type: 'text', error: errors.playlistLink },
+        { id: 'description', index: 4, label: '. Description', placeholder: 'Enter a small description of your course', type: 'textarea', error: errors.description },
     ];
 
     return (
@@ -59,11 +59,10 @@ const PageOne = ({ errors, handleImageUpload, handleDrop, removeImage, formData,
                     </div>
 
                     <div className='bg-white rounded-lg text-start shadow-md p-8 w-full lg:w-[48%]'>
-                        {/* Render dynamic form fields */}
                         <div className="flex flex-col gap-1">
                             {inputFields.map(field => (
                                 <div key={field.id} className='items-start mb-6'>
-                                    <label htmlFor={field.id} className="block text-lg font-medium text-black">{field.label}</label>
+                                    <label htmlFor={field.id} className="block text-lg font-medium text-black">{field.index}{field.label}</label>
                                     {field.type === 'textarea' ? (
                                         <textarea
                                             id={field.id}
