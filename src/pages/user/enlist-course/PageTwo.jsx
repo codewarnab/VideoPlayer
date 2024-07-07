@@ -1,7 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 
-const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categories, isLoading }) => {
+const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categories, isLoading,setCurrentPage }) => {
         const categoryOptions = categories.map(category => ({
                 value: category._id,
                 label: category.categoryName
@@ -33,7 +33,8 @@ const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categorie
                 { value: 'weeks', label: 'Weeks' },
                 { value: 'months', label: 'Months' }
         ];
-
+        const difficultyLevels = ["Beginner", "Intermediate", "Advanced"];
+        const languages = ["English", "Bengali", "Hindi", "Other"];
         const customStyles = {
                 container: (provided) => ({
                         ...provided,
@@ -72,7 +73,8 @@ const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categorie
         };
 
         return (
-                <div className='w-full flex flex-col gap-5 lg:flex-row min-h-[20rem]'>
+                <>
+                <div className='w-full flex flex-col justify-center items-center gap-5 lg:flex-row min-h-[20rem]'>
                         <div className='border  w-full lg:w-1/2 h-full bg-white p-7 rounded-xl text-start mb-4 lg:mb-0'>
                                 <div className="flex flex-col ">
                                         <div className='items-start mb-6'>
@@ -100,12 +102,12 @@ const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categorie
                                                         onChange={handleChange}
                                                         className={`p-2 border ${errors.prerequisites ? 'border-red-400' : 'border-gray-300'} rounded-lg bg-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent font-light font-sans text-black w-full`}
                                                 ></textarea>
-                                                {errors.prerequisites && <p className="text-red-500 text-sm mt-1 absolute">{errors.prerequisites}</p>}
+                                                {errors.prerequisites && <p className="text-red-500 text-sm  absolute">{errors.prerequisites}</p>}
                                         </div>
                                 </div>
                         </div>
-
-                        <div className='border w-full lg:w-1/2 h-full bg-white p-5 pl-6 rounded-xl text-start'>
+                          {/* right side*/}
+                        <div className='border w-full lg:w-1/2 h-full bg-white p-5 pl-6 py-8 rounded-xl text-start'>
                                 <div className="flex flex-col gap-12">
                                         <div className='flex flex-col lg:flex-row justify-between gap-2'>
                                                 <div className='w-full lg:w-1/3 mb-4 lg:mb-0'>
@@ -154,11 +156,11 @@ const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categorie
                                                                 className={`p-2 border ${errors.difficultyLevel ? 'border-red-400' : 'border-gray-300'} rounded-lg bg-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent font-light font-sans text-black w-full`}
                                                         >
                                                                 <option value="">Select Difficulty</option>
-                                                                <option value="Beginner">Beginner</option>
-                                                                <option value="Intermediate">Intermediate</option>
-                                                                <option value="Advanced">Advanced</option>
+                                                                {difficultyLevels.map(level => (
+                                                                        <option key={level} value={level}>{level}</option>
+                                                                ))}
                                                         </select>
-                                                        {errors.difficultyLevel && <p className="text-red-500 text-sm mt-1">{errors.difficultyLevel}</p>}
+                                                        {errors.difficultyLevel && <p className="text-red-500 text-sm mt-1 absolute">{errors.difficultyLevel}</p>}
                                                 </div>
                                                 <div className='w-full lg:w-[70%]'>
                                                         <label htmlFor='language' className="block text-md font-medium text-black mb-1">9. Language</label>
@@ -170,16 +172,14 @@ const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categorie
                                                                 className={`p-2 border ${errors.language ? 'border-red-400' : 'border-gray-300'} rounded-lg bg-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent font-light font-sans text-black w-full`}
                                                         >
                                                                 <option value="">Select Language</option>
-                                                                <option value="English">English</option>
-                                                                <option value="Bengali">Bengali </option>
-                                                                <option value="hindi">hindi </option>
-                                                                <option value="other">other </option>
-                                                                {/* Add more language options as needed */}
+                                                                {languages.map(lang => (
+                                                                        <option key={lang} value={lang}>{lang}</option>
+                                                                ))}
                                                         </select>
-                                                        {errors.language && <p className="text-red-500 text-sm mt-1">{errors.language}</p>}
+                                                        {errors.language && <p className="text-red-500 text-sm mt-1 absolute">{errors.language}</p>}
                                                 </div>
                                         </div>
-                                        <div className='flex flex-col justify-center items-center lg:flex-row gap-6 w-full'>
+                                        <div className='flex flex-col justify-between items-center lg:flex-row gap-6 w-full'>
                                                 <div className='w-full lg:w-[70%]'>
                                                         <label htmlFor='expectedtimeFinish' className="block text-md font-medium text-black mb-1">11. Expected Time to Finish</label>
                                                         <div className="flex gap-2">
@@ -201,7 +201,7 @@ const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categorie
                                                                         className="w-full"
                                                                 />
                                                         </div>
-                                                        {errors.expectedtimeFinishNumber && <p className="text-red-500 text-sm mt-1">{errors.expectedtimeFinishNumber}</p>}
+                                                        {errors.expectedtimeFinishNumber && <p className="text-red-500 text-sm mt-1 absolute">{errors.expectedtimeFinishNumber}</p>}
                                                 </div>
                                                 <div className='w-full lg:w-[70%]'>
                                                         <label htmlFor='contactNumber' className="block text-md font-medium text-black mb-1">12. Enter contact number </label>
@@ -214,13 +214,31 @@ const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categorie
                                                                 onChange={handleChange}
                                                                 className={`p-1 border ${errors.contactNumber ? 'border-red-400' : 'border-gray-300'} rounded-md bg-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent font-light font-sans text-black lg:w-[85%] w-full`}
                                                         />
-                                                        {errors.contactNumber && <p className="text-red-500 text-sm mt-1">{errors.contactNumber}</p>}
+                                                        {errors.contactNumber && <p className="text-red-500 text-sm mt-1 absolute">{errors.contactNumber}</p>}
                                                         
                                                 </div>
                                         </div>
                                 </div>
                         </div>
                 </div>
+                <div className='flex w-full justify-evenly mt-6'>
+                        <div className='flex w-full justify-evenly'>
+                            <button
+                                type="button"
+                                className="lg:w-[20%] w-[40%] text-xl font-bold bg-blue-700 text-white py-2 mt-6 rounded-md hover:bg-blue-800 transition duration-300"
+                                onClick={() => setCurrentPage(prevState => prevState - 1)}
+                            >
+                                Back
+                            </button>
+                            <button
+                                type="submit"
+                                className="lg:w-[20%] w-[40%] text-xl font-bold bg-blue-700 text-white py-2 mt-6 rounded-md hover:bg-blue-800 transition duration-300"
+                            >
+                                Submit
+                            </button>
+                        </div>
+                </div>
+                </>
         );
 };
 

@@ -1,12 +1,47 @@
 import React from 'react';
 import { Upload, X } from 'lucide-react';
 
-const PageOne = ({ errors, handleImageUpload, handleDrop, removeImage, formData, handleChange, handleNextPage }) => {
+const PageOne = ({ errors, setErrors, handleImageUpload, handleDrop, removeImage, formData, handleChange, setCurrentPage }) => {
+    const handleNextPage = () => {
+        if (isPageOneValid()) {
+            setCurrentPage((prevPage) => prevPage + 1);
+        }
+    };
+
+    const isPageOneValid = () => {
+        const pageData = formData;
+        const pageErrors = {};
+        const playlistLinkPattern = /^https?:\/\/(?:www\.)?youtube\.com\/playlist\?list=[\w-]+(?:&[\w-]+(=[\w-]*)?)*$/;
+        if (!pageData.imageUrl) {
+            pageErrors.imageUrl = "Image is required.";
+        }
+        if (!pageData.title) {
+            pageErrors.title = "Course Title is required";
+        }
+        if (!pageData.description) {
+            pageErrors.description = "Course Description is required";
+        }
+        if (!pageData.playlistLink) {
+            pageErrors.playlistLink = "Playlist Link is required";
+        } else if (!playlistLinkPattern.test(formData.playlistLink)) {
+            pageErrors.playlistLink = "Invalid playlist link";
+        }
+        if (!pageData.numProjectsIncluded) {
+            pageErrors.numProjectsIncluded = "Enter zero if no projects included.";
+        } else if (pageData.numProjectsIncluded && pageData.numProjectsIncluded <= 0) {
+            pageErrors.numProjectsIncluded = "Number of projects must be greater than zero.";
+        }
+        
+
+        setErrors((prevErrors) => ({ ...prevErrors, ...pageErrors }));
+        return Object.values(pageErrors).every((error) => error === "");
+    };
 
     const inputFields = [
-        { id: 'title',index:2, label: '. Course Title', placeholder: 'Enter title of the course', type: 'text', error: errors.title },
+        { id: 'title', index: 2, label: '. Course Title', placeholder: 'Enter title of the course', type: 'text', error: errors.title },
         { id: 'playlistLink', index: 3, label: '. Playlist Link', placeholder: 'Enter link of your YouTube playlist', type: 'text', error: errors.playlistLink },
         { id: 'description', index: 4, label: '. Description', placeholder: 'Enter a small description of your course', type: 'textarea', error: errors.description },
+        { id: 'numProjectsIncluded', index: 5, label: '. Number of Projects Included', placeholder: 'Enter number of projects included in the course', type: 'number', error: errors.numProjectsIncluded },
     ];
 
     return (
@@ -15,11 +50,8 @@ const PageOne = ({ errors, handleImageUpload, handleDrop, removeImage, formData,
                 <h1 className="lg:text-4xl md:text-3xl text-xl font-bold text-gray-800 mb-8">
                     Enter Your Course/Playlist Details
                 </h1>
-                <div className='flex flex-col  lg:flex-row lg:justify-between gap-5 lg:gap-0'>
-
-                    
+                <div className='flex flex-col lg:flex-row lg:justify-between gap-5 lg:gap-0'>
                     <div className="bg-white flex justify-center flex-col rounded-lg shadow-md p-8 w-full lg:w-[48%] relative">
-
                         <h2 className="lg:text-2xl text-lg font-semibold text-gray-700 mb-6">
                             1. Upload Course Thumbnail
                         </h2>
@@ -55,7 +87,7 @@ const PageOne = ({ errors, handleImageUpload, handleDrop, removeImage, formData,
                                 className="hidden"
                             />
                         </div>
-                        <p className='text-red-400 absolute bottom-5 lg:left-[39%] left-[30%]' >{errors.imageUrl ? `${errors.imageUrl}` : ''}</p>
+                        <p className='text-red-400 absolute bottom-5 lg:left-[39%] left-[30%]'>{errors.imageUrl ? `${errors.imageUrl}` : ''}</p>
                     </div>
 
                     <div className='bg-white rounded-lg text-start shadow-md p-8 w-full lg:w-[48%]'>
@@ -89,13 +121,12 @@ const PageOne = ({ errors, handleImageUpload, handleDrop, removeImage, formData,
                             ))}
                         </div>
                     </div>
-                    
                 </div>
                 <div className='w-full'>
                     <button
-                        type="submit"
+                        type="button"
                         className="lg:w-[30%] w-[40%] text-xl font-bold bg-blue-700 text-white py-2 mt-6 rounded-md hover:bg-blue-800 transition duration-300"
-                        onClick={() => handleNextPage()}
+                        onClick={handleNextPage}
                     >
                         Next
                     </button>

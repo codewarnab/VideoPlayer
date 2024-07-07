@@ -4,12 +4,11 @@ import axios from 'axios';
 import { uploadImageToCloudinary } from '../../../utils/user/imageUploader';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
+import isValidPhoneNumber from '../../../utils/shared/isValidPhoneNumber';
 
 const CourseForm = () => {
     const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        phone: "",
+        email: "random@gmail.com",
         imageUrl: "",//
         playlistLink: "",
         title: "",
@@ -21,12 +20,14 @@ const CourseForm = () => {
         subSubCategory: null,//
         difficultyLevel: "",//
         language: "",//
-        tags: [],//
-        expectedtimeFinishNumber: "" //
+        contactNumber: "",
+        numProjectsIncluded:"",
+        expectedtimeFinishNumber: "",//,
+        expectedtimeFinishUnit: "",
+        isEmployeeUser:false
     });
 
     const [errors, setErrors] = useState({
-        name: "",
         email: "",
         phone: "",
         imageUrl: "",
@@ -41,10 +42,12 @@ const CourseForm = () => {
         difficultyLevel: "",
         language: "",
         tags: "",
-        expectedtimeFinish: ""
-    });
+        expectedtimeFinishNumber: "",
+        expectedtimeFinishUnit: "",
+        numProjectsIncluded:""
 
-    const [currentPage, setCurrentPage] = useState(2);
+    });
+    const [currentPage, setCurrentPage] = useState(1);
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -103,7 +106,7 @@ const CourseForm = () => {
             ...prev,
             [name]: value
         }));
-        if (name === 'expectedtimeFinishNumber' && (value <= 0 )) {
+        if (name === 'expectedtimeFinishNumber' && (value <= 0)) {
             setErrors(prev => ({ ...prev, [name]: "Value must be greater than zero" }));
             return;
         }
@@ -133,64 +136,75 @@ const CourseForm = () => {
     };
 
 
-    const handleNextPage = () => {
-        if (validatePage(currentPage)) {
-            setCurrentPage((prevPage) => prevPage + 1);
-        }
-    };
-
-    const validatePage = (page) => {
+    const validateSecondPage = () => {
         const pageData = formData;
         const pageErrors = {};
-        switch (page) {
-            case 1:
-                const playlistLinkPattern = /^https?:\/\/(?:www\.)?youtube\.com\/playlist\?list=[\w-]+(?:&[\w-]+(=[\w-]*)?)*$/;
-                if (!pageData.imageUrl) {
-                    pageErrors.imageUrl = "Image is required.";
-                }
-                if (!pageData.title) {
-                    pageErrors.title = "Course Title is required";
-                }
-                if (!pageData.description) {
-                    pageErrors.description = "Course Description is required";
-                }
-                if (!pageData.playlistLink) {
-                    pageErrors.playlistLink = "Playlist Link is required";
-                } else if (!playlistLinkPattern.test(formData.playlistLink)) {
-                    pageErrors.playlistLink = "Invalid playlist link";
-                }
-                break;
-            case 2:
-                if (!pageData.requirements) {
-                    pageErrors.requirements = "Requirements are required";
-                }
-                if (!pageData.subCategory || !pageData.subSubCategory || !pageData.category){
-                    pageErrors.category = "All category field must be filled ";
-                }
-                if (!pageData.prerequisites){
-                    pageErrors.prerequisites = "Even if no prereuisites needed explain that you will teach everything from scratch "
-                }
-                if(!pageData.difficultyLevel){
-                    pageErrors.difficultyLevel = "please select difficulty level "
-                }
-                if (!pageData.language){
-                    pageErrors.language = "please select course language "
-                }
-                break;
-            default:
-                break;
+        if (!pageData.requirements) {
+            pageErrors.requirements = "Requirements are required";
         }
+        if (!pageData.subCategory || !pageData.subSubCategory || !pageData.category) {
+            pageErrors.category = "All category field must be filled ";
+        }
+        if (!pageData.prerequisites) {
+            pageErrors.prerequisites = "Even if no prereuisites needed explain that you will teach everything from scratch "
+        }
+        if (!pageData.difficultyLevel) {
+            pageErrors.difficultyLevel = "please select difficulty level "
+        }
+        if (!pageData.language) {
+            pageErrors.language = "please select course language "
+        }
+        if (!isValidPhoneNumber(pageData.contactNumber)) {
+            pageErrors.contactNumber = "Enter a Valid phone number "
+        }
+        if (!pageData.expectedtimeFinishNumber) {
+            pageErrors.expectedtimeFinishNumber = "enter a number "
+        }
+        else if (!pageData.expectedtimeFinishUnit) {
+            pageErrors.expectedtimeFinishNumber = "please select unit  "
+        }
+
         setErrors((prevErrors) => ({ ...prevErrors, ...pageErrors }));
         return Object.values(pageErrors).every((error) => error === "");
     };
 
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        if (validatePage(currentPage)) {
-            console.log(formData);
-            // Handle form submission logic here
-            toast.success("Form submitted successfully!");
+
+
+        if (validateSecondPage(currentPage)) {
+            try{
+                console.log(formData);
+                toast.success("Form submitted successfully!");
+                const response = await axios.post("/course/enlist-request",{
+                    name:"Arnab",
+                    email:formData.email,
+                    imageUrl:formData.imageUrl,
+                    playlistLink:formData.playlistLink,
+                    title:formData.title,
+                    description:formData.description,
+                    requirements:formData.requirements,
+                    prerequisites:formData.prerequisites,
+                    category:formData.category,
+                    subCategory:formData.subCategory,
+                    subSubCategory:formData.subSubCategory,
+                    difficultyLevel:formData.difficultyLevel,
+                    language:formData.language,
+                    contactNumber:formData.contactNumber,
+                    numProjectsIncluded:formData.numProjectsIncluded,
+                    expectedtimeFinishNumber:formData.expectedtimeFinishNumber,
+                    expectedtimeFinishUnit:formData.expectedtimeFinishUnit["value"],
+                    isEmployeeUser: formData.email.endsWith('@pcsgpl')
+                    
+                }) 
+
+                console.log(response)
+            } catch (error) {
+                console.error(error)
+            }
         } else {
+
             toast.error("Please fill in all required fields correctly.");
         }
     };
@@ -201,12 +215,13 @@ const CourseForm = () => {
             currentPageComponent = (
                 <PageOne
                     errors={errors}
+                    setErrors={setErrors}
                     handleImageUpload={handleImageUpload}
                     handleDrop={handleDrop}
                     removeImage={removeImage}
                     formData={formData}
                     handleChange={handleChange}
-                    handleNextPage={handleNextPage}
+                    setCurrentPage={setCurrentPage}
                 />
             );
             break;
@@ -219,6 +234,7 @@ const CourseForm = () => {
                     handleSelectChange={handleSelectChange}
                     categories={categories}
                     isLoading={isLoading}
+                    setCurrentPage={setCurrentPage}
                 />
             );
             break;
@@ -230,27 +246,6 @@ const CourseForm = () => {
         <div className="lg:min-h-[33rem] w-full bg-gray-100 p-8 flex flex-col justify-between">
             <form onSubmit={handleSubmit}>
                 {currentPageComponent}
-
-                <div className='flex w-full justify-evenly mt-6'>
-                    {currentPage > 1 && (
-                        <div className='flex w-full justify-evenly'>
-                            <button
-                                type="button"
-                                className="lg:w-[20%] w-[40%] text-xl font-bold bg-blue-700 text-white py-2 mt-6 rounded-md hover:bg-blue-800 transition duration-300"
-                                onClick={() => setCurrentPage(prevState => prevState - 1)}
-                            >
-                                Back
-                            </button>
-                            <button
-                                type="button"
-                                className="lg:w-[20%] w-[40%] text-xl font-bold bg-blue-700 text-white py-2 mt-6 rounded-md hover:bg-blue-800 transition duration-300"
-                                onClick={handleNextPage}
-                            >
-                                Next
-                            </button>
-                        </div>
-                    )}
-                </div>
             </form>
         </div>
     );
