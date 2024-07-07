@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import TotalCount from "../components/TotalCount";
+import TotalCount from "../../../components/TotalCount";
 import toast from "react-hot-toast";
 import axios from "axios";
 import Description from "./Description";

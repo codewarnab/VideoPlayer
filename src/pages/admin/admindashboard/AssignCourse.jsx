@@ -76,7 +76,7 @@ const AssignCourse = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg ml-6 h-[25rem] md:ml-56 md:w-[30rem]">
+    <div className="max-w-md mx-auto p-6 bg-gray-100 rounded-lg shadow-lg ml-6 h-[25rem] md:ml-56 md:w-[30rem]">
       <h2 className="text-2xl font-bold mb-4">Assign Course to User</h2>
       <div className="mb-4">
         <label className="block text-gray-700 mb-2">Select User:</label>

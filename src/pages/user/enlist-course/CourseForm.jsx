@@ -5,7 +5,7 @@ import { uploadImageToCloudinary } from '../../../utils/user/imageUploader';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
 import isValidPhoneNumber from '../../../utils/shared/isValidPhoneNumber';
-
+import SuccesPage from './SuccesPage';
 const CourseForm = () => {
     const [formData, setFormData] = useState({
         email: "random@gmail.com",
@@ -21,10 +21,10 @@ const CourseForm = () => {
         difficultyLevel: "",//
         language: "",//
         contactNumber: "",
-        numProjectsIncluded:"",
+        numProjectsIncluded: "",
         expectedtimeFinishNumber: "",//,
         expectedtimeFinishUnit: "",
-        isEmployeeUser:false
+        isEmployeeUser: false
     });
 
     const [errors, setErrors] = useState({
@@ -44,13 +44,13 @@ const CourseForm = () => {
         tags: "",
         expectedtimeFinishNumber: "",
         expectedtimeFinishUnit: "",
-        numProjectsIncluded:""
+        numProjectsIncluded: ""
 
     });
     const [currentPage, setCurrentPage] = useState(1);
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
+    const [isSucces, setisSucess] = useState(false)
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -169,37 +169,39 @@ const CourseForm = () => {
     };
 
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
 
         if (validateSecondPage(currentPage)) {
-            try{
+            try {
                 console.log(formData);
                 toast.success("Form submitted successfully!");
-                const response = await axios.post("/course/enlist-request",{
-                    name:"Arnab",
-                    email:formData.email,
-                    imageUrl:formData.imageUrl,
-                    playlistLink:formData.playlistLink,
-                    title:formData.title,
-                    description:formData.description,
-                    requirements:formData.requirements,
-                    prerequisites:formData.prerequisites,
-                    category:formData.category,
-                    subCategory:formData.subCategory,
-                    subSubCategory:formData.subSubCategory,
-                    difficultyLevel:formData.difficultyLevel,
-                    language:formData.language,
-                    contactNumber:formData.contactNumber,
-                    numProjectsIncluded:formData.numProjectsIncluded,
-                    expectedtimeFinishNumber:formData.expectedtimeFinishNumber,
-                    expectedtimeFinishUnit:formData.expectedtimeFinishUnit["value"],
+                const response = await axios.post("/course/enlist-request", {
+                    name: "Arnab",
+                    email: formData.email,
+                    imageUrl: formData.imageUrl,
+                    playlistLink: formData.playlistLink,
+                    title: formData.title,
+                    description: formData.description,
+                    requirements: formData.requirements,
+                    prerequisites: formData.prerequisites,
+                    category: formData.category,
+                    subCategory: formData.subCategory,
+                    subSubCategory: formData.subSubCategory,
+                    difficultyLevel: formData.difficultyLevel,
+                    language: formData.language,
+                    contactNumber: formData.contactNumber,
+                    numProjectsIncluded: formData.numProjectsIncluded,
+                    expectedtimeFinishNumber: formData.expectedtimeFinishNumber,
+                    expectedtimeFinishUnit: formData.expectedtimeFinishUnit["value"],
                     isEmployeeUser: formData.email.endsWith('@pcsgpl')
-                    
-                }) 
 
-                console.log(response)
+                })
+
+                if (response.status === 201) {
+                    setisSucess(true)
+                }
             } catch (error) {
                 console.error(error)
             }
@@ -244,9 +246,14 @@ const CourseForm = () => {
 
     return (
         <div className="lg:min-h-[33rem] w-full bg-gray-100 p-8 flex flex-col justify-between">
-            <form onSubmit={handleSubmit}>
-                {currentPageComponent}
-            </form>
+            {isSucces ?
+                <SuccesPage />
+                :
+                <form onSubmit={handleSubmit}>
+                    {currentPageComponent}
+                </form>
+            }
+
         </div>
     );
 };

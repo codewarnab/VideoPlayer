@@ -10,7 +10,7 @@ import Dashboard from "./pages/user/AllCourses/AllCourses";
 
 import { useEffect } from "react";
 import CourseDetails from "./components/CourseDetails";
-import AdminDashboard from "./admindashboard/AdminDashboard";
+import AdminDashboard from "./pages/admin/admindashboard/AdminDashboard";
 //import ShowAllUsers from "./admindashboard/ShowAllUsers";
 //import CreatePlaylist from "./admindashboard/CreatePlaylist";
 import ProtectedAdmin from "./components/ProtectedAdmin";
@@ -45,7 +45,7 @@ import Payment from "./TopScript/Payment";
 import Construct from "./pages/Construct";
 import CartPage from "./Cart/CartPage";
 import CartGeneralPage from "./Cart/CartGeneral";
-import CourseDescription from "./admindashboard/CourseDescription";
+import CourseDescription from "./pages/admin/admindashboard/CourseDescription";
 // axios.defaults.baseURL = "https://lms-backend-bcn2.onrender.com";
 axios.defaults.baseURL = "http://localhost:8000";
 // axios.defaults.baseURL = "http://107.22.154.213";
