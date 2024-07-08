@@ -1,69 +1,74 @@
 import React, { useState, useEffect } from "react";
-//import ApiService from "../services/ApiService";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import Select from 'react-select';
 
 const AssignCourse = () => {
   const [users, setUsers] = useState([]);
   const [courses, setCourses] = useState([]);
-  const [selectedUser, setSelectedUser] = useState("");
-  const [selectedCourses, setSelectedCourses] = useState("");
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedCourses, setSelectedCourses] = useState([]);
+  const [isLoadingUsers, setIsLoadingUsers] = useState(false);
+  const [isLoadingCourses, setIsLoadingCourses] = useState(false);
 
   useEffect(() => {
-    // Fetch users and courses data when component mounts
     fetchUsers();
     fetchCourses();
   }, []);
 
   const fetchUsers = async () => {
+    setIsLoadingUsers(true);
     try {
       const response = await axios.get("/authpcs/users-pcs");
-      setUsers(response.data.users);
+      const userOptions = response.data.users.map(user => ({
+        value: user._id,
+        label: `${user.firstName} ${user.lastName}`
+      }));
+      setUsers(userOptions);
     } catch (error) {
-      toast.error("Error fetching users:", error);
+      toast.error("Error fetching users: " + error.message);
+    } finally {
+      setIsLoadingUsers(false);
     }
   };
 
   const fetchCourses = async () => {
+    setIsLoadingCourses(true);
     try {
-      const response = await axios.get("/maincourse/get-dashboard");
+      const response = await axios.get("/maincourse/getALlCourseCards");
       setCourses(response.data.dashboards);
     } catch (error) {
-      toast.error("Error fetching courses:", error);
+      toast.error("Error fetching courses: " + error.message);
+    } finally {
+      setIsLoadingCourses(false);
     }
   };
 
   const handleCheckboxChange = (courseId) => {
-    if (selectedCourses.includes(courseId)) {
-      setSelectedCourses(selectedCourses.filter(id => id !== courseId));
-    } else {
-      setSelectedCourses([...selectedCourses, courseId]);
-    }
+    setSelectedCourses(prev =>
+      prev.includes(courseId)
+        ? prev.filter(id => id !== courseId)
+        : [...prev, courseId]
+    );
   };
-
-
 
   const handleAssignCourse = async () => {
     if (!selectedUser || selectedCourses.length === 0) {
-      toast.error("Please select a user and a course.");
+      toast.error("Please select a user and at least one course.");
       return;
     }
 
-    // console.log(selectedCourses)
-    // console.log(selectedUser);
-
     try {
-      const promises = selectedCourses.map(async (courseId) => {
-        const res = await axios.post("/maincourse/assignments", {
-          userId: selectedUser,
+      const promises = selectedCourses.map(courseId =>
+        axios.post("/maincourse/assignments", {
+          userId: selectedUser.value,
           courseId,
-        });
-        return res;
-      });
+        })
+      );
 
       const results = await Promise.all(promises);
 
-      results.forEach((res) => {
+      results.forEach(res => {
         if (res && res.data.success) {
           toast.success(res.data.message);
         } else if (res && !res.data.success) {
@@ -75,45 +80,80 @@ const AssignCourse = () => {
     }
   };
 
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      borderRadius: '8px',
+      minHeight: '30px',
+      height: '30px',
+    }),
+    valueContainer: (provided) => ({
+      ...provided,
+      height: '30px',
+      padding: '0 12px',
+    }),
+    input: (provided) => ({
+      ...provided,
+      margin: '0px',
+    }),
+    indicatorsContainer: (provided) => ({
+      ...provided,
+      height: '30px',
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      color: 'black',
+      backgroundColor: state.isSelected ? '#e0e0e0' : 'white',
+      '&:hover': {
+        backgroundColor: '#f0f0f0',
+      },
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: 'black',
+    }),
+  };
+
   return (
-    <div className="max-w-md mx-auto p-6 bg-gray-100 rounded-lg shadow-lg ml-6 h-[25rem] md:ml-56 md:w-[30rem]">
-      <h2 className="text-2xl font-bold mb-4">Assign Course to User</h2>
-      <div className="mb-4">
-        <label className="block text-gray-700 mb-2">Select User:</label>
-        <select
-          className="block w-full p-2 border border-gray-300 rounded-md"
+    <div className="text-black text-start p-9 pl-10 bg-gray-100 rounded-lg shadow-lg">
+      <h2 className="text-3xl font-bold mb-4">Assign Course to User</h2>
+      <div className="mb-4 lg:w-[40%]">
+        <Select
+          options={users}
           value={selectedUser}
-          onChange={(e) => setSelectedUser(e.target.value)}>
-          <option value="">Select User</option>
-          {users.map((user) => (
-            <option key={user._id} value={user._id}>
-              {user.firstName + " " + user.lastName}
-            </option>
-          ))}
-        </select>
+          onChange={setSelectedUser}
+          placeholder="Select User"
+          isLoading={isLoadingUsers}
+          styles={customStyles}
+          isClearable
+        />
       </div>
 
-      <label className="block text-gray-700">Select Courses:</label>
-      <div className="mb-4 overflow-x-auto overflow-scroll" style={{ height: "10rem" }}>
-
-        {courses.map((course) => (
-          <div key={course._id} className="flex items-center mb-2 table table-xs table-pin-rows table-pin-cols"
-          >
-            <input
-              type="checkbox"
-              id={course._id}
-              value={course._id}
-              checked={selectedCourses.includes(course._id)}
-              onChange={() => handleCheckboxChange(course._id)}
-              className="mr-2"
-            />
-            <label htmlFor={course._id}>{course.courseName}</label>
+      <label className="block text-xl text-black mb-2">Select Courses:</label>
+      <div className="mb-4 overflow-y-auto  "style={{ maxHeight: "10rem" }}>
+        {isLoadingCourses ? (
+          <div className="flex justify-center items-center h-20 ">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
           </div>
-        ))}
+        ) : (
+          courses.map((course) => (
+            <div key={course._id} className="flex items-center mb-2">
+              <input
+                type="checkbox"
+                id={course._id}
+                checked={selectedCourses.includes(course._id)}
+                onChange={() => handleCheckboxChange(course._id)}
+                className="mr-2"
+              />
+              <label htmlFor={course._id}>{course.courseTitle}</label>
+            </div>
+          ))
+        )}
       </div>
       <button
         className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-300"
-        onClick={handleAssignCourse}>
+        onClick={handleAssignCourse}
+      >
         Assign Course
       </button>
     </div>

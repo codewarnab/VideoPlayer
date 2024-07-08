@@ -254,7 +254,8 @@ const CourseDescription = ({ item, setSearchTerm }) => {
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                                 </svg>
                             </ul>
-                            <h1 className="text-4xl flex justify-start mb-3 mt-8">{savedItem?.courseName.toUpperCase()}</h1>
+                            <h1 className="text-4xl flex justify-start mb-3 mt-8">{savedItem?.courseTitle?.toUpperCase() || 'Course Title Not Available'}</h1>
+
                         </div>
 
                         <div>

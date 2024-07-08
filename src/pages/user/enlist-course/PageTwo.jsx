@@ -96,7 +96,7 @@ const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categorie
                                                 <textarea
                                                         id='prerequisites'
                                                         name='prerequisites'
-                                                        placeholder='Enter any prerequisites for this course'
+                                                        placeholder="Enter any prerequisites for this course. (add ' \n ' for line break)"
                                                         rows='3'
                                                         value={formData.prerequisites}
                                                         onChange={handleChange}

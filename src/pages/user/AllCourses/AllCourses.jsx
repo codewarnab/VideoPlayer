@@ -2,7 +2,7 @@ import axios from "axios";
 import React, {  Suspense, useState, useEffect, lazy } from "react";
 import {  useNavigate } from "react-router-dom";
 // import TotalCount from "../../../components/TotalCount";
-import MultiFilter from "./MultiFilter";
+// import MultiFilter from "./MultiFilter";
 const CourseCard = lazy(() => import('./CourseCard'))
 
 const Dashboard = ({ searchTerm, setSearchTerm, setItem }) => {
@@ -19,8 +19,8 @@ const Dashboard = ({ searchTerm, setSearchTerm, setItem }) => {
       try {
         const res = await axios.get(
           searchTerm
-            ? `/maincourse/get-dashboard?search=${searchTerm}`
-            : "/maincourse/get-dashboard"
+            ? `/maincourse/getALlCourseCards?search=${searchTerm}`
+            : "/maincourse/getALlCourseCards"
         );
         if (!searchTerm) {
           setAllCourses(res.data.dashboards);
@@ -38,15 +38,15 @@ const Dashboard = ({ searchTerm, setSearchTerm, setItem }) => {
   }, [searchTerm]);
 
   // Extract categories from AllCourses for filtering 
-  const uniqueCategories = [...new Set(AllCourses.map(course => course.category))];
-  const categories = uniqueCategories.filter(Boolean); // Filter out any falsy values
+  // const uniqueCategories = [...new Set(AllCourses.map(course => course.category))];
+  // const categories = uniqueCategories.filter(Boolean); // Filter out any falsy values
 
   return (
     <>
       <div className="flex flex-col items-center mb-7 h-auto min-h-svh min-w-svw justify-start bg-[#F5F5F5] p-4">
         {!loading ? (
           <>
-            <div className="flex items-start w-full">
+            {/* <div className="flex items-start w-full">
 
               {AllCourses.length > 0 && (
                 <MultiFilter
@@ -56,7 +56,7 @@ const Dashboard = ({ searchTerm, setSearchTerm, setItem }) => {
                   categories={categories}
                 />
               )}
-            </div>
+            </div> */}
             <div className="grid grid-cols-1 w-[93%] md:w-full lg:w-full gap-6 md:grid-cols-3 lg:grid-cols-4 my-4">
               {tempCourses?.length > 0 &&
                 tempCourses?.map((item) => (

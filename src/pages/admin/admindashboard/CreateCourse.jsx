@@ -157,7 +157,7 @@ const CreateCourse = () => {
                                         required
                                     />
                                     {image?.url && (
-                                        <img src={image.url} className="w-28  aspect-square" />
+                                        <img src={image.url} alt="" className="w-28  aspect-square" />
                                     )}
                                 </div>
                                 <div>

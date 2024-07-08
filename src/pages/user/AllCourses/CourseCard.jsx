@@ -9,7 +9,7 @@ const CourseCard = ({ item, setItem }) => {
                 <div className="lg:w-[18.5rem] lg:h-[17rem] h-[300px] bg-white border border-gray-200 rounded-lg shadow hover:-translate-y-2 duration-200 hover:shadow-[#6260607a] hover:shadow-xl flex flex-col">
                     <LazyLoadImage
                         className="rounded-t-lg w-full h-[140px] object-cover"
-                        src={item?.image}
+                        src={item?.courseThumbNail}
                         alt="cover image "
                         effect="blur"
                     />
@@ -26,11 +26,11 @@ const CourseCard = ({ item, setItem }) => {
                                 </div>
                             </div>
                             <p className="mb-1 text-base lg:text-md font-bold tracking-tight text-gray-700 text-left line-clamp-2">
-                                {item?.courseName ?? "other"}
+                                {item?.courseTitle ?? "other"}
                             </p>
                         </div>
                         <div className="w-full">
-                            <h6 className="text-sm py-1 px-2 rounded-lg text-black bg-slate-200 w-fit">{item.category}</h6>
+                            <h6 className="text-sm py-1 px-2 rounded-lg text-black bg-slate-200 w-fit">{item.subSubCategoryName}</h6>
                         </div>
                     </div>
                 </div>
