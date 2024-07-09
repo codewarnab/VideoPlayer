@@ -175,6 +175,10 @@ const CourseForm = () => {
 
         if (validateSecondPage(currentPage)) {
             try {
+                const cleanedPrerequisites = formData.prerequisites
+                    .split('\\n')
+                    .map(item => item.trim())
+                    .filter(item => item !== "");
                 console.log(formData);
                 toast.success("Form submitted successfully!");
                 const response = await axios.post("/course/enlist-request", {
@@ -185,7 +189,7 @@ const CourseForm = () => {
                     title: formData.title,
                     description: formData.description,
                     requirements: formData.requirements,
-                    prerequisites: formData.prerequisites,
+                    prerequisites: cleanedPrerequisites,
                     category: formData.category,
                     subCategory: formData.subCategory,
                     subSubCategory: formData.subSubCategory,

@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Upload, X } from 'lucide-react';
 
 const PageOne = ({ errors, setErrors, handleImageUpload, handleDrop, removeImage, formData, handleChange, setCurrentPage }) => {
+    const [descriptionWordCount, setDescriptionWordCount] = useState(0);
+
+    useEffect(() => {
+        setDescriptionWordCount(formData.description.split(/\s+/).filter(word => word.length > 0).length);
+    }, [formData.description]);
+
     const handleNextPage = () => {
         if (isPageOneValid()) {
             setCurrentPage((prevPage) => prevPage + 1);
@@ -20,6 +26,8 @@ const PageOne = ({ errors, setErrors, handleImageUpload, handleDrop, removeImage
         }
         if (!pageData.description) {
             pageErrors.description = "Course Description is required";
+        } else if (descriptionWordCount < 30 || descriptionWordCount > 50) {
+            pageErrors.description = "Description must be between 30 and 50 words";
         }
         if (!pageData.playlistLink) {
             pageErrors.playlistLink = "Playlist Link is required";
@@ -31,7 +39,6 @@ const PageOne = ({ errors, setErrors, handleImageUpload, handleDrop, removeImage
         } else if (pageData.numProjectsIncluded && pageData.numProjectsIncluded <= 0) {
             pageErrors.numProjectsIncluded = "Number of projects must be greater than zero.";
         }
-        
 
         setErrors((prevErrors) => ({ ...prevErrors, ...pageErrors }));
         return Object.values(pageErrors).every((error) => error === "");
@@ -40,7 +47,7 @@ const PageOne = ({ errors, setErrors, handleImageUpload, handleDrop, removeImage
     const inputFields = [
         { id: 'title', index: 2, label: '. Course Title', placeholder: 'Enter title of the course', type: 'text', error: errors.title },
         { id: 'playlistLink', index: 3, label: '. Playlist Link', placeholder: 'Enter link of your YouTube playlist', type: 'text', error: errors.playlistLink },
-        { id: 'description', index: 4, label: '. Description', placeholder: 'Enter a small description of your course', type: 'textarea', error: errors.description },
+        { id: 'description', index: 4, label: '. Description', placeholder: 'Enter a  description of your course', type: 'textarea', error: errors.description },
         { id: 'numProjectsIncluded', index: 5, label: '. Number of Projects Included', placeholder: 'Enter number of projects included in the course', type: 'number', error: errors.numProjectsIncluded },
     ];
 
@@ -94,17 +101,24 @@ const PageOne = ({ errors, setErrors, handleImageUpload, handleDrop, removeImage
                         <div className="flex flex-col gap-1">
                             {inputFields.map(field => (
                                 <div key={field.id} className='items-start mb-6'>
-                                    <label htmlFor={field.id} className="block text-lg font-medium text-black">{field.index}{field.label}</label>
+                                    <div className='flex items-center gap-3'>
+                                        <label htmlFor={field.id} className="block text-lg font-medium text-black">{field.index}{field.label}</label> { field.type === 'textarea' &&
+                                            <p className="text-sm text-gray-600">word count: {descriptionWordCount}</p>
+                                        }
+                                    </div>
                                     {field.type === 'textarea' ? (
-                                        <textarea
-                                            id={field.id}
-                                            name={field.id}
-                                            placeholder={field.placeholder}
-                                            rows="3"
-                                            value={formData[field.id]}
-                                            onChange={handleChange}
-                                            className={`p-2 border ${field.error ? 'border-red-400' : 'border-gray-300'} rounded-lg bg-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent font-light font-sans text-black w-full`}
-                                        ></textarea>
+                                        <>
+                                            <textarea
+                                                id={field.id}
+                                                name={field.id}
+                                                placeholder={field.placeholder}
+                                                rows="3"
+                                                value={formData[field.id]}
+                                                onChange={handleChange}
+                                                className={`p-2 border ${field.error ? 'border-red-400' : 'border-gray-300'} rounded-lg bg-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent font-light font-sans text-black w-full`}
+                                            ></textarea>
+
+                                        </>
                                     ) : (
                                         <input
                                             type={field.type}

@@ -48,6 +48,7 @@ import CartGeneralPage from "./Cart/CartGeneral";
 import CourseDescription from "./pages/admin/admindashboard/CourseDescription";
 // axios.defaults.baseURL = "https://lms-backend-bcn2.onrender.com";
 axios.defaults.baseURL = "http://localhost:8000";
+// axios.defaults.baseURL = "https://pcs-global360-server.vercel.app/";
 // axios.defaults.baseURL = "http://107.22.154.213";
 
 const App = () => {
