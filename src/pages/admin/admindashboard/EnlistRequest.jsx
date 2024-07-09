@@ -11,7 +11,7 @@ const EnlistRequest = () => {
     useEffect(() => {
         const fetchRequests = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/course/get-EnlistRequests')
+                const response = await axios.get('/course/get-EnlistRequests')
                 setRequests(response.data.data)
                 setLoading(false)
             } catch (err) {
@@ -97,7 +97,7 @@ const EnlistRequest = () => {
                             {/* bottom section  */}
 
                             <div className='flex flex-col md:flex-row w-full justify-between space-y-4 md:space-y-0 md:space-x-4'>
-                                <div className="flex-1">
+                                <div className="flex-[2]">
                                     <h1 className='font-semibold text-xl mb-2'>Prerequisites For the course</h1>
                                     <ul className="list-disc pl-5">
                                         {request.prerequisites.map((pre, index) => (
@@ -121,6 +121,7 @@ const EnlistRequest = () => {
                                     <p><strong>Contact Number:</strong> {request.contactNumber}</p>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <div className="bg-gray-100 px-6 py-4 flex justify-evenly items-center ">
