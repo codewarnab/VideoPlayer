@@ -5,13 +5,13 @@ const CreatePlaylist = lazy(() => import("./CreatePlaylist"));
 const ShowAllUsers = lazy(() => import("./ShowAllUsers"));
 const EnlistRequest = lazy(() => import("./EnlistRequest"));
 const AllUsersPCS = lazy(() => import("../../../pcsPages/AllUsersPCS"));
-const CreateMyCourse = lazy(() => import("./CreateMyCourse"));
+const CreateMyCourse = lazy(() => import("./createCourse/CreateCourse"));
 const AssignCourse = lazy(() => import("./AssignCourse"));
 const CreateCategory = lazy(() => import("./CreateCategory"));
 const CreateSubCategory = lazy(() => import("./CreateSubCategory"));
 const CreateSubSubCategory = lazy(() => import("./CreateSubSubCategory"));
 const AddFestival = lazy(() => import("../../../TopScript/AddFestival"));
-const CreateCourse = lazy(() => import("./CreateCourse"));
+const CreateCourse = lazy(() => import("./createCourse/CreateCourse"));
 
 const LoadingFallback = () => <div className="text-black text-xl">Loading...</div>;
 
@@ -100,7 +100,7 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
-      <div className="w-full lg:min-h-[40rem] flex justify-center items-center md:w-3/4 md:pl-4">
+      <div className="w-full lg:min-h-[40rem]  flex justify-center items-center md:w-3/4 md:pl-4">
         {renderComponent()}
       </div>
     </div>

@@ -104,7 +104,7 @@ const PageTwo = ({ errors, formData, handleChange, handleSelectChange, categorie
                                                 ></textarea>
                                                 {errors.prerequisites && <p className="text-red-500 text-sm  absolute">{errors.prerequisites}</p>}
                                         </div>
-                                </div>
+                                </div>z
                         </div>
                           {/* right side*/}
                         <div className='border w-full lg:w-1/2 h-full bg-white p-5 pl-6 py-8 rounded-xl text-start'>
