@@ -47,7 +47,7 @@ const CourseForm = () => {
         numProjectsIncluded: ""
 
     });
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(2);
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isSucces, setisSucess] = useState(false)

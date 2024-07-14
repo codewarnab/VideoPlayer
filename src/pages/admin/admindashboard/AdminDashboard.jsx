@@ -1,15 +1,12 @@
 import React, { useState, lazy, Suspense } from "react";
 import AdminDetails from "./AdminDetails";
 
-const CreatePlaylist = lazy(() => import("./CreatePlaylist"));
 const ShowAllUsers = lazy(() => import("./ShowAllUsers"));
 const EnlistRequest = lazy(() => import("./EnlistRequest"));
-const AllUsersPCS = lazy(() => import("../../../pcsPages/AllUsersPCS"));
-const CreateMyCourse = lazy(() => import("./createCourse/CreateCourse"));
+const AllUsersPCS = lazy(() => import("./AllUsersPCS"));
+const CreateMyCourse = lazy(() => import("./createCourse/CreateCourse")); 
 const AssignCourse = lazy(() => import("./AssignCourse"));
-const CreateCategory = lazy(() => import("./CreateCategory"));
-const CreateSubCategory = lazy(() => import("./CreateSubCategory"));
-const CreateSubSubCategory = lazy(() => import("./CreateSubSubCategory"));
+const CreateCategories = lazy(() => import("./categoryManager/CreateCategories"));
 const AddFestival = lazy(() => import("../../../TopScript/AddFestival"));
 const CreateCourse = lazy(() => import("./createCourse/CreateCourse"));
 
@@ -24,12 +21,10 @@ const AdminDashboard = () => {
     { key: "enlistRequests", label: "Course Enlist  Requests" },
     { key: "assign", label: "Assign Course" },
     { key: "course", label: "Create Course" },
-    { key: "playlist", label: "Create Playlist" },
-    { key: "users", label: "All Users" },
+    // { key: "playlist", label: "Create Playlist" },
+    // { key: "users", label: "All Users" },
     { key: "users-pcs", label: "All PCS Global's Users" },
-    { key: "categories", label: "Create Category" },
-    { key: "subcategories", label: "Create subCategory" },
-    { key: "subsubcategories", label: "Create SubSubCategory" },
+    { key: "categories", label: "Manage Categories" },
     { key: "festival", label: "Add Festival" },
   ];
 
@@ -49,18 +44,12 @@ const AdminDashboard = () => {
         return <Suspense fallback={<LoadingFallback />}><EnlistRequest /></Suspense>;
       case "mycourse":
         return <Suspense fallback={<LoadingFallback />}><CreateMyCourse /></Suspense>;
-      case "playlist":
-        return <Suspense fallback={<LoadingFallback />}><CreatePlaylist /></Suspense>;
       case "users":
         return <Suspense fallback={<LoadingFallback />}><ShowAllUsers /></Suspense>;
       case "users-pcs":
         return <Suspense fallback={<LoadingFallback />}><AllUsersPCS /></Suspense>;
       case "categories":
-        return <Suspense fallback={<LoadingFallback />}><CreateCategory /></Suspense>;
-      case "subcategories":
-        return <Suspense fallback={<LoadingFallback />}><CreateSubCategory /></Suspense>;
-      case "subsubcategories":
-        return <Suspense fallback={<LoadingFallback />}><CreateSubSubCategory /></Suspense>;
+        return <Suspense fallback={<LoadingFallback />}><CreateCategories /></Suspense>;
       case "festival":
         return <Suspense fallback={<LoadingFallback />}><AddFestival /></Suspense>;
       default:

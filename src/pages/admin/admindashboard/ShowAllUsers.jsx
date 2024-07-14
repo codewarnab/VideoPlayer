@@ -7,6 +7,7 @@ const ShowAllUsers = () => {
   const fetchUsers = async () => {
     try {
       const res = await axios.get("/auth/users");
+      
       setUsers(res.data.users);
     } catch (err) {
       console.error(`Failed to fetch dashboards: ${err}`);
