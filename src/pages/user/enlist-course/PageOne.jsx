@@ -36,8 +36,8 @@ const PageOne = ({ errors, setErrors, handleImageUpload, handleDrop, removeImage
         }
         if (!pageData.numProjectsIncluded) {
             pageErrors.numProjectsIncluded = "Enter zero if no projects included.";
-        } else if (pageData.numProjectsIncluded && pageData.numProjectsIncluded <= 0) {
-            pageErrors.numProjectsIncluded = "Number of projects must be greater than zero.";
+        } else if (pageData.numProjectsIncluded && pageData.numProjectsIncluded < 0) {
+            pageErrors.numProjectsIncluded = "Number of projects must be greater than or equal to zero.";
         }
 
         setErrors((prevErrors) => ({ ...prevErrors, ...pageErrors }));

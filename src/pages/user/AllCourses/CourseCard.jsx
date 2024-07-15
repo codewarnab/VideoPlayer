@@ -28,7 +28,9 @@ const CourseCard = ({ item, setItem }) => {
                             <div className="flex w-full justify-between mb-2">
                                 <div className="flex gap-1 items-center">
                                     <Star strokeWidth={0} opacity={0.5} fill="#2563EB" size={20} />
-                                    <p className="text-sm text-black">{item?.finalRating ? Number(item.finalRating).toFixed(1) : '5'}</p>
+                                    <p className="text-sm text-black">
+                                        {item?.finalRating !== undefined && item.finalRating !== null ? Number(item.finalRating).toFixed(1) : '5'}
+                                    </p>
                                 </div>
                                 <div className="flex gap-1 items-center">
                                     <Play size={16} color="black" fill="black" />

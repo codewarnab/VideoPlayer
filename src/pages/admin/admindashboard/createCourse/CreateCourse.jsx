@@ -130,6 +130,9 @@ const CreateCourse = () => {
     if (!pageData.difficultyLevel) {
       pageErrors.difficultyLevel = "Please select difficulty level";
     }
+    if (pageData.numProjectsIncluded && pageData.numProjectsIncluded < 0) {
+      pageErrors.numProjectsIncluded = "Number of projects must be greater than or equal to zero.";
+    }
     if (!pageData.language) {
       pageErrors.language = "Please select course language";
     }
