@@ -47,7 +47,7 @@ const CourseForm = () => {
         numProjectsIncluded: ""
 
     });
-    const [currentPage, setCurrentPage] = useState(2);
+    const [currentPage, setCurrentPage] = useState(1);
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isSucces, setisSucess] = useState(false)
@@ -184,15 +184,15 @@ const CourseForm = () => {
                     description: formData.description,
                     requirements: formData.requirements,
                     prerequisites: formData.prerequisites,
-                    category: formData.category,
-                    subCategory: formData.subCategory,
-                    subSubCategory: formData.subSubCategory,
+                    category: formData.category.label,
+                    subCategory: formData.subCategory.label,
+                    subSubCategory: formData.subSubCategory.label,
                     difficultyLevel: formData.difficultyLevel,
                     language: formData.language,
                     contactNumber: formData.contactNumber,
                     numProjectsIncluded: formData.numProjectsIncluded,
-                    expectedtimeFinishNumber: formData.expectedtimeFinishNumber,
-                    expectedtimeFinishUnit: formData.expectedtimeFinishUnit["value"],
+                    expectedTimeToFinishNumber: formData.expectedtimeFinishNumber,
+                    expectedTimeToFinishUnit: formData.expectedtimeFinishUnit["value"],
                     isEmployeeUser: formData.email.endsWith('@pcsgpl')
 
                 })
