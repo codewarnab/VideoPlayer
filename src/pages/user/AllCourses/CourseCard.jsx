@@ -16,14 +16,14 @@ const CourseCard = ({ item, setItem }) => {
     return (
         <div key={item._id} className="relative">
             <Link to="/description" onClick={() => setItem(item)}>
-                <div className="lg:w-[18rem] lg:h-[16.6rem] h-[300px] bg-white border border-gray-200 rounded-lg shadow hover:-translate-y-2 duration-200 hover:shadow-[#6260607a] hover:shadow-xl flex flex-col">
+                <div className="lg:w-[18rem] lg:h-[16.4rem] h-[270px] mr-3 bg-white border border-gray-200 rounded-lg shadow hover:-translate-y-2 duration-200 hover:shadow-[#6260607a] hover:shadow-xl flex flex-col">
                     <LazyLoadImage
                         className="rounded-t-lg w-full h-[140px] object-cover"
                         src={item?.courseThumbNail}
                         alt="cover image"
                         effect="blur"
                     />
-                    <div className="flex flex-col flex-grow justify-between p-3">
+                    <div className="flex flex-col flex-grow justify-between p-2">
                         <div className="w-full text-start">
                             <div className="flex w-full justify-between mb-2">
                                 <div className="flex gap-1 items-center">
@@ -42,7 +42,7 @@ const CourseCard = ({ item, setItem }) => {
                             </p>
                         </div>
                         <div className="w-full">
-                            <h6 className="text-sm py-1 px-2 rounded-lg text-black bg-slate-200 w-fit">{item.subCategory}</h6>
+                            <h6 className="text-xs py-1 px-2 rounded-md text-black bg-slate-200 w-fit">{item.subCategory}</h6>
                         </div>
                     </div>
                 </div>

@@ -102,7 +102,7 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
 
         let updatedNavItems = [
             { id: 1, text: 'Home', link: '/' },
-            { id: 1, text: 'All courses', link: '/dashboard' },
+            { id: 1, text: 'Courses', link: '/dashboard' },
             { id: 2, text: 'Be an Instructor', link: '/teach' },
             { id: 3, text: 'Help', link: '/help' },
         ];

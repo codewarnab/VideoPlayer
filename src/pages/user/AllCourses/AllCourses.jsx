@@ -4,8 +4,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'primeicons/primeicons.css';
-import './styles.css'; // Import the local CSS file
-
+import './styles.css';
 import CourseCard from "./CourseCard";
 
 const Dashboard = ({ searchTerm, setItem }) => {
@@ -22,7 +21,6 @@ const Dashboard = ({ searchTerm, setItem }) => {
         );
         const courses = res.data.dashboards;
 
-        // Group courses by category
         const groupedCourses = courses.reduce((acc, course) => {
           if (!acc[course.category]) {
             acc[course.category] = [];
@@ -41,20 +39,29 @@ const Dashboard = ({ searchTerm, setItem }) => {
     fetchData();
   }, [searchTerm]);
 
-  const CarouselArrow = ({ direction, onClick }) => (
-    <button
-      onClick={onClick}
-      className={`absolute ${direction === 'next' ? 'right-0' : 'left-0'} top-1/2 -translate-y-1/2 z-10 bg-white bg-opacity-50 rounded-full p-2`}
-    >
-      <i className={`pi ${direction === 'next' ? 'pi-chevron-right' : 'pi-chevron-left'}`} />
-    </button>
-  );
+  const CarouselArrow = ({ direction, onClick, slideCount, currentSlide }) => {
+    const isNext = direction === 'next';
+    const isPrev = direction === 'prev';
+    const isHidden = (isPrev && currentSlide === 0) || (isNext && currentSlide >= slideCount - 4);
 
-  const settings = {
+    if (isHidden) return null;
+
+    return (
+      <button
+        onClick={onClick}
+        className={`absolute ${isNext ? 'right-0' : 'left-0'} top-1/2 -translate-y-1/2 z-10 bg-white border  rounded-full p-2`}
+      >
+        <i className={`pi ${isNext ? 'pi-chevron-right text-black' : 'pi-chevron-left text-black'}`} /> 
+      </button>
+    );
+  };
+
+
+  const SliderSettings = (coursesCount) => ({
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 3.4,
+    slidesToShow: Math.min(3.4, coursesCount),
     slidesToScroll: 1,
     nextArrow: <CarouselArrow direction="next" />,
     prevArrow: <CarouselArrow direction="prev" />,
@@ -67,19 +74,20 @@ const Dashboard = ({ searchTerm, setItem }) => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: Math.min(2, coursesCount),
           slidesToScroll: 1,
         }
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 1.1,
           slidesToScroll: 1,
+          arrows: false,
         }
       }
     ]
-  };
+  });
 
   return (
     <div className="flex flex-col items-center mb-4 h-auto min-h-screen w-full justify-start bg-[#F5F5F5] px-5">
@@ -87,15 +95,17 @@ const Dashboard = ({ searchTerm, setItem }) => {
         <h1 className="text-5xl text-black font-extrabold">Loading....</h1>
       ) : (
         Object.entries(coursesByCategory).map(([category, courses]) => (
-          <div key={category} className="w-full flex flex-col justify-center " >
-            <h2 className="text-2xl  text-black font-extrabold ">{category}</h2>
-            <Slider {...settings}>
-              {courses.map((item) => (
-                <Suspense key={item._id} fallback={<div className="h-[300px] bg-gray-200 rounded-lg animate-pulse"></div>}>
-                  <CourseCard item={item} setItem={setItem} />
-                </Suspense>
-              ))}
-            </Slider>
+          <div key={category} className="w-full flex flex-col  justify-center pt-1">
+            <h2 className="text-2xl w-full pl-10 text-start text-black font-extrabold">{category}</h2>
+            <div className={`lg:slider-container  ${courses.length < 4 ? 'lg:few-cards' : ''}`}>
+              <Slider {...SliderSettings(courses.length)}>
+                {courses.map((item) => (
+                  <Suspense key={item._id} fallback={<div className="h-[300px] bg-gray-200 rounded-lg animate-pulse"></div>}>
+                    <CourseCard item={item} setItem={setItem} />
+                  </Suspense>
+                ))}
+              </Slider>
+            </div>
           </div>
         ))
       )}
