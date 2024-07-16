@@ -116,8 +116,8 @@ const App = () => {
           <Routes>
             <Route path="/construct" element={<Construct />} />
             <Route path="/enrollnow" element={<EnrollNow />} />
-            <Route path="/description" element={<CourseDescription item={item} setSearchTerm={setSearchTerm} />} />
-
+            {/* <Route path="/description" element={<CourseDescription item={item} setSearchTerm={setSearchTerm} />} /> */}
+            <Route path="/dashboard/description/:descriptionId" element={<CourseDescription />} />
             <Route path="/cart" element={<CartPage setCartLength={setCartLength} />} />
             <Route path="/cartgeneral" element={<CartGeneralPage setCartGeneralLength={setCartGeneralLength} />} />
 

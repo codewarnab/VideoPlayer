@@ -61,7 +61,7 @@ const Dashboard = ({ searchTerm, setItem }) => {
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: Math.min(3.4, coursesCount),
+    slidesToShow: Math.min(3.5, coursesCount),
     slidesToScroll: 1,
     nextArrow: <CarouselArrow direction="next" />,
     prevArrow: <CarouselArrow direction="prev" />,
@@ -96,7 +96,7 @@ const Dashboard = ({ searchTerm, setItem }) => {
       ) : (
         Object.entries(coursesByCategory).map(([category, courses]) => (
           <div key={category} className="w-full flex flex-col  justify-center pt-1">
-            <h2 className="text-2xl w-full pl-10 text-start text-black font-extrabold">{category}</h2>
+            <h2 className="text-2xl w-full pl-10 text-start text-black font-extrabold leading-tight">{category}</h2>
             <div className={`lg:slider-container  ${courses.length < 4 ? 'lg:few-cards' : ''}`}>
               <Slider {...SliderSettings(courses.length)}>
                 {courses.map((item) => (
