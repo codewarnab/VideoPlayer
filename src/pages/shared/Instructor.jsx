@@ -9,7 +9,14 @@ const Instructor = () => {
     const [expanded, setExpanded] = useState(false);
     const [formVisible, setFormVisible] = useState(false);
     const divRef = useRef(null);
-
+    const domains = [
+        { value: '', label: 'Domain' },
+        { value: 'EILP MERN STACK DEVELOPER', label: 'MERN Stack Developer' },
+        { value: 'EILP JAVA FULL STACK DEVELOPER', label: 'Java Full Stack Developer' },
+        { value: 'EILP DATA ANALYST', label: 'Data Analyst' },
+        { value: 'EILP SALESFORCE', label: 'Salesforce' },
+        { value: 'EILP PYTHON DEVELOPER', label: 'Python Developer' }
+    ];
     const handleDivClick = () => {
         if (!expanded) {
             setExpanded(true);
@@ -57,7 +64,7 @@ const Instructor = () => {
         <div className="py-10">
             <div className="flex justify-evenly">
                 <div className="lg:text-left">
-                    <img src={require('../images/samarthnaik.jpg')} className='rounded-lg w-[45rem]' alt="" />
+                    <img src={require('../../images/samarthnaik.jpg')} className='rounded-lg w-[45rem]' alt="" />
                 </div>
                 <div className="flex items-center">
                     <div
@@ -115,12 +122,9 @@ const Instructor = () => {
                                                         onChange={(e) => setDomain(e.target.value)}
                                                         className="input input-bordered" // Ensure text is visible
                                                     >
-                                                        <option value="">Domain</option>
-                                                        <option value="EILP MERN STACK DEVELOPER">Mern Stack Developer</option>
-                                                        <option value="EILP JAVA FULL STACK DEVELOPER">Java Full Stack Developer</option>
-                                                        <option value="EILP DATA ANALYST">Data Analyst</option>
-                                                        <option value="EILP SALESFORCE">Salesforce</option>
-                                                        <option value="EILP PYTHON DEVELOPER">Business Analyst</option>
+                                                        {domains.map((option, index) => (
+                                                            <option key={index} value={option.value}>{option.label}</option>
+                                                        ))}
                                                     </select>
 
                                                 </div>

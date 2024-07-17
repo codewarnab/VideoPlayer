@@ -5,12 +5,12 @@ import Hamburger from 'hamburger-react';
 import ProfileDropDown from "./ProfileDropDown";
 import SearchInput from "./SearchInput";
 import AuthLinks from "./AuthLinks";
-import CartDisplay from "./CartDisplay";
+// import CartDisplay from "./CartDisplay";
 import DropDownLg from "./DropDowns/DropDownLg";
 import DropDownSm from "./DropDowns/DropDownSm";
 import { useContext } from "react";
 import { CategoryContext } from "../../../utils/contexts/categoryContext";
-import {UserContext} from "../../../utils/contexts/userContext"
+import { UserContext } from "../../../utils/contexts/userContext"
 
 const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) => {
     const navigate = useNavigate();
@@ -22,15 +22,15 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
     const [isCategoryOpen, setCategoryOpen] = useState(false);
     let location = useLocation();
-    const { user,logout } = useContext(UserContext);
-    const { categories, categoryLoading, error} = useContext(CategoryContext);
+    const { user, logout } = useContext(UserContext);
+    const { categories, categoryLoading, error } = useContext(CategoryContext);
 
 
     useEffect(() => {
         setIsActive(location.pathname);
     }, [location.pathname]);
 
-   
+
     const handleSearch = (event) => {
         event.preventDefault();
         const inputValue = event.target.value || '';
@@ -68,14 +68,20 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
 
         let updatedNavItems = [
             { id: 1, text: 'Home', link: '/' },
-            { id: 1, text: 'Courses', link: '/dashboard' },
-            { id: 2, text: 'Be an Instructor', link: '/teach' },
-            { id: 3, text: 'Help', link: '/help' },
+            { id: 2, text: 'Courses', link: '/dashboard' },
+            { id: 3, text: 'Enlist Your Course', link: '/enlist-course' },
+            { id: 4, text: 'Be an Instructor', link: '/teach' },
+            { id: 5, text: 'Help', link: '/help' },
+
         ];
 
-        if (user?.role === "Employee") {
+        if (user?.userType === "Employee") {
             updatedNavItems = [
                 { id: 1, text: 'My Courses', link: '/my-course' },
+                { id: 2, text: 'Courses', link: '/dashboard' },
+                { id: 3, text: 'Enlist Your Course', link: '/enlist-course' },
+                { id: 4, text: 'Be an Instructor', link: '/teach' },
+                { id: 6, text: 'Help', link: '/help' },
             ];
         }
 
