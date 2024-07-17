@@ -177,11 +177,11 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
                             ) : (
                                 <>
                                     <div className={`flex gap-2 ${isSearchExpanded && 'hidden sm:flex'}`}>
-                                        <CartDisplay
+                                        {/* <CartDisplay
                                             cartLength={cartLength}
                                             cartGeneralLength={cartGeneralLength}
                                             user={user}
-                                        />
+                                        /> */}
                                         <ProfileDropDown
                                             user={user}
                                             isOpen={isOpen}

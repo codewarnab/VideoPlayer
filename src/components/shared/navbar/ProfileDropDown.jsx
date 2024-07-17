@@ -7,7 +7,6 @@ const ProfileDropDown = ({ user, isOpen, toggleAvatar, handlelogout, handleAdmin
         const nameArray = name.split(' ');
         return nameArray.map(part => part[0].toUpperCase()).join('');
     };
-    console.log(user)
     return (
         <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar" onClick={toggleAvatar}>

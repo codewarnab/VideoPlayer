@@ -1,5 +1,3 @@
-// App.js
-
 import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -32,9 +30,10 @@ import Construct from './pages/Construct';
 import CartPage from './Cart/CartPage';
 import CartGeneralPage from './Cart/CartGeneral';
 import Unauthorized from './pages/shared/Unauthorized';
-import CourseDescription from './pages/admin/admindashboard/CourseDescription';
+import CourseDescription from './pages/user/AllCourses/CourseDescription';
 import { CategoryProvider } from './utils/contexts/categoryContext';
 import { UserProvider } from './utils/contexts/userContext';
+import VideoPlayer from './pages/user/AllCourses/VideoPlayer';
 
 // axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.baseURL = "https://pcs-global360-server.vercel.app/";
@@ -50,61 +49,62 @@ const App = () => {
             <BrowserRouter>
                 <Toaster />
                 <UserProvider>
-                   <CategoryProvider>
-                    <Layout
-                        searchTerm={searchTerm}
-                        setSearchTerm={setSearchTerm}
-                        cartLength={cartLength}
-                        cartGeneralLength={cartGeneralLength}
-                    >
-                        <Routes>
-                            <Route path="/construct" element={<Construct />} />
-                            <Route path="/enrollnow" element={<EnrollNow />} />
-                            <Route path="/dashboard/description/:descriptionId" element={<CourseDescription />} />
-                            <Route path="/cart" element={<CartPage setCartLength={setCartLength} />} />
-                            <Route path="/cartgeneral" element={<CartGeneralPage setCartGeneralLength={setCartGeneralLength} />} />
+                    <CategoryProvider>
+                        <Layout
+                            searchTerm={searchTerm}
+                            setSearchTerm={setSearchTerm}
+                            cartLength={cartLength}
+                            cartGeneralLength={cartGeneralLength}
+                        >
+                            <Routes>
+                                <Route path="/construct" element={<Construct />} />
+                                <Route path="/enrollnow" element={<EnrollNow />} />
+                                <Route path="/dashboard/:descriptionId" element={<CourseDescription />} />
+                                <Route path="/dashboard/:descriptionId/:ytPlayListId" element={<VideoPlayer />} />
+                                <Route path="/cart" element={<CartPage setCartLength={setCartLength} />} />
+                                <Route path="/cartgeneral" element={<CartGeneralPage setCartGeneralLength={setCartGeneralLength} />} />
 
-                            <Route path="/" element={<Home />} />
-                            <Route
-                                path="/dashboard"
-                                element={<Dashboard searchTerm={searchTerm} setSearchTerm={setSearchTerm} rie={rie} />}
-                            />
-                            <Route
-                                path="/my-course"
-                                element={<MyCourse searchTerm={searchTerm} />}
-                            />
+                                <Route path="/" element={<Home />} />
+                                <Route
+                                    path="/dashboard"
+                                    element={<Dashboard searchTerm={searchTerm} setSearchTerm={setSearchTerm} rie={rie} />}
+                                />
+                                <Route
+                                    path="/my-course"
+                                    element={<MyCourse searchTerm={searchTerm} />}
+                                />
 
                                 <Route path="/enlist-course" element={<CourseForm />} />
                                 <Route path="/admin" element={<AdminDashboard />} />
-                            
 
-                            <Route element={<ProtectedUser />}>
-                                <Route path="/user" element={<UserDashboard />} />
-                            </Route>
 
-                            <Route element={<ProtectedEnroll />}>
-                                <Route path="/enroll" element={<EnrollmentForm />} />
-                            </Route>
+                                <Route element={<ProtectedUser />}>
+                                    <Route path="/user" element={<UserDashboard />} />
+                                </Route>
 
-                            <Route path="/unauthorized" element={<Unauthorized />} />
-                            <Route path="/payment" element={<Payment />} />
-                            <Route path="/teach" element={<Instructor />} />
+                                <Route element={<ProtectedEnroll />}>
+                                    <Route path="/enroll" element={<EnrollmentForm />} />
+                                </Route>
 
-                            <Route path="/signup" element={<SignUp />} />
-                            <Route path="/signin" element={<SignIn />} />
+                                <Route path="/unauthorized" element={<Unauthorized />} />
+                                <Route path="/payment" element={<Payment />} />
+                                <Route path="/teach" element={<Instructor />} />
 
-                            <Route path="/login-pcs" element={<LoginPCS />} />
-                            <Route path="/register" element={<SignUp />} />
-                            <Route path="/login" element={<SignIn />} />
-                            <Route path="/forgot-password" element={<Forgetpassword />} />
-                            <Route path="/forgot-password-pcs" element={<ForgetpasswordPCS />} />
-                            <Route path="/reset-password/:id/:token" element={<ResetPassword />} />
-                            <Route path="/reset-password-pcs/:id/:token" element={<ResetPasswordPCS />} />
-                            <Route path="/help" element={<Help />} />
-                            <Route path="/feedback" element={<Review />} />
-                            <Route path="*" element={<PageNotFound />} />
-                        </Routes>
-                    </Layout>
+                                <Route path="/signup" element={<SignUp />} />
+                                <Route path="/signin" element={<SignIn />} />
+
+                                <Route path="/login-pcs" element={<LoginPCS />} />
+                                <Route path="/register" element={<SignUp />} />
+                                <Route path="/login" element={<SignIn />} />
+                                <Route path="/forgot-password" element={<Forgetpassword />} />
+                                <Route path="/forgot-password-pcs" element={<ForgetpasswordPCS />} />
+                                <Route path="/reset-password/:id/:token" element={<ResetPassword />} />
+                                <Route path="/reset-password-pcs/:id/:token" element={<ResetPasswordPCS />} />
+                                <Route path="/help" element={<Help />} />
+                                <Route path="/feedback" element={<Review />} />
+                                <Route path="*" element={<PageNotFound />} />
+                            </Routes>
+                        </Layout>
                     </CategoryProvider>
                 </UserProvider>
             </BrowserRouter>
