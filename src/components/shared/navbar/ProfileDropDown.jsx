@@ -7,7 +7,7 @@ const ProfileDropDown = ({ user, isOpen, toggleAvatar, handlelogout, handleAdmin
         const nameArray = name.split(' ');
         return nameArray.map(part => part[0].toUpperCase()).join('');
     };
-
+    console.log(user)
     return (
         <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar" onClick={toggleAvatar}>
@@ -22,8 +22,8 @@ const ProfileDropDown = ({ user, isOpen, toggleAvatar, handlelogout, handleAdmin
             {isOpen && (
                 <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                     <li><a href="/#" className="flex justify-between">Name<span className="badge">{user?.name || `${user?.firstName} ${user?.lastName}`}</span></a></li>
-                    <li><a href="/#" className="flex justify-between">Role<span className="badge">{user?.role}</span></a></li>
-                    <li>{user?.role === 'admin' ? (
+                    <li><a href="/#" className="flex justify-between">Role<span className="badge">{user?.userType}</span></a></li>
+                    <li>{user?.userType === 'admin' ? (
                         <div className="text-gray-600 dark:text-gray-500 hover:text-xl cursor-pointer duration-300" onClick={handleAdmin}>Admin Dashboard</div>
                     ) : (
                         <div className="text-gray-600 dark:text-gray-500 hover:text-xl cursor-pointer duration-300" onClick={handleUser}>User Dashboard</div>

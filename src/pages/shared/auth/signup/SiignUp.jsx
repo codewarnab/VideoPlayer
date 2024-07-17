@@ -59,7 +59,6 @@ const SignUp = () => {
       ...prevData,
       [name]: value
     }));
-    console.log("Updated formData:", { ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -69,7 +68,7 @@ const SignUp = () => {
       const success = await registerHandler(userType, formData);
 
       if (success) {
-        navigate('/signin');
+        navigate('/dashboard');
       }
     } catch (error) {
       console.error("Registration error:", error);

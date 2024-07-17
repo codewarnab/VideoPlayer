@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../../../utils/contexts/userContext";
 
+// Lazy-loaded components
 const AdminDetails = lazy(() => import("./AdminDetails"));
-const ShowAllUsers = lazy(() => import("./ShowAllUsers"));
+// const ShowAllUsers = lazy(() => import("./ShowAllUsers"));
 const EnlistRequest = lazy(() => import("./EnlistRequest"));
 const AllUsersPCS = lazy(() => import("./AllUsersPCS"));
 const AssignCourse = lazy(() => import("./AssignCourse"));
@@ -15,9 +16,9 @@ const CreateCourse = lazy(() => import("./createCourse/CreateCourse"));
 const LoadingFallback = () => <div className="text-black text-xl">Loading...</div>;
 
 const AdminDashboard = () => {
-  const [select, setSelect] = useState("admin");
+  const [select, setSelect] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { token} = useContext(UserContext);
+  const { token } = useContext(UserContext);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -46,7 +47,7 @@ const AdminDashboard = () => {
         console.error("Error verifying admin access:", error);
         navigate("/unauthorized");
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); // Always set isLoading to false when request completes
       }
     };
 
@@ -85,8 +86,6 @@ const AdminDashboard = () => {
         return <Suspense fallback={<LoadingFallback />}><CreateCourse /></Suspense>;
       case "enlistRequests":
         return <Suspense fallback={<LoadingFallback />}><EnlistRequest /></Suspense>;
-      case "users":
-        return <Suspense fallback={<LoadingFallback />}><ShowAllUsers /></Suspense>;
       case "users-pcs":
         return <Suspense fallback={<LoadingFallback />}><AllUsersPCS /></Suspense>;
       case "categories":
