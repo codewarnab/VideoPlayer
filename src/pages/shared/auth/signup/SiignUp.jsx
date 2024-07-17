@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import registerHandler from '../../../../utils/shared/registerHandler';
+import useRegistration from '../../../../utils/hooks/useRegistration';
 import Lottie from "lottie-react";
 import registerAnimation from './SignUpAnimation.json';
 import SignUpFrontSection from './SignUpFrontSection';
@@ -20,7 +20,7 @@ const SignUp = () => {
     confirmpassword: ''
   });
   const navigate = useNavigate();
-
+  const { registerHandler } = useRegistration();
   const adminFormFields = [
     ['First Name*', 'Last Name*'],
     ['Employee ID*', 'Official Email ID*'],

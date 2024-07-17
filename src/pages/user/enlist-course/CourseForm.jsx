@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { uploadImageToCloudinary } from '../../../utils/user/imageUploader';
@@ -6,6 +6,9 @@ import PageOne from './PageOne';
 import PageTwo from './PageTwo';
 import isValidPhoneNumber from '../../../utils/shared/isValidPhoneNumber';
 import SuccesPage from './SuccesPage';
+import { CategoryContext } from '../../../utils/contexts/categoryContext';
+
+
 const CourseForm = () => {
     const [formData, setFormData] = useState({
         email: "random@gmail.com",
@@ -47,27 +50,9 @@ const CourseForm = () => {
         numProjectsIncluded: ""
 
     });
+    const { categories, categoryLoading } = useContext(CategoryContext);
     const [currentPage, setCurrentPage] = useState(1);
-    const [categories, setCategories] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
     const [isSucces, setisSucess] = useState(false)
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const response = await axios.get('/category/getCategory');
-                if (response.data.success) {
-                    setCategories(response.data.categories);
-                }
-            } catch (error) {
-                console.error('Error fetching categories:', error);
-                toast.error("Failed to fetch categories. Please try again.");
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchCategories();
-    }, []);
 
     const handleImageUpload = async (event) => {
         const file = event.target.files[0];
@@ -234,7 +219,7 @@ const CourseForm = () => {
                     handleChange={handleChange}
                     handleSelectChange={handleSelectChange}
                     categories={categories}
-                    isLoading={isLoading}
+                    isLoading={categoryLoading}
                     setCurrentPage={setCurrentPage}
                 />
             );

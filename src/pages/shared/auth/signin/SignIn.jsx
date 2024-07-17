@@ -1,15 +1,19 @@
-import React, { useState,lazy,Suspense} from 'react';
+import React, { useState,lazy,Suspense,useContext} from 'react';
 import axios from 'axios';
 import { toast } from "react-hot-toast";
 import { useNavigate } from 'react-router-dom';
 import LoginAnimation from './LoginAnimation.json'
+import {UserContext} from "../../../../utils/contexts/userContext";
 const Lottie = lazy(() => import("lottie-react"));
+
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const {loginuser} = useContext(UserContext);
+
 
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -34,6 +38,7 @@ const SignIn = () => {
                 toast.success(res.data.message);
                 localStorage.setItem("token", JSON.stringify(res.data.token));
                 localStorage.setItem("user", JSON.stringify(res.data.user));
+                loginuser(res.data.user, res.data.token);
                 navigate("/dashboard");
             } else {
                 toast.error(res.data.message);

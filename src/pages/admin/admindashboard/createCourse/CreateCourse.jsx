@@ -1,8 +1,10 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState,  lazy, Suspense,useContext } from 'react';
 import { uploadImageToCloudinary } from '../../../../utils/user/imageUploader';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import PageOne from './PageOne';
+import { CategoryContext } from '../../../../utils/contexts/categoryContext';
+
 
 const PageTwo = lazy(() => import('./PageTwo'));
 const SuccessPage = lazy(() => import('./SuccessPage'));
@@ -56,27 +58,9 @@ const CreateCourse = () => {
   });
 
   const [page, setPage] = useState(1);
-  const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
+  const {categoryLoading, categories} = useContext(CategoryContext);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get('/category/getCategory');
-        if (response.data.success) {
-          setCategories(response.data.categories);
-        }
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-        toast.error("Failed to fetch categories. Please try again.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchCategories();
-  }, []);
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
@@ -258,7 +242,7 @@ const CreateCourse = () => {
           <PageTwo
             formData={formData}
             handleChange={handleChange}
-            isLoading={isLoading}
+            isLoading={categoryLoading}
             categories={categories}
             handleSelectChange={handleSelectChange}
             errors={errors}

@@ -2,6 +2,8 @@ import isValidEmail from "./isValidEmail";
 import isValidPhoneNumber from "./isValidPhoneNumber";
 import { toast } from 'react-hot-toast';
 import axios from "axios";
+import { UserContext } from "../contexts/userContext";
+import { useContext } from "react";
 
 const PASSWORD_REGEX = {
     minLength: 8,
@@ -35,6 +37,9 @@ const validatePasswordStrength = (password) => {
 };
 
 const registerHandler = async (userType, formData) => {
+
+    const { loginuser } = useContext(UserContext);
+
     const commonValidations = [
         () => {
             if (!formData.password || !formData.confirmpassword) {
@@ -76,7 +81,6 @@ const registerHandler = async (userType, formData) => {
                 name: formData.name,
                 email: formData.email,
                 password: formData.password,
-                confirmPassword: formData.confirmpassword
             }
             : {
                 firstName: formData.firstname,
@@ -92,6 +96,7 @@ const registerHandler = async (userType, formData) => {
 
         if (res.data?.success) {
             toast.success("Registration Successful .Login Now!");
+            loginuser(res.data.user, res.data.token);
             return true;
         } else {
             toast.error(res.data?.message || "Registration failed. Please try again.");

@@ -1,10 +1,12 @@
-import React, { useState, lazy, Suspense } from "react";
-import AdminDetails from "./AdminDetails";
+import React, { useState, useEffect, lazy, Suspense, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { UserContext } from "../../../utils/contexts/userContext";
 
+const AdminDetails = lazy(() => import("./AdminDetails"));
 const ShowAllUsers = lazy(() => import("./ShowAllUsers"));
 const EnlistRequest = lazy(() => import("./EnlistRequest"));
 const AllUsersPCS = lazy(() => import("./AllUsersPCS"));
-const CreateMyCourse = lazy(() => import("./createCourse/CreateCourse")); 
 const AssignCourse = lazy(() => import("./AssignCourse"));
 const CreateCategories = lazy(() => import("./categoryManager/CreateCategories"));
 const AddFestival = lazy(() => import("../../../TopScript/AddFestival"));
@@ -15,14 +17,47 @@ const LoadingFallback = () => <div className="text-black text-xl">Loading...</di
 const AdminDashboard = () => {
   const [select, setSelect] = useState("admin");
   const [menuOpen, setMenuOpen] = useState(false);
+  const { token} = useContext(UserContext);
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthorized, setIsAuthorized] = useState(false);
+
+  useEffect(() => {
+    const verifyAdminAccess = async () => {
+      try {
+        const response = await axios.post(
+          "/api/verify-admin",
+          {},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.status === 200) {
+          setIsAuthorized(true);
+          setSelect("admin");
+        } else {
+          navigate("/unauthorized");
+        }
+      } catch (error) {
+        console.error("Error verifying admin access:", error);
+        navigate("/unauthorized");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    verifyAdminAccess();
+  }, [token, navigate]);
 
   const menuItems = [
     { key: "admin", label: "Admin Details" },
-    { key: "enlistRequests", label: "Course Enlist  Requests" },
+    { key: "enlistRequests", label: "Course Enlist Requests" },
     { key: "assign", label: "Assign Course" },
     { key: "course", label: "Create Course" },
-    // { key: "playlist", label: "Create Playlist" },
-    // { key: "users", label: "All Users" },
     { key: "users-pcs", label: "All PCS Global's Users" },
     { key: "categories", label: "Manage Categories" },
     { key: "festival", label: "Add Festival" },
@@ -33,6 +68,14 @@ const AdminDashboard = () => {
   };
 
   const renderComponent = () => {
+    if (isLoading) {
+      return <LoadingFallback />;
+    }
+
+    if (!isAuthorized) {
+      return null; // You can render a message or redirect here if needed
+    }
+
     switch (select) {
       case "admin":
         return <AdminDetails />;
@@ -42,8 +85,6 @@ const AdminDashboard = () => {
         return <Suspense fallback={<LoadingFallback />}><CreateCourse /></Suspense>;
       case "enlistRequests":
         return <Suspense fallback={<LoadingFallback />}><EnlistRequest /></Suspense>;
-      case "mycourse":
-        return <Suspense fallback={<LoadingFallback />}><CreateMyCourse /></Suspense>;
       case "users":
         return <Suspense fallback={<LoadingFallback />}><ShowAllUsers /></Suspense>;
       case "users-pcs":
@@ -89,7 +130,7 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
-      <div className="w-full lg:min-h-[40rem]  flex justify-center items-center md:w-3/4 md:pl-4">
+      <div className="w-full lg:min-h-[40rem] flex justify-center items-center md:w-3/4 md:pl-4">
         {renderComponent()}
       </div>
     </div>

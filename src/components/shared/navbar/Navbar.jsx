@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import toast from "react-hot-toast";
 import images from "../../../images/pcs logo.png";
 import Hamburger from 'hamburger-react';
 import ProfileDropDown from "./ProfileDropDown";
@@ -8,9 +7,10 @@ import SearchInput from "./SearchInput";
 import AuthLinks from "./AuthLinks";
 import CartDisplay from "./CartDisplay";
 import DropDownLg from "./DropDowns/DropDownLg";
-import axios from 'axios'
 import DropDownSm from "./DropDowns/DropDownSm";
-
+import { useContext } from "react";
+import { CategoryContext } from "../../../utils/contexts/categoryContext";
+import {UserContext} from "../../../utils/contexts/userContext"
 
 const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) => {
     const navigate = useNavigate();
@@ -20,51 +20,17 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
     const [isOpen, setIsOpen] = useState(false);
     const [isSearchExpanded, setIsSearchExpanded] = useState(false);
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-    const [categories, setCategories] = useState(null);
-    const [categoryloading, setcategoryLoading] = useState(true);
     const [isCategoryOpen, setCategoryOpen] = useState(false);
-    const [categoryFetchError,setcategoryFetchError] = useState(null);
     let location = useLocation();
+    const { user,logout } = useContext(UserContext);
+    const { categories, categoryLoading, error} = useContext(CategoryContext);
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        const user = localStorage.getItem('user');
-        if (!(token && user)) {
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
-        }
-    }, []);
-
-    useEffect(() => {
-        const fetchcategoryData = async () => {
-            try {
-                const res = await axios.get('/category/getCategory'); 
-                if (res.data.success) {
-                    setCategories(res.data.categories);
-                }
-            } catch (error) {
-                setcategoryFetchError(error.message)
-            } finally {
-                setcategoryLoading(false);
-            }
-        };
-
-        fetchcategoryData();
-    }, []);
-
-    const user = JSON.parse(localStorage.getItem("user"));
 
     useEffect(() => {
         setIsActive(location.pathname);
     }, [location.pathname]);
 
-    const handlelogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        toast.success("Logout Successfully");
-        navigate("/authSignin");
-    };
-
+   
     const handleSearch = (event) => {
         event.preventDefault();
         const inputValue = event.target.value || '';
@@ -149,7 +115,7 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
                             <img className="h-23 w-24" src={images} alt="PcsGlobal360" />
                         </Link>
                         <div className="flex gap-10">
-                            <DropDownLg loading={categoryloading} categories={categories} categoryFetchError={categoryFetchError} />
+                            <DropDownLg loading={categoryLoading} categories={categories} categoryFetchError={error} />
                             <SearchInput
                                 isSearchExpanded={isSearchExpanded}
                                 toggleSearchInputVisibility={toggleSearchInputVisibility}
@@ -187,7 +153,7 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
 
                     }
 
-                    <DropDownSm categories={categories} isCategoryOpen ={isCategoryOpen} loading={categoryloading} setCategoryOpen={setCategoryOpen}  setIsMobileNavOpen={setIsMobileNavOpen} />
+                    <DropDownSm categories={categories} isCategoryOpen={isCategoryOpen} loading={categoryLoading} setCategoryOpen={setCategoryOpen} setIsMobileNavOpen={setIsMobileNavOpen} />
 
 
 
@@ -206,7 +172,7 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
 
                         {/* AuthLinks or Profile/Cart icons based on user login */}
                         <div className="flex items-center justify-end space-x-3 mr-2 sm:space-x-4">
-                            {!localStorage.getItem("token") ? (
+                            {!user ? (
                                 <AuthLinks isActive={isActive} isSearchExpanded={isSearchExpanded} location={isActive} />
                             ) : (
                                 <>
@@ -220,7 +186,7 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
                                             user={user}
                                             isOpen={isOpen}
                                             toggleAvatar={toggleAvatar}
-                                            handlelogout={handlelogout}
+                                            handlelogout={logout}
                                             handleAdmin={handleAdmin}
                                             handleUser={handleUser}
                                         />

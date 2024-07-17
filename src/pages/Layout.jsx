@@ -3,23 +3,26 @@ import React from "react";
 import Footer from "../components/shared/Footer";
 import Navbar from "../components/shared/navbar/Navbar";
 import TopBanner from "../TopScript/TopBanner";
+import { CategoryProvider } from "../utils/contexts/categoryContext";
 
 const Layout = ({ children, searchTerm, setSearchTerm, setDropdown, cartLength, cartGeneralLength }) => {
   return (
     <>
       <header
         className="mx-auto ">
-        <TopBanner/>
-        <Navbar
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          setDropdown={setDropdown}
-          cartLength={cartLength}
-          cartGeneralLength={cartGeneralLength}
-        />
+        <TopBanner />
+        <CategoryProvider>
+          <Navbar
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            cartLength={cartLength}
+            cartGeneralLength={cartGeneralLength}
+          />
+        </CategoryProvider>
+
       </header>
       <main>{children}</main>
-      <Footer /> 
+      <Footer />
     </>
   );
 };
