@@ -5,7 +5,6 @@ import { UserContext } from "../../../utils/contexts/userContext";
 
 // Lazy-loaded components
 const AdminDetails = lazy(() => import("./AdminDetails"));
-// const ShowAllUsers = lazy(() => import("./ShowAllUsers"));
 const EnlistRequest = lazy(() => import("./EnlistRequest"));
 const AllUsersPCS = lazy(() => import("./AllUsersPCS"));
 const AssignCourse = lazy(() => import("./AssignCourse"));
@@ -41,10 +40,12 @@ const AdminDashboard = () => {
           setIsAuthorized(true);
           setSelect("admin");
         } else {
+          setIsAuthorized(false); // Set isAuthorized to false if not verified
           navigate("/unauthorized");
         }
       } catch (error) {
         console.error("Error verifying admin access:", error);
+        setIsAuthorized(false); // Set isAuthorized to false on error
         navigate("/unauthorized");
       } finally {
         setIsLoading(false); // Always set isLoading to false when request completes
@@ -74,9 +75,49 @@ const AdminDashboard = () => {
     }
 
     if (!isAuthorized) {
-      return null; // You can render a message or redirect here if needed
+      return null; // Render nothing if not authorized
     }
 
+    return (
+      <div className="flex flex-col md:flex-row justify-center items-start p-4">
+        <div className="w-full md:w-1/4 mb-4 md:mb-0 p-3">
+          <div className="bg-gray-100 rounded-lg shadow-md p-4">
+            <div className="flex justify-between items-center mb-4">
+              <h4 className="text-lg text-center font-semibold text-gray-800">Admin Panel</h4>
+              <button
+                className="md:hidden bg-blue-500 text-white px-2 py-1 rounded"
+                onClick={() => setMenuOpen(!menuOpen)}
+              >
+                {menuOpen ? 'Close' : 'Menu'}
+              </button>
+            </div>
+            <div
+              className={`transition-all duration-300 ease-in-out overflow-hidden md:block
+                ${menuOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0 md:max-h-full md:opacity-100'}`}
+            >
+              {menuItems.map((item) => (
+                <div
+                  key={item.key}
+                  className={getButtonClass(item.key)}
+                  onClick={() => {
+                    setSelect(item.key);
+                    setMenuOpen(false);
+                  }}
+                >
+                  <h4>{item.label}</h4>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="w-full lg:min-h-[40rem] flex justify-center items-center md:w-3/4 md:pl-4">
+          {select && renderSelectedComponent(select)}
+        </div>
+      </div>
+    );
+  };
+
+  const renderSelectedComponent = (select) => {
     switch (select) {
       case "admin":
         return <AdminDetails />;
@@ -97,43 +138,7 @@ const AdminDashboard = () => {
     }
   };
 
-  return (
-    <div className="flex flex-col md:flex-row justify-center items-start p-4">
-      <div className="w-full md:w-1/4 mb-4 md:mb-0 p-3">
-        <div className="bg-gray-100 rounded-lg shadow-md p-4">
-          <div className="flex justify-between items-center mb-4">
-            <h4 className="text-lg text-center font-semibold text-gray-800">Admin Panel</h4>
-            <button
-              className="md:hidden bg-blue-500 text-white px-2 py-1 rounded"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              {menuOpen ? 'Close' : 'Menu'}
-            </button>
-          </div>
-          <div
-            className={`transition-all duration-300 ease-in-out overflow-hidden md:block
-              ${menuOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0 md:max-h-full md:opacity-100'}`}
-          >
-            {menuItems.map((item) => (
-              <div
-                key={item.key}
-                className={getButtonClass(item.key)}
-                onClick={() => {
-                  setSelect(item.key);
-                  setMenuOpen(false);
-                }}
-              >
-                <h4>{item.label}</h4>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      <div className="w-full lg:min-h-[40rem] flex justify-center items-center md:w-3/4 md:pl-4">
-        {renderComponent()}
-      </div>
-    </div>
-  );
+  return renderComponent();
 };
 
 export default AdminDashboard;
