@@ -12,7 +12,6 @@ import Help from './pages/shared/help/Help';
 import Forgetpassword from './pages/Forget-password';
 import ResetPassword from './pages/ResetPassword';
 import MyCourse from './pcsPages/MyCourse';
-import ProtectedUser from './components/ProtectedUser';
 import UserDashboard from './userDashboard/UserDashboard';
 import SignUp from './pages/shared/auth/signup/SiignUp';
 import SignIn from './pages/shared/auth/signin/SignIn';
@@ -20,7 +19,6 @@ import LoginPCS from './pcsPages/LoginPCS';
 import ForgetpasswordPCS from './pcsPages/ForgetPasswordPCS';
 import ResetPasswordPCS from './pcsPages/ResetPasswordPCS';
 import EnrollmentForm from './form/EnrollmentForm';
-import ProtectedEnroll from './components/ProtectedEnroll';
 import Review from './Comment/Review';
 import EnrollNow from './TopScript/EnrollNow';
 import CourseForm from './pages/user/enlist-course/CourseForm';
@@ -77,14 +75,9 @@ const App = () => {
                                 <Route path="/enlist-course" element={<CourseForm />} />
                                 <Route path="/admin" element={<AdminDashboard />} />
 
+                                <Route path="/user" element={<UserDashboard />} />
 
-                                <Route element={<ProtectedUser />}>
-                                    <Route path="/user" element={<UserDashboard />} />
-                                </Route>
-
-                                <Route element={<ProtectedEnroll />}>
-                                    <Route path="/enroll" element={<EnrollmentForm />} />
-                                </Route>
+                                <Route path="/enroll" element={<EnrollmentForm />} />
 
                                 <Route path="/unauthorized" element={<Unauthorized />} />
                                 <Route path="/payment" element={<Payment />} />
