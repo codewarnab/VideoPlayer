@@ -24,7 +24,7 @@ export const UserProvider = ({ children }) => {
         localStorage.removeItem('user');
         localStorage.removeItem('token');
         toast.success("Logout Successfully");
-        navigate("/authSignin"); // Use navigate to redirect
+        navigate("/signin"); 
 
     }
 

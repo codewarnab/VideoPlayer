@@ -69,7 +69,7 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
         let updatedNavItems = [
             { id: 1, text: 'Home', link: '/' },
             { id: 2, text: 'Courses', link: '/dashboard' },
-            { id: 3, text: 'Enlist Your Course', link: '/enlist-course' },
+            { id: 3, text: 'Enlist Course', link: '/enlist-course' },
             { id: 4, text: 'Be an Instructor', link: '/teach' },
             { id: 5, text: 'Help', link: '/help' },
 
@@ -79,7 +79,7 @@ const Navbar = ({ searchTerm, setSearchTerm, cartLength, cartGeneralLength }) =>
             updatedNavItems = [
                 { id: 1, text: 'My Courses', link: '/my-course' },
                 { id: 2, text: 'Courses', link: '/dashboard' },
-                { id: 3, text: 'Enlist Your Course', link: '/enlist-course' },
+                { id: 3, text: 'Enlist Course', link: '/enlist-course' },
                 { id: 4, text: 'Be an Instructor', link: '/teach' },
                 { id: 6, text: 'Help', link: '/help' },
             ];
