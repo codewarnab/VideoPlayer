@@ -82,7 +82,12 @@ const TopBanner = () => {
                     <div className={`text-${textColor} font-semibold leading-none`}>
                         <div>
                             <h1 className='flex lg:py-2 items-center flex-wrap justify-center'>
-                                <a href={todayFestival.link} target="_blank" rel="noopener noreferrer" className='underline hover:text-blue-400 hover:cursor-pointer'>
+                                <a
+                                    href={todayFestival.link.startsWith('http') ? todayFestival.link : `https://${todayFestival.link}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className='underline hover:text-blue-400 hover:cursor-pointer'
+                                >
                                     {todayFestival ? `Grab The ${todayFestival.name} sale Offer` : 'Grab Frontend System Design offer here '}
                                 </a>
                                 <span className="ml-2">Coupon Code:</span>
