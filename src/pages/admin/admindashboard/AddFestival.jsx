@@ -25,7 +25,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
 // Button Component
 const Button = ({ children, className, ...props }) => (
     <button
-        className={`px-4 py-2 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl rounded ${className}`}
+        className={`px-6 py-3 text-lg rounded ${className}`}
         {...props}
     >
         {children}
@@ -46,31 +46,26 @@ const FestivalManagementSegment = () => {
 
     const handleChangeName = (e) => {
         setName(e.target.value);
-        // Clear error message for name field
         setErrors({ ...errors, name: '' });
     };
 
     const handleChangeStartDate = (date) => {
         setStartDate(date);
-        // Clear error message for startDate field
         setErrors({ ...errors, startDate: '' });
     };
 
     const handleChangeEndDate = (date) => {
         setEndDate(date);
-        // Clear error message for endDate field
         setErrors({ ...errors, endDate: '' });
     };
 
     const handleChangeCouponCode = (e) => {
         setCouponCode(e.target.value);
-        // Clear error message for couponCode field
         setErrors({ ...errors, couponCode: '' });
     };
 
     const handleChangeLink = (e) => {
         setLink(e.target.value);
-        // Clear error message for link field
         setErrors({ ...errors, link: '' });
     };
 
@@ -99,7 +94,6 @@ const FestivalManagementSegment = () => {
                 if (res && res.data.success) {
                     toast.success(res.data.message);
                     setShowCreateModal(false);
-                    // Reset form fields
                     setName('');
                     setStartDate(null);
                     setEndDate(null);
@@ -123,14 +117,14 @@ const FestivalManagementSegment = () => {
     return (
         <div className="bg-white p-4 rounded-lg shadow-md">
             <h2 className="text-xl font-bold mb-4 text-black">Festival Management</h2>
-            <div className="flex flex-col lg:flex-row lg:space-x-4 mb-4">
-                <Button onClick={() => setShowCreateModal(true)} className="bg-green-500 text-white hover:bg-green-600 mb-2 lg:mb-0">
+            <div className="flex flex-col lg:flex-row lg:space-x-4 mb-4 space-y-4 lg:space-y-0">
+                <Button onClick={() => setShowCreateModal(true)} className="bg-green-500 text-white hover:bg-green-600">
                     Create Festival
                 </Button>
-                <Button onClick={() => setShowEditModal(true)} className="bg-yellow-500 text-white hover:bg-yellow-600 mb-2 lg:mb-0">
+                <Button onClick={() => setShowEditModal(true)} className="bg-yellow-500 text-white hover:bg-yellow-600">
                     Edit Current Festival
                 </Button>
-                <Button onClick={() => setShowDeleteModal(true)} className="bg-red-500 text-white hover:bg-red-600 mb-2 lg:mb-0">
+                <Button onClick={() => setShowDeleteModal(true)} className="bg-red-500 text-white hover:bg-red-600">
                     Delete Festival
                 </Button>
             </div>
