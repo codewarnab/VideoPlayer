@@ -17,13 +17,20 @@ const LoadingFallback = () => <div className="text-black text-xl">Loading...</di
 const AdminDashboard = () => {
   const [select, setSelect] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { token } = useContext(UserContext);
+  const { token, loading: userLoading } = useContext(UserContext);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
+    if (userLoading) return; // If user is still loading, don't proceed
+
     const verifyAdminAccess = async () => {
+      if (!token) {
+        navigate("/signin"); // Redirect to signin if no token
+        return;
+      }
+
       try {
         const response = await axios.post(
           "/api/verify-admin",
@@ -40,20 +47,20 @@ const AdminDashboard = () => {
           setIsAuthorized(true);
           setSelect("admin");
         } else {
-          setIsAuthorized(false); // Set isAuthorized to false if not verified
+          setIsAuthorized(false);
           navigate("/unauthorized");
         }
       } catch (error) {
         console.error("Error verifying admin access:", error);
-        setIsAuthorized(false); // Set isAuthorized to false on error
+        setIsAuthorized(false);
         navigate("/unauthorized");
       } finally {
-        setIsLoading(false); // Always set isLoading to false when request completes
+        setIsLoading(false);
       }
     };
 
     verifyAdminAccess();
-  }, [token, navigate]);
+  }, [token, userLoading, navigate]);
 
   const menuItems = [
     { key: "admin", label: "Admin Details" },
@@ -75,7 +82,7 @@ const AdminDashboard = () => {
     }
 
     if (!isAuthorized) {
-      return null; // Render nothing if not authorized
+      return null;
     }
 
     return (

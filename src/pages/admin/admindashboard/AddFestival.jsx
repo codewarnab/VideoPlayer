@@ -11,7 +11,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center lg:p-0 p-3">
             <div className="bg-white rounded-lg p-6 w-full max-w-md">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-xl font-bold">{title}</h2>
+                    <h2 className="text-xl font-bold text-black">{title}</h2>
                     <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
                         &times;
                     </button>
@@ -25,7 +25,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
 // Button Component
 const Button = ({ children, className, ...props }) => (
     <button
-        className={`px-4 py-2 rounded ${className}`}
+        className={`px-4 py-2 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl rounded ${className}`}
         {...props}
     >
         {children}
@@ -123,14 +123,14 @@ const FestivalManagementSegment = () => {
     return (
         <div className="bg-white p-4 rounded-lg shadow-md">
             <h2 className="text-xl font-bold mb-4 text-black">Festival Management</h2>
-            <div className="grid grid-cols-3 gap-4 mb-4">
-                <Button onClick={() => setShowCreateModal(true)} className="bg-green-500 text-white hover:bg-green-600">
+            <div className="flex flex-col lg:flex-row lg:space-x-4 mb-4">
+                <Button onClick={() => setShowCreateModal(true)} className="bg-green-500 text-white hover:bg-green-600 mb-2 lg:mb-0">
                     Create Festival
                 </Button>
-                <Button onClick={() => setShowEditModal(true)} className="bg-yellow-500 text-white hover:bg-yellow-600">
+                <Button onClick={() => setShowEditModal(true)} className="bg-yellow-500 text-white hover:bg-yellow-600 mb-2 lg:mb-0">
                     Edit Current Festival
                 </Button>
-                <Button onClick={() => setShowDeleteModal(true)} className="bg-red-500 text-white hover:bg-red-600">
+                <Button onClick={() => setShowDeleteModal(true)} className="bg-red-500 text-white hover:bg-red-600 mb-2 lg:mb-0">
                     Delete Festival
                 </Button>
             </div>

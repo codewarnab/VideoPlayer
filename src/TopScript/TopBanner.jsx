@@ -1,11 +1,10 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 const TopBanner = () => {
     const [currentTime, setCurrentTime] = useState(new Date());
     const [textColor, setTextColor] = useState('yellow'); // Initial text color
-    const offerExpiry = calculateOfferExpiry(); // Calculate offer expiry time
 
     const [todayFestival, setTodayFestival] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -17,6 +16,7 @@ const TopBanner = () => {
                 setTodayFestival(res?.data?.festival);
             } catch (error) {
                 console.error('Error fetching today\'s festival:', error);
+                toast.error('Failed to fetch today\'s festival. Please try again.');
             } finally {
                 setLoading(false);
             }
@@ -24,14 +24,6 @@ const TopBanner = () => {
 
         fetchTodayFestival();
     }, []);
-
-    // Calculate offer expiry time (end of the current day)
-    function calculateOfferExpiry() {
-        const now = new Date();
-        const endOfDay = new Date(now);
-        endOfDay.setHours(23, 59, 59, 999); // Set to end of the day (23:59:59.999)
-        return endOfDay;
-    }
 
     // Update current time every second
     useEffect(() => {
@@ -43,9 +35,15 @@ const TopBanner = () => {
         return () => clearInterval(intervalId);
     }, []);
 
-    // Calculate remaining time until offer expiry
+    // Calculate remaining time until offer expiry based on festival data
     function calculateTimeRemaining() {
-        const timeDiff = offerExpiry - currentTime;
+        if (!todayFestival) {
+            return { hours: 0, minutes: 0, seconds: 0 };
+        }
+
+        const endDate = new Date(todayFestival.endDate);
+        const timeDiff = endDate - currentTime;
+
         if (timeDiff <= 0) {
             return { hours: 0, minutes: 0, seconds: 0 };
         }
@@ -78,15 +76,15 @@ const TopBanner = () => {
     return (
         <>
             {loading ? (
-                <p className="text-gray-400 bg-gray-800 sm:min-h-14 lg:min-h-16 flex justify-center items-center ">Loading...</p>
+                <p className="text-gray-400 bg-gray-800 sm:min-h-14 lg:min-h-16 flex justify-center items-center">Loading...</p>
             ) : (
                 <div className='bg-gray-800 flex justify-center lg:gap-4 lg:py-1 items-center'>
                     <div className={`text-${textColor} font-semibold leading-none`}>
                         <div>
-                            <h1 className='flex  lg:py-2 items-center  flex-wrap justify-center'>
-                                <span className='underline hover:text-blue-400 hover:cursor-pointer'>
+                            <h1 className='flex lg:py-2 items-center flex-wrap justify-center'>
+                                <a href={todayFestival.link} target="_blank" rel="noopener noreferrer" className='underline hover:text-blue-400 hover:cursor-pointer'>
                                     {todayFestival ? `Grab The ${todayFestival.name} sale Offer` : 'Grab Frontend System Design offer here '}
-                                </span>
+                                </a>
                                 <span className="ml-2">Coupon Code:</span>
                                 <div className="bg-yellow-400 text-gray-800 p-[0.34rem] rounded font-semibold ml-2">
                                     {todayFestival ? `${todayFestival.couponCode}` : 'PCS360'}
