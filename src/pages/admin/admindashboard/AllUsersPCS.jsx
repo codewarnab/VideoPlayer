@@ -61,6 +61,11 @@ const AllUsersPCS = () => {
   const isPrevDisabled = currentPage === 1;
   const isNextDisabled = indexOfLastUser >= users.length || currentUsers.length < usersPerPage;
 
+  // Calculate total, verified, and not verified counts
+  const totalUsers = users.length;
+  const verifiedUsersCount = users.filter(user => user.isVerified).length;
+  const notVerifiedUsersCount = totalUsers - verifiedUsersCount;
+
   const buttonBaseClass = "px-4 py-2 sm:px-6 sm:py-3 rounded text-base font-medium transition-colors duration-200";
   const activeButtonClass = "bg-blue-500 text-white hover:bg-blue-600";
   const disabledButtonClass = "bg-gray-300 text-gray-500 cursor-not-allowed";
@@ -86,6 +91,29 @@ const AllUsersPCS = () => {
 
   return (
     <div className="bg-gray-100 p-4 sm:p-6 min-w-full lg:min-h-[33rem] rounded-md flex flex-col justify-between">
+      {/* Dashboard Section moved above tabs */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-4 sm:space-y-0">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-700">Users Dashboard</h1>
+        <div className="flex items-center bg-white shadow px-4 py-2 rounded-lg">
+          <span className="text-gray-700 mr-2">Total Users:</span>
+          <span className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+            {totalUsers}
+          </span>
+        </div>
+        <div className="flex items-center bg-white shadow px-4 py-2 rounded-lg">
+          <span className="text-gray-700 mr-2">Verified Users:</span>
+          <span className="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+            {verifiedUsersCount}
+          </span>
+        </div>
+        <div className="flex items-center bg-white shadow px-4 py-2 rounded-lg">
+          <span className="text-gray-700 mr-2">Not Verified Users:</span>
+          <span className="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+            {notVerifiedUsersCount}
+          </span>
+        </div>
+      </div>
+
       <MinimalistTabs
         tabs={['Verified', 'Not Verified']}
         activeTab={activeTab}
@@ -93,16 +121,6 @@ const AllUsersPCS = () => {
       />
 
       <div>
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-4 sm:space-y-0">
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-700">Users Dashboard</h1>
-          <div className="flex items-center bg-white shadow px-4 py-2 rounded-lg">
-            <span className="text-gray-700 mr-2">Total Users:</span>
-            <span className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
-              {users.length}
-            </span>
-          </div>
-        </div>
-
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-4 md:gap-6">
           {loading ? (
             // Render skeleton loading components while loading
@@ -149,19 +167,19 @@ const AllUsersPCS = () => {
 
       {selectedUser && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-          <div className="bg-white  flex justify-center items-center flex-col text-black rounded-lg p-4 sm:p-6 max-w-md w-full">
-            <h2 className="text-xl  sm:text-2xl font-bold mb-4">{selectedUser.firstName} {selectedUser.lastName}</h2>
+          <div className="bg-white flex justify-center items-center flex-col text-black rounded-lg p-4 sm:p-6 max-w-md w-full">
+            <h2 className="text-xl sm:text-2xl font-bold mb-4">{selectedUser.firstName} {selectedUser.lastName}</h2>
             <div className="text-start">
               <p className="mb-2">
-                <span className="text-gray-700 font-semibold">Email:  </span>
+                <span className="text-gray-700 font-semibold">Email: </span>
                 {selectedUser.email}
               </p>
               <p className="mb-2">
-                <span className="text-gray-700 font-semibold">Phone:  </span>
+                <span className="text-gray-700 font-semibold">Phone: </span>
                 {selectedUser.phoneNo}
               </p>
               <p className="mb-2">
-                <span className="text-gray-700 font-semibold">Employee ID:  </span>
+                <span className="text-gray-700 font-semibold">Employee ID: </span>
                 {selectedUser.employeeId}
               </p>
             </div>

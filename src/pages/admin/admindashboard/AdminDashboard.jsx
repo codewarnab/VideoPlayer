@@ -23,7 +23,7 @@ const AdminDashboard = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
-    if (userLoading) return; // If user is still loading, don't proceed
+    if (userLoading) return; 
 
     const verifyAdminAccess = async () => {
       if (!token) {
