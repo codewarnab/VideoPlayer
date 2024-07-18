@@ -97,3 +97,6 @@ scrollbar-hide {
   /* Chrome, Safari and Opera */
 }
 
+.react-datepicker-wrapper{
+  width: 100%;
+}

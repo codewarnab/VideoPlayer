@@ -9,7 +9,7 @@ const EnlistRequest = lazy(() => import("./EnlistRequest"));
 const AllUsersPCS = lazy(() => import("./AllUsersPCS"));
 const AssignCourse = lazy(() => import("./AssignCourse"));
 const CreateCategories = lazy(() => import("./categoryManager/CreateCategories"));
-const AddFestival = lazy(() => import("../../../TopScript/AddFestival"));
+const AddFestival = lazy(() => import("./AddFestival"));
 const CreateCourse = lazy(() => import("./createCourse/CreateCourse"));
 
 const LoadingFallback = () => <div className="text-black text-xl">Loading...</div>;
