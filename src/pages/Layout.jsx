@@ -2,10 +2,10 @@ import React from "react";
 // import Navbar from "../components/Navbar";
 import Footer from "../components/shared/Footer";
 import Navbar from "../components/shared/navbar/Navbar";
-import TopBanner from "../TopScript/TopBanner";
+import TopBanner from "../components/shared/TopBanner";
 import { CategoryProvider } from "../utils/contexts/categoryContext";
 
-const Layout = ({ children, searchTerm, setSearchTerm, setDropdown, cartLength, cartGeneralLength }) => {
+const Layout = ({ children, searchTerm, setSearchTerm,  cartLength, cartGeneralLength }) => {
   return (
     <>
       <header
