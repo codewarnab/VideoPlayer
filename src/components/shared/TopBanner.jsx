@@ -83,13 +83,16 @@ const TopBanner = () => {
                         <div>
                             <h1 className='flex lg:py-2 items-center flex-wrap justify-center'>
                                 <a
-                                    href={todayFestival.link.startsWith('http') ? todayFestival.link : `https://${todayFestival.link}`}
+                                    href={todayFestival && todayFestival.link
+                                        ? (todayFestival.link.startsWith('http') ? todayFestival.link : `https://${todayFestival.link}`)
+                                        : 'https://example.com'}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className='underline hover:text-blue-400 hover:cursor-pointer'
                                 >
                                     {todayFestival ? `Grab The ${todayFestival.name} sale Offer` : 'Grab Frontend System Design offer here '}
                                 </a>
+
                                 <span className="ml-2">Coupon Code:</span>
                                 <div className="bg-yellow-400 text-gray-800 p-[0.34rem] rounded font-semibold ml-2">
                                     {todayFestival ? `${todayFestival.couponCode}` : 'PCS360'}

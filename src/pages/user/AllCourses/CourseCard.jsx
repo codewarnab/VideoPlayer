@@ -15,7 +15,7 @@ const formatViewCount = (views) => {
 const CourseCard = ({ item }) => {
     return (
         <div key={item._id} className="relative">
-            <Link to={`${item.description}`} >
+            <Link to={`${item.description}`} state={{ item }}>
                 <div className="lg:w-[18rem] lg:h-[16.4rem] h-[270px] mr-3 bg-white border border-gray-200 rounded-lg shadow hover:-translate-y-2 duration-200 hover:shadow-[#6260607a] hover:shadow-xl flex flex-col">
                     <LazyLoadImage
                         className="rounded-t-lg w-full h-[140px] object-cover"
