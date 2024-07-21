@@ -3,7 +3,7 @@ import { Link, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Breadcrumbs from '../../../components/shared/BreadCrumb';
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Monitor, Code, FileText, BookOpen, Smartphone, Award, Clock, Play } from 'lucide-react';
+import { Monitor, Code,  Smartphone,  Clock, Play } from 'lucide-react';
 
 // Skeleton component
 const Skeleton = ({ width = '100%', height = '20px', className = '' }) => (
@@ -17,31 +17,39 @@ const CourseDescription = () => {
   const { descriptionId } = useParams();
   const location = useLocation();
   const [description, setDescription] = useState({});
-  const courseData = location.state?.item;
+  const [courseData, setCourseData] = useState(location.state?.item);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchDescriptions = async () => {
+    const fetchData = async () => {
       try {
         if (!descriptionId) {
           console.error("descriptionId is required");
           return;
         }
         setLoading(true);
-        const response = await axios.get(`/description/getDescriptions?descriptionId=${descriptionId}`);
-        console.log(response.data);
-        setDescription(response.data);
+
+        // Fetch description data
+        const descriptionResponse = await axios.get(`/description/getDescriptions?descriptionId=${descriptionId}`);
+        setDescription(descriptionResponse.data);
+
+        // Fetch course data if not available in location state
+        if (!courseData) {
+          const courseResponse = await axios.get(`/course/getCourseCardByDescId?descriptionId=${descriptionId}`);
+          setCourseData(courseResponse.data.courseCard);
+          console.log(courseData)
+        }
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
-    fetchDescriptions();
-  }, [descriptionId]);
+    fetchData();
+  }, [descriptionId, courseData]);
 
   const renderContent = () => {
-    if (loading) {
+    if (loading || !description || !courseData) {
       return (
         <>
           {/* Top section skeleton */}
@@ -113,7 +121,7 @@ const CourseDescription = () => {
       <>
         {/* top section */}
         <div className='bg-gray-100 rounded-md pb-8'>
-          <div className='p-3'>
+          <div className='p-3 py-4'>
             <Breadcrumbs courseData={courseData} />
           </div>
           <div className='flex flex-col px-4 pt-1 lg:px-6'>
@@ -121,7 +129,7 @@ const CourseDescription = () => {
             <div className='lg:hidden mb-4'>
               <div className='flex items-center gap-2 mb-3'>
                 <i className="pi pi-user text-xl text-black border-2 text-[0.6rem] rounded-full p-1"></i>
-                <span className="text-md text-black font-bold">{description.instructor}</span>
+                <span className="text-md text-black font-bold">{description?.instructor}</span>
               </div>
               <h2 className='text-xl font-bold text-black text-start'>{courseData?.courseTitle}</h2>
             </div>
@@ -140,7 +148,7 @@ const CourseDescription = () => {
                 <div className='hidden lg:block'>
                   <div className='flex items-center gap-2 mb-3'>
                     <i className="pi pi-user text-xl text-black border-2 text-[0.65rem] rounded-full p-1"></i>
-                    <span className="text-lg text-black font-bold">{description.instructor}</span>
+                    <span className="text-lg text-black font-bold">{description?.instructor}</span>
                   </div>
                   <h2 className='text-xl font-bold mb-4 text-black text-start'>{courseData?.courseTitle}</h2>
                 </div>
@@ -153,12 +161,12 @@ const CourseDescription = () => {
                   </Link>
                 </div>
                 <div className='w-full flex gap-3 justify-start items-center mt-4 flex-wrap'>
-                  <h6 className="text-xs lg:py-2 lg:px-3 py-1 px-2 rounded-md text-black font-semibold bg-slate-200 w-fit">{courseData.subCategory}</h6>
-                  <h6 className="text-xs lg:py-2 lg:px-3 py-1 px-2 rounded-md text-black font-semibold bg-slate-200 w-fit">{courseData.subSubCategory}</h6>
+                  <h6 className="text-xs lg:py-2 lg:px-3 py-1 px-2 rounded-md text-black font-semibold bg-slate-200 w-fit">{courseData?.subCategory}</h6>
+                  <h6 className="text-xs lg:py-2 lg:px-3 py-1 px-2 rounded-md text-black font-semibold bg-slate-200 w-fit">{courseData?.subSubCategory}</h6>
                   <div className='flex items-center '>
                     <Clock size={20} className='mr-2 text-blue-500' />
                     <span className="text-sm text-black">
-                      Duration: <span className="font-bold text-blue-600">{courseData.expectedTimeToFinishNumber} {courseData.expectedTimeToFinishUnit}</span>
+                      Duration: <span className="font-bold text-blue-600">{courseData?.expectedTimeToFinishNumber} {courseData?.expectedTimeToFinishUnit}</span>
                     </span>
                   </div>
                 </div>
@@ -170,7 +178,7 @@ const CourseDescription = () => {
         {/* course description  */}
         <div className='bg-gray-100 rounded-md p-5 flex flex-col gap-2'>
           <h1 className='text-start text-2xl text-black font-bold'>Course Description</h1>
-          <p className='text-start text-black lg:text-lg md:text-md text-sm'>{description.description}</p>
+          <p className='text-start text-black lg:text-lg md:text-md text-sm'>{description?.description}</p>
         </div>
 
         <div className='w-full flex flex-col lg:flex-row'>
@@ -180,12 +188,12 @@ const CourseDescription = () => {
             <div className='text-sm sm:text-base lg:text-lg text-black space-y-2 sm:space-y-3'>
               <div className='flex items-center'>
                 <Monitor size={20} className='mr-2 flex-shrink-0' />
-                <span><span className='font-bold text-blue-600'>{description.totalVideoContentLength}</span> of on-demand video</span>
+                <span><span className='font-bold text-blue-600'>{description?.totalVideoContentLength}</span> of on-demand video</span>
               </div>
               {description.numProjectsIncluded !== 0 && (
                 <div className='flex items-center'>
                   <Code size={20} className='mr-2 flex-shrink-0' />
-                  <span><span className='font-bold text-blue-600'>{description.numProjectsIncluded}</span> hands-on coding Projects</span>
+                  <span><span className='font-bold text-blue-600'>{description?.numProjectsIncluded}</span> hands-on coding Projects</span>
                 </div>
               )}
               <div className='flex items-center'>
