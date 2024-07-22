@@ -49,13 +49,12 @@ const Dashboard = ({ searchTerm, setItem }) => {
     return (
       <button
         onClick={onClick}
-        className={`absolute ${isNext ? 'right-0' : 'left-0'} top-1/2 -translate-y-1/2 z-10 bg-white border  rounded-full p-2`}
+        className={`absolute ${isNext ? 'right-0' : 'left-0'} top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2`}
       >
-        <i className={`pi ${isNext ? 'pi-chevron-right text-black' : 'pi-chevron-left text-black'}`} /> 
+        <i className={`pi ${isNext ? 'pi-chevron-right text-black' : 'pi-chevron-left text-black'}`} />
       </button>
     );
   };
-
 
   const SliderSettings = (coursesCount) => ({
     dots: false,
@@ -89,15 +88,30 @@ const Dashboard = ({ searchTerm, setItem }) => {
     ]
   });
 
+  const SkeletonLoader = () => (
+    <>
+      {[1, 2].map((category) => (
+        <div key={category} className="w-full flex flex-col justify-center pt-1 mb-8 overflow-hidden">
+          <div className="w-48 h-8 bg-gray-200 rounded mb-4 animate-pulse"></div>
+          <div className="flex w-fit space-x-14 overflow-hidden">
+            {[1, 2, 3, 4].map((card) => (
+              <div key={card} className="w-80 h-64 bg-gray-200 rounded-lg animate-pulse"></div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </>
+  );
+
   return (
     <div className="flex flex-col items-center mb-4 h-auto min-h-screen w-full justify-start bg-[#F5F5F5] px-5">
-      {loading ? (
-        <h1 className="text-5xl text-black font-extrabold">Loading....</h1>
+      {loading? (
+        <SkeletonLoader />
       ) : (
         Object.entries(coursesByCategory).map(([category, courses]) => (
-          <div key={category} className="w-full flex flex-col  justify-center pt-1">
+          <div key={category} className="w-full flex flex-col justify-center pt-1">
             <h2 className="text-2xl w-full pl-10 text-start text-black font-extrabold leading-tight">{category}</h2>
-            <div className={`lg:slider-container  ${courses.length < 4 ? 'lg:few-cards' : ''}`}>
+            <div className={`lg:slider-container ${courses.length < 4 ? 'lg:few-cards' : ''}`}>
               <Slider {...SliderSettings(courses.length)}>
                 {courses.map((item) => (
                   <Suspense key={item._id} fallback={<div className="h-[300px] bg-gray-200 rounded-lg animate-pulse"></div>}>
