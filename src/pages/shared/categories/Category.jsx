@@ -26,10 +26,8 @@ const Category = () => {
                     params: { categoryName }
                 });
 
-                console.log('API Response:', res.data);
 
                 const courses = Array.isArray(res.data.courses) ? res.data.courses : [];
-                console.log('Courses:', courses);
 
                 if (res.data.success) {
                     const groupedCourses = courses.reduce((acc, course) => {
@@ -124,7 +122,7 @@ const Category = () => {
 
     return (
         <div className="flex flex-col items-center mb-4 h-auto min-h-screen w-full justify-start bg-[#F5F5F5] px-5">
-            <h1 className="lg:text-3xl text-2xl tracking-wider font-bold pt-3 mb-3 text-black">{categoryName}</h1>
+            <h1 className="lg:text-3xl md:text-2xl text-xl tracking-wider font-bold pt-3 mb-3 text-black">{categoryName}</h1>
             {loading ? (
                 <>
                     <LoadingSkeleton />
@@ -141,7 +139,7 @@ const Category = () => {
             ) : (
                 Object.entries(coursesBySubCategory).map(([subCategory, courses]) => (
                     <div key={subCategory} className="w-full flex flex-col justify-center pt-1">
-                        <h2 className="text-2xl w-full pl-10 text-start text-black font-extrabold leading-tight">{subCategory}</h2>
+                        <h2 className="lg:text-2xl md:text-lg   w-full pl-10 text-start text-black font-extrabold leading-tight">{subCategory}</h2>
                         <div className={`lg:slider-container ${courses.length < 4 ? 'lg:few-cards' : ''} ${courses.length === 2 ? 'two-cards' : ''} ${courses.length === 3 ? 'three-cards' : ''}`}>
                             <Slider {...SliderSettings(courses.length)}>
                                 {courses.map((item) => (

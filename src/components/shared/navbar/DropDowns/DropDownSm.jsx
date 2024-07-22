@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Plus, Minus, ChevronDown, ArrowLeft } from 'lucide-react';
 
 const DropDownSm = ({ categories, isCategoryOpen, loading, setCategoryOpen, setIsMobileNavOpen }) => {
@@ -6,6 +7,7 @@ const DropDownSm = ({ categories, isCategoryOpen, loading, setCategoryOpen, setI
   const [openSubCategory, setOpenSubCategory] = useState(null);
   const [showScrollIndicator, setShowScrollIndicator] = useState(false);
   const contentRef = useRef(null);
+  const navigate = useNavigate();
 
   const toggleCategory = (categoryId) => {
     setOpenCategory(openCategory === categoryId ? null : categoryId);
@@ -39,16 +41,34 @@ const DropDownSm = ({ categories, isCategoryOpen, loading, setCategoryOpen, setI
     }
   }, []);
 
+  const handleCategoryClick = (categoryName) => {
+    setCategoryOpen(false);
+    setIsMobileNavOpen(false);
+    navigate(`/category/${categoryName}`);
+  };
+
+  const handleSubCategoryClick = (subCategoryName) => {
+    setCategoryOpen(false);
+    setIsMobileNavOpen(false);
+    navigate(`/subcategory/${subCategoryName}`);
+  };
+
+  const handleSubSubCategoryClick = (subSubCategoryName) => {
+    setCategoryOpen(false);
+    setIsMobileNavOpen(false);
+    navigate(`/subsubcategory/${subSubCategoryName}`);
+  };
+
   return (
     <div className={`bg-white text-black max-h-[80svh] min-h-[78svh] w-[70%] md:hidden lg:hidden flex flex-col rounded-lg absolute top-0 left-[-10px] p-5 overflow-hidden py-10 z-[100] shadow-md transition-transform transform ${isCategoryOpen ? 'translate-x-0' : '-translate-x-full'}`}>
       <div className='flex gap-2 mb-4 items-center'>
-        <span onClick={()=>{
+        <span onClick={() => {
           setCategoryOpen(false);
           setIsMobileNavOpen(true);
         }}>
-          <ArrowLeft size={20}/>
+          <ArrowLeft size={20} />
         </span>
-      <h1 className='text-xl '>Categories</h1>
+        <h1 className='text-xl'>Categories</h1>
       </div>
       <div
         ref={contentRef}
@@ -57,7 +77,7 @@ const DropDownSm = ({ categories, isCategoryOpen, loading, setCategoryOpen, setI
         {!loading && categories && categories.map(category => (
           <div key={category._id} className="mb-4 w-full">
             <h2 className="font-semibold flex gap-2 w-full items-center justify-between text-sm">
-              {category.categoryName}
+              <span onClick={() => handleCategoryClick(category.categoryName)}>{category.categoryName}</span>
               <span
                 className='text-gray-500 cursor-pointer'
                 onClick={() => toggleCategory(category._id)}
@@ -70,7 +90,7 @@ const DropDownSm = ({ categories, isCategoryOpen, loading, setCategoryOpen, setI
                 {category.subcategories.map(subcategory => (
                   <div key={subcategory._id} className="w-full">
                     <div className="flex justify-between items-center text-sm py-1">
-                      <span>{subcategory.name}</span>
+                      <span onClick={() => handleSubCategoryClick(subcategory.name)}>{subcategory.name}</span>
                       <span
                         className='text-gray-500 cursor-pointer'
                         onClick={() => toggleSubcategory(subcategory._id)}
@@ -81,7 +101,7 @@ const DropDownSm = ({ categories, isCategoryOpen, loading, setCategoryOpen, setI
                     {openSubCategory === subcategory._id && subcategory.subSubcategories && (
                       <div className="ml-4 mt-1 flex flex-col items-start">
                         {subcategory.subSubcategories.map(subSubcategory => (
-                          <div key={subSubcategory._id} className="text-sm py-1">
+                          <div key={subSubcategory._id} className="text-sm py-1" onClick={() => handleSubSubCategoryClick(subSubcategory.name)}>
                             {subSubcategory.name}
                           </div>
                         ))}

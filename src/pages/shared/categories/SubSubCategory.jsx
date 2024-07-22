@@ -63,12 +63,18 @@ const SubSubCategory = () => {
     }
 
     if (error) {
-        return <div className="text-red-500 text-center my-4">{error}</div>;
+        return (
+            <>
+                <h1 className="lg:text-3xl text-2xl text-black font-bold text-center pt-4">{subsubcategoryName}</h1>
+                <div className="text-red-500 flex-col my-4 min-h-[30rem] flex text-xl justify-center items-center">
+                    <p>{error}</p>
+                </div>
+            </>
+        );
     }
 
     return (
         <div>
-                <h1 className=" lg:text-3xl  text-2xl text-black font-bold text-center">{subsubcategoryName}</h1>
             <div className="grid grid-cols-1 w-[93%] md:w-full lg:w-full gap-6 md:grid-cols-3 lg:grid-cols-4 my-4 min-h-svh p-10">
                 {subSubCategoryCourses.length > 0 &&
                     subSubCategoryCourses.map((item) => (

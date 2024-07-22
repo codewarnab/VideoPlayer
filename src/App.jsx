@@ -63,64 +63,77 @@ const App = () => {
                                 <Route path="/enrollnow" element={<EnrollNow />} />
 
 
-                                <Route path="/dashboard/:descriptionId" element={<CourseDescription />} />
-                                <Route path="/dashboard/:descriptionId/:ytPlayListId" element={<VideoPlayer />} />
+                                <Route path="/dashboard/:descriptionId">
+                                    <Route index element={<CourseDescription />} />
+                                    <Route path=":ytPlayListId" element={<VideoPlayer />} />
+                                </Route>
 
-                                <Route path="/category/:categoryName" element={<Category />} />
-                                <Route path="/category/:categoryName/:descriptionId" element={<CourseDescription />} />
-                                <Route path="/category/:categoryName/:descriptionId/:ytPlayListId" element={<VideoPlayer />} />
+                                <Route path="/category/:categoryName">
+                                    <Route index element={<Category />} />
+                                    <Route path=":descriptionId">
+                                        <Route index element={<CourseDescription />} />
+                                        <Route path=":ytPlayListId" element={<VideoPlayer />} />
+                                    </Route>
+                                </Route>
 
-                                <Route path="/subcategory/:subcategoryName" element={<SubCategory />} />
-                                <Route path="/subcategory/:subcategoryName/:descriptionId" element={<CourseDescription />} />
-                                <Route path="/subcategory/:subcategoryName/:descriptionId/:ytPlayListId" element={<VideoPlayer />} />
-                                
-                                <Route path="/subsubcategory/:subsubcategoryName" element={<SubSubCategory />} />
-                                <Route path="/subsubcategory/:subsubcategoryName/:descriptionId" element={<CourseDescription />} />
-                                <Route path="/subsubcategory/:subsubcategoryName/:descriptionId/:ytPlayListId" element={<VideoPlayer />} />
+                                <Route path="/subcategory/:subcategoryName">
+                                    <Route index element={<SubCategory />} />
+                                    <Route path=":descriptionId">
+                                        <Route index element={<CourseDescription />} />
+                                        <Route path=":ytPlayListId" element={<VideoPlayer />} />
+                                    </Route>
+                                </Route>
 
+                                <Route path="/subsubcategory/:subsubcategoryName">
+                                    <Route index element={<SubSubCategory />} />
+                                    <Route path=":descriptionId">
+                                        <Route index element={<CourseDescription />} />
+                                        <Route path=":ytPlayListId" element={<VideoPlayer />} />
+                                    </Route>
+                                </Route>
 
-                                <Route path="/cart" element={<CartPage setCartLength={setCartLength} />} />
-                                <Route path="/cartgeneral" element={<CartGeneralPage setCartGeneralLength={setCartGeneralLength} />} />
+                            <Route path="/cart" element={<CartPage setCartLength={setCartLength} />} />
+                            <Route path="/cartgeneral" element={<CartGeneralPage setCartGeneralLength={setCartGeneralLength} />} />
 
-                                <Route path="/" element={<Home />} />
-                                <Route
-                                    path="/dashboard"
-                                    element={<Dashboard searchTerm={searchTerm} setSearchTerm={setSearchTerm} rie={rie} />}
-                                />
-                                <Route
-                                    path="/my-course"
-                                    element={<MyCourse searchTerm={searchTerm} />}
-                                />
-                                <Route path="/enlist-course" element={<CourseForm />} />
-                                <Route path="/admin" element={<AdminDashboard />} />
+                            <Route path="/" element={<Home />} />
+                            <Route
+                                path="/dashboard"
+                                element={<Dashboard searchTerm={searchTerm} setSearchTerm={setSearchTerm} rie={rie} />}
+                            />
+                            <Route
+                                path="/my-course"
+                                element={<MyCourse searchTerm={searchTerm} />}
+                            />
+                            <Route path="/enlist-course" element={<CourseForm />} />
+                            <Route path="/admin" element={<AdminDashboard />} />
 
-                                <Route path="/user" element={<UserDashboard />} />
+                            <Route path="/user" element={<UserDashboard />} />
 
-                                <Route path="/enroll" element={<EnrollmentForm />} />
+                            <Route path="/enroll" element={<EnrollmentForm />} />
 
-                                <Route path="/unauthorized" element={<Unauthorized />} />
-                                <Route path="/payment" element={<Payment />} />
-                                <Route path="/teach" element={<Instructor />} />
+                            <Route path="/unauthorized" element={<Unauthorized />} />
+                            <Route path="/payment" element={<Payment />} />
+                            <Route path="/teach" element={<Instructor />} />
 
-                                <Route path="/signup" element={<SignUp />} />
-                                <Route path="/signin" element={<SignIn />} />
+                            <Route path="/signup" element={<SignUp />} />
+                            <Route path="/signin" element={<SignIn />} />
 
-                                <Route path="/login-pcs" element={<LoginPCS />} />
-                                <Route path="/register" element={<SignUp />} />
-                                <Route path="/login" element={<SignIn />} />
-                                <Route path="/forgot-password" element={<Forgetpassword />} />
-                                <Route path="/forgot-password-pcs" element={<ForgetpasswordPCS />} />
-                                <Route path="/reset-password/:id/:token" element={<ResetPassword />} />
-                                <Route path="/reset-password-pcs/:id/:token" element={<ResetPasswordPCS />} />
-                                <Route path="/help" element={<Help />} />
-                                <Route path="/feedback" element={<Review />} />
-                                <Route path="*" element={<PageNotFound />} />
-                            </Routes>
-                        </Layout>
-                    </CategoryProvider>
-                </UserProvider>
-            </BrowserRouter>
-        </div>
+                            <Route path="/login-pcs" element={<LoginPCS />} />
+                            <Route path="/register" element={<SignUp />} />
+                            <Route path="/login" element={<SignIn />} />
+                            <Route path="/forgot-password" element={<Forgetpassword />} />
+                            <Route path="/forgot-password-pcs" element={<ForgetpasswordPCS />} />
+                            <Route path="/reset-password/:id/:token" element={<ResetPassword />} />
+                            <Route path="/reset-password-pcs/:id/:token" element={<ResetPasswordPCS />} />
+                            <Route path="/help" element={<Help />} />
+                            <Route path="/feedback" element={<Review />} />
+                            <Route path="*" element={<PageNotFound />} />
+                        </Routes>
+                    </Layout>
+                </CategoryProvider>
+            </UserProvider>
+        </BrowserRouter>
+        </div >
     );
 };
 

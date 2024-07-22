@@ -26,10 +26,7 @@ const SubCategory = () => {
                     params: { subcategoryName }
                 });
 
-                console.log('API Response:', res.data);
-
                 const courses = Array.isArray(res.data.courses) ? res.data.courses : [];
-                console.log('Courses:', courses);
 
                 if (res.data.success) {
                     const groupedCourses = courses.reduce((acc, course) => {
@@ -131,11 +128,11 @@ const SubCategory = () => {
                     <LoadingSkeleton />
                 </>
             ) : error ? (
-                <div className="w-full text-center py-10">
+                <div className="w-full text-center py-10 min-h-svh">
                     <p className="text-xl font-semibold text-gray-600">{error}</p>
                 </div>
             ) : noCourses ? (
-                <div className="w-full text-center py-10">
+                <div className="w-full text-center py-10 min-h-svh">
                     <p className="text-xl font-semibold text-gray-600">No courses exist in this subcategory.</p>
                 </div>
             ) : (
