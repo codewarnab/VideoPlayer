@@ -4,7 +4,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'primeicons/primeicons.css';
-import './styles.css';
 import CourseCard from "../../../components/shared/CourseCard";
 
 const Dashboard = ({ searchTerm }) => {
@@ -105,13 +104,13 @@ const Dashboard = ({ searchTerm }) => {
 
   return (
     <div className="flex flex-col items-center mb-4 h-auto min-h-screen w-full justify-start bg-[#F5F5F5] px-5">
-      {loading? (
+      {loading ? (
         <SkeletonLoader />
       ) : (
         Object.entries(coursesByCategory).map(([category, courses]) => (
           <div key={category} className="w-full flex flex-col justify-center pt-1">
             <h2 className="text-2xl w-full pl-10 text-start text-black font-extrabold leading-tight">{category}</h2>
-            <div className={`lg:slider-container ${courses.length < 4 ? 'lg:few-cards' : ''}`}>
+            <div className={`lg:slider-container ${courses.length < 4 ? 'lg:few-cards' : ''} ${courses.length === 2 ? 'two-cards' : ''} ${courses.length === 3 ? 'three-cards' : ''}`}>
               <Slider {...SliderSettings(courses.length)}>
                 {courses.map((item) => (
                   <Suspense key={item._id} fallback={<div className="h-[300px] bg-gray-200 rounded-lg animate-pulse"></div>}>

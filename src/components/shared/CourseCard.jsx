@@ -16,7 +16,6 @@ const CourseCard = ({ item }) => {
     const location = useLocation();
     const isCategoryPage = location.pathname.includes('/category/');
 
-    console.log(item);
 
     return (
         <div key={item._id} className="relative">

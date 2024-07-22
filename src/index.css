@@ -76,12 +76,14 @@ code {
     transform: translateY(-30px);
     opacity: 0;
   }
+
   100% {
     transform: translateY(0);
     opacity: 1;
   }
 }
-:root{
+
+:root {
   background-color: white;
 }
 
@@ -97,6 +99,36 @@ scrollbar-hide {
   /* Chrome, Safari and Opera */
 }
 
-.react-datepicker-wrapper{
+.react-datepicker-wrapper {
   width: 100%;
+}
+
+.slick-slider {
+  padding: 0;
+}
+
+.slider-container.few-cards .slick-track {
+  display: flex !important;
+  justify-content: flex-start !important;
+
+}
+
+@media (min-width: 768px) {
+  .slick-track {
+    height: 18.3rem !important;
+
+  }
+}
+
+@media (min-width: 768px) {
+  .two-cards .slick-slide.slick-active.slick-current {
+    width: 30% !important;
+  }
+}
+
+
+@media (min-width: 768px) {
+  .three-cards .slick-slide.slick-active {
+    width: 350px !important;
+  }
 }

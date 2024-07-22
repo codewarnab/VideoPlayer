@@ -1,9 +1,0 @@
-.slick-slider {
-    padding: 0;
-}
-
-.slider-container.few-cards .slick-track {
-
-    display: flex !important;
-    justify-content: flex-start !important;
-}

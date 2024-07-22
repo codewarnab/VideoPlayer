@@ -7,23 +7,23 @@ import "slick-carousel/slick/slick-theme.css";
 import 'primeicons/primeicons.css';
 import CourseCard from '../../../components/shared/CourseCard';
 
-const Category = () => {
-    const { categoryName } = useParams();
+const SubCategory = () => {
+    const { subcategoryName } = useParams();
     const location = useLocation();
-    const [coursesBySubCategory, setCoursesBySubCategory] = useState({});
+    const [coursesBySubSubCategory, setCoursesBySubSubCategory] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchCourseByCategory = async () => {
+        const fetchCourseBySubCategory = async () => {
             setLoading(true);
             setError(null); // Reset error state
             try {
-                setCoursesBySubCategory({});
-                if (!categoryName) return;
+                setCoursesBySubSubCategory({});
+                if (!subcategoryName) return;
 
-                const res = await axios.get('/course/getCourseByCategory', {
-                    params: { categoryName }
+                const res = await axios.get('/course/getCourseBySubCategory', {
+                    params: { subcategoryName }
                 });
 
                 console.log('API Response:', res.data);
@@ -33,32 +33,32 @@ const Category = () => {
 
                 if (res.data.success) {
                     const groupedCourses = courses.reduce((acc, course) => {
-                        if (!acc[course.subCategory]) {
-                            acc[course.subCategory] = [];
+                        if (!acc[course.subSubCategory]) {
+                            acc[course.subSubCategory] = [];
                         }
-                        acc[course.subCategory].push(course);
+                        acc[course.subSubCategory].push(course);
                         return acc;
                     }, {});
 
-                    setCoursesBySubCategory(groupedCourses);
+                    setCoursesBySubSubCategory(groupedCourses);
                 } else {
                     setError(res.data.message || 'An error occurred while fetching courses.');
                 }
             } catch (err) {
                 if (err.response && err.response.status === 404) {
-                    setError('No courses found for the specified category.');
+                    setError('No courses found for the specified subcategory.');
                 } else {
                     setError('An error occurred while fetching courses.');
                 }
-                console.error(`Failed to fetch category courses: ${err}`);
+                console.error(`Failed to fetch subcategory courses: ${err}`);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchCourseByCategory();
+        fetchCourseBySubCategory();
 
-    }, [categoryName, location.pathname]);
+    }, [subcategoryName, location.pathname]);
 
     const CarouselArrow = ({ direction, onClick, slideCount, currentSlide, coursesCount }) => {
         const isNext = direction === 'next';
@@ -109,7 +109,7 @@ const Category = () => {
         ]
     });
 
-    const noCourses = Object.keys(coursesBySubCategory).length === 0 && !error;
+    const noCourses = Object.keys(coursesBySubSubCategory).length === 0 && !error;
 
     const LoadingSkeleton = () => (
         <div className="w-full flex flex-col justify-center pt-1 mb-8 overflow-hidden">
@@ -124,7 +124,7 @@ const Category = () => {
 
     return (
         <div className="flex flex-col items-center mb-4 h-auto min-h-screen w-full justify-start bg-[#F5F5F5] px-5">
-            <h1 className="lg:text-3xl text-2xl tracking-wider font-bold pt-3 mb-3 text-black">{categoryName}</h1>
+            <h1 className="lg:text-3xl text-2xl tracking-wider font-bold pt-3 mb-3 text-black">{subcategoryName}</h1>
             {loading ? (
                 <>
                     <LoadingSkeleton />
@@ -136,12 +136,12 @@ const Category = () => {
                 </div>
             ) : noCourses ? (
                 <div className="w-full text-center py-10">
-                    <p className="text-xl font-semibold text-gray-600">No courses exist in this category.</p>
+                    <p className="text-xl font-semibold text-gray-600">No courses exist in this subcategory.</p>
                 </div>
             ) : (
-                Object.entries(coursesBySubCategory).map(([subCategory, courses]) => (
-                    <div key={subCategory} className="w-full flex flex-col justify-center pt-1">
-                        <h2 className="text-2xl w-full pl-10 text-start text-black font-extrabold leading-tight">{subCategory}</h2>
+                Object.entries(coursesBySubSubCategory).map(([subSubCategory, courses]) => (
+                    <div key={subSubCategory} className="w-full flex flex-col justify-center pt-1">
+                        <h2 className="text-2xl w-full pl-10 text-start text-black font-extrabold leading-tight">{subSubCategory}</h2>
                         <div className={`lg:slider-container ${courses.length < 4 ? 'lg:few-cards' : ''} ${courses.length === 2 ? 'two-cards' : ''} ${courses.length === 3 ? 'three-cards' : ''}`}>
                             <Slider {...SliderSettings(courses.length)}>
                                 {courses.map((item) => (
@@ -158,4 +158,4 @@ const Category = () => {
     );
 };
 
-export default Category;
+export default SubCategory;
