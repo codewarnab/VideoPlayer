@@ -61,6 +61,7 @@ const App = () => {
                                 <Route path="/dashboard/:descriptionId" element={<CourseDescription />} />
                                 <Route path="/category/:categoryName/:descriptionId" element={<CourseDescription />} />
                                 <Route path="/dashboard/:descriptionId/:ytPlayListId" element={<VideoPlayer />} />
+                                <Route path="/category/:categoryName/:descriptionId/:ytPlayListId" element={<VideoPlayer />} />
                                 <Route path="/cart" element={<CartPage setCartLength={setCartLength} />} />
                                 <Route path="/cartgeneral" element={<CartGeneralPage setCartGeneralLength={setCartGeneralLength} />} />
 

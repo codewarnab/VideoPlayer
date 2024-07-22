@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -10,12 +10,15 @@ import './styles.css';
 
 const Category = () => {
     const { categoryName } = useParams();
+    const location = useLocation();
     const [coursesBySubCategory, setCoursesBySubCategory] = useState({});
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchCourseByCategory = async () => {
+            setLoading(true);
             try {
+                setCoursesBySubCategory({});
                 if (!categoryName) return;
 
                 const res = await axios.get('/course/getCourseByCategory', {
@@ -45,7 +48,7 @@ const Category = () => {
 
         fetchCourseByCategory();
 
-    }, [categoryName]);
+    }, [categoryName, location.pathname]);
 
     const CarouselArrow = ({ direction, onClick, slideCount, currentSlide, coursesCount }) => {
         const isNext = direction === 'next';
@@ -96,17 +99,31 @@ const Category = () => {
         ]
     });
 
+    const noCourses = Object.keys(coursesBySubCategory).length === 0;
+
+    const LoadingSkeleton = () => (
+        <div className="w-full flex flex-col justify-center pt-1 mb-8 overflow-hidden">
+            <div className="w-48 h-8 bg-gray-200 rounded mb-4 animate-pulse"></div>
+            <div className="flex w-fit space-x-14 overflow-hidden">
+                {[1, 2, 3, 4].map((card) => (
+                    <div key={card} className="w-80 h-64 bg-gray-200 rounded-lg animate-pulse"></div>
+                ))}
+            </div>
+        </div>
+    );
+
     return (
         <div className="flex flex-col items-center mb-4 h-auto min-h-screen w-full justify-start bg-[#F5F5F5] px-5">
-            <h1 className="lg:text-3xl text-2xl tracking-wider font-bold   pt-3   mb-3 text-black"> {categoryName}</h1>
+            <h1 className="lg:text-3xl text-2xl tracking-wider font-bold pt-3 mb-3 text-black">{categoryName}</h1>
             {loading ? (
-                <div className="w-full flex flex-col justify-center pt-1 mb-8">
-                    <div className="w-48 h-8 bg-gray-200 rounded mb-4 animate-pulse"></div>
-                    <div className="flex w-fit space-x-14 overflow-hidden">
-                        {[1, 2, 3, 4].map((card) => (
-                            <div key={card} className="w-80 h-64 bg-gray-200 rounded-lg animate-pulse"></div>
-                        ))}
-                    </div>
+                <>
+                    <LoadingSkeleton />
+                    <LoadingSkeleton />
+                    <LoadingSkeleton />
+                </>
+            ) : noCourses ? (
+                <div className="w-full text-center py-10">
+                    <p className="text-xl font-semibold text-gray-600">No courses exist in this category.</p>
                 </div>
             ) : (
                 Object.entries(coursesBySubCategory).map(([subCategory, courses]) => (
