@@ -24,7 +24,7 @@ import EnrollNow from './TopScript/EnrollNow';
 import CourseForm from './pages/user/enlist-course/CourseForm';
 import Instructor from './pages/shared/Instructor';
 import Payment from './TopScript/Payment';
-import Construct from './pages/Construct';
+import Construct from './pages/shared/Construct';
 import CartPage from '../src/components/shared/Cart/CartPage';
 import CartGeneralPage from '../src/components/shared/Cart/CartGeneral';
 import Unauthorized from './pages/shared/Unauthorized';
@@ -33,8 +33,8 @@ import { CategoryProvider } from './utils/contexts/categoryContext';
 import { UserProvider } from './utils/contexts/userContext';
 import VideoPlayer from './pages/user/AllCourses/VideoPlayer';
 
-// axios.defaults.baseURL = 'http://localhost:8000';
-axios.defaults.baseURL = "https://pcs-global360-server.vercel.app/";
+axios.defaults.baseURL = 'http://localhost:8000';
+// axios.defaults.baseURL = "https://pcs-global360-server.vercel.app/";
 
 const App = () => {
     const [searchTerm, setSearchTerm] = useState('');
