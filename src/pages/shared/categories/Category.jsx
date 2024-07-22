@@ -130,7 +130,6 @@ const Category = () => {
                 <>
                     <LoadingSkeleton />
                     <LoadingSkeleton />
-                    <LoadingSkeleton />
                 </>
             ) : error ? (
                 <div className="w-full text-center py-10">
