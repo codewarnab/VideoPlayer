@@ -34,8 +34,8 @@ import { UserProvider } from './utils/contexts/userContext';
 import VideoPlayer from './pages/user/AllCourses/VideoPlayer';
 import Category from './pages/shared/categories/Category';
 
-axios.defaults.baseURL = 'http://localhost:8000';
-// axios.defaults.baseURL = "https://pcs-global360-server.vercel.app/";
+// axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = "https://pcs-global360-server.vercel.app/";
 
 const App = () => {
     const [searchTerm, setSearchTerm] = useState('');
