@@ -34,8 +34,8 @@ import { UserProvider } from './utils/contexts/userContext';
 import VideoPlayer from './pages/user/AllCourses/VideoPlayer';
 import Category from './pages/shared/categories/Category';
 
-axios.defaults.baseURL = 'http://localhost:8000';
-// axios.defaults.baseURL = "https://pcs-global360-server.vercel.app/";
+// axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = "https://pcs-global360-server.vercel.app/";
 
 const App = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -59,6 +59,7 @@ const App = () => {
                                 <Route path="/construct" element={<Construct />} />
                                 <Route path="/enrollnow" element={<EnrollNow />} />
                                 <Route path="/dashboard/:descriptionId" element={<CourseDescription />} />
+                                <Route path="/category/:categoryName/:descriptionId" element={<CourseDescription />} />
                                 <Route path="/dashboard/:descriptionId/:ytPlayListId" element={<VideoPlayer />} />
                                 <Route path="/cart" element={<CartPage setCartLength={setCartLength} />} />
                                 <Route path="/cartgeneral" element={<CartGeneralPage setCartGeneralLength={setCartGeneralLength} />} />

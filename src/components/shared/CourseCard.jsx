@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Play, Star } from 'lucide-react';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
@@ -13,6 +13,11 @@ const formatViewCount = (views) => {
 };
 
 const CourseCard = ({ item }) => {
+    const location = useLocation();
+    const isCategoryPage = location.pathname.includes('/category/');
+
+    console.log(item);
+
     return (
         <div key={item._id} className="relative">
             <Link to={`${item.description}`} state={{ item }}>
@@ -42,7 +47,9 @@ const CourseCard = ({ item }) => {
                             </p>
                         </div>
                         <div className="w-full">
-                            <h6 className="text-xs py-1 px-2 rounded-md text-black bg-slate-200 w-fit">{item.subCategory}</h6>
+                            <h6 className="text-xs py-1 px-2 rounded-md text-black bg-slate-200 w-fit">
+                                {isCategoryPage ? item.subSubCategory : item.subCategory}
+                            </h6>
                         </div>
                     </div>
                 </div>

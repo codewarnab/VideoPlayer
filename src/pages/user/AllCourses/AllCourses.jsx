@@ -5,9 +5,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'primeicons/primeicons.css';
 import './styles.css';
-import CourseCard from "./CourseCard";
+import CourseCard from "../../../components/shared/CourseCard";
 
-const Dashboard = ({ searchTerm, setItem }) => {
+const Dashboard = ({ searchTerm }) => {
   const [coursesByCategory, setCoursesByCategory] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -115,7 +115,7 @@ const Dashboard = ({ searchTerm, setItem }) => {
               <Slider {...SliderSettings(courses.length)}>
                 {courses.map((item) => (
                   <Suspense key={item._id} fallback={<div className="h-[300px] bg-gray-200 rounded-lg animate-pulse"></div>}>
-                    <CourseCard item={item} setItem={setItem} />
+                    <CourseCard item={item} />
                   </Suspense>
                 ))}
               </Slider>
