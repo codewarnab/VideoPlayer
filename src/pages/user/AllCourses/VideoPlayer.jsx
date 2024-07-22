@@ -11,6 +11,29 @@ const formatViewCount = (views) => {
     return views;
 };
 
+const SkeletonLoader = () => (
+    <div className="flex flex-col lg:flex-row items-start w-full max-w-7xl mx-auto bg-gray-800 rounded-3xl shadow-lg overflow-hidden animate-pulse">
+        <div className="w-full lg:w-2/3 bg-gray-700 rounded-t-3xl lg:rounded-l-3xl lg:rounded-tr-none overflow-hidden">
+            <div className="relative pt-[56.25%] bg-gray-600"></div>
+            <div className="p-4">
+                <div className="h-6 bg-gray-600 rounded w-3/4 mb-2"></div>
+                <div className="h-4 bg-gray-600 rounded w-1/4"></div>
+            </div>
+        </div>
+        <div className="w-full lg:w-1/3 bg-gray-700 rounded-b-3xl lg:rounded-r-3xl lg:rounded-bl-none">
+            {[...Array(5)].map((_, index) => (
+                <div key={index} className="flex items-center p-3">
+                    <div className="flex-shrink-0 w-24 h-16 mr-3 bg-gray-600 rounded-lg"></div>
+                    <div className="flex-grow">
+                        <div className="h-4 bg-gray-600 rounded w-3/4 mb-2"></div>
+                        <div className="h-3 bg-gray-600 rounded w-1/4"></div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+);
+
 const VideoPlayerComponent = ({ videos }) => {
     const [currentVideo, setCurrentVideo] = useState(videos[0]);
 
@@ -63,6 +86,7 @@ const VideoPlayerComponent = ({ videos }) => {
 
 const VideoPlayer = () => {
     const [videos, setVideos] = useState([]);
+    const [loading, setLoading] = useState(true);
     const { ytPlayListId } = useParams();
 
     useEffect(() => {
@@ -74,8 +98,10 @@ const VideoPlayer = () => {
                 }
                 const response = await axios.get(`/description/getVideos?ytPlayListId=${ytPlayListId}`);
                 setVideos(response.data);
+                setLoading(false);
             } catch (error) {
                 console.error("Error fetching videos:", error);
+                setLoading(false);
             }
         };
         fetchVideos();
@@ -83,10 +109,12 @@ const VideoPlayer = () => {
 
     return (
         <div className="p-4 md:p-8 bg-gray-900 min-h-screen">
-            {videos.length > 0 ? (
+            {loading ? (
+                <SkeletonLoader />
+            ) : videos.length > 0 ? (
                 <VideoPlayerComponent videos={videos} />
             ) : (
-                <p className="text-center text-xl font-semibold text-white">Loading videos...</p>
+                <p className="text-center text-xl font-semibold text-white">No videos found.</p>
             )}
         </div>
     );
