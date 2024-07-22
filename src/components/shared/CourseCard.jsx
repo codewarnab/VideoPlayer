@@ -14,7 +14,8 @@ const formatViewCount = (views) => {
 
 const CourseCard = ({ item }) => {
     const location = useLocation();
-    const isCategoryPage = location.pathname.includes('/category/');
+    const isCategoryPage = location.pathname.includes('/category/') || location.pathname.includes('/subcategory/');
+
 
 
     return (

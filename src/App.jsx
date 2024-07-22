@@ -59,10 +59,16 @@ const App = () => {
                             <Routes>
                                 <Route path="/construct" element={<Construct />} />
                                 <Route path="/enrollnow" element={<EnrollNow />} />
+
+
                                 <Route path="/dashboard/:descriptionId" element={<CourseDescription />} />
                                 <Route path="/category/:categoryName/:descriptionId" element={<CourseDescription />} />
+                                <Route path="/subcategory/:subcategoryName/:descriptionId" element={<CourseDescription />} />
                                 <Route path="/dashboard/:descriptionId/:ytPlayListId" element={<VideoPlayer />} />
                                 <Route path="/category/:categoryName/:descriptionId/:ytPlayListId" element={<VideoPlayer />} />
+                                <Route path="/subcategory/:subcategoryName/:descriptionId/:ytPlayListId" element={<VideoPlayer />} />
+
+
                                 <Route path="/cart" element={<CartPage setCartLength={setCartLength} />} />
                                 <Route path="/cartgeneral" element={<CartGeneralPage setCartGeneralLength={setCartGeneralLength} />} />
 

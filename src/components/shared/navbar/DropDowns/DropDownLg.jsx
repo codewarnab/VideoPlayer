@@ -31,14 +31,17 @@ const DropDownLg = ({ loading, categories, categoryFetchError }) => {
     };
 
     const handleCategoryClick = (categoryName) => {
+        setIsOpen(false)
         navigate(`/category/${categoryName}`);
     };
 
     const handleSubCategoryClick = (subCategoryName) => {
+        setIsOpen(false)
         navigate(`/subcategory/${subCategoryName}`);
     };
 
     const handleSubSubCategoryClick = (subSubCategoryName) => {
+        setIsOpen(false)
         navigate(`/subsubcategory/${subSubCategoryName}`);
     };
 
