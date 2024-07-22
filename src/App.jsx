@@ -32,6 +32,7 @@ import CourseDescription from './pages/user/AllCourses/CourseDescription';
 import { CategoryProvider } from './utils/contexts/categoryContext';
 import { UserProvider } from './utils/contexts/userContext';
 import VideoPlayer from './pages/user/AllCourses/VideoPlayer';
+import Category from './pages/shared/categories/Category';
 
 // axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.baseURL = "https://pcs-global360-server.vercel.app/";
@@ -71,7 +72,9 @@ const App = () => {
                                     path="/my-course"
                                     element={<MyCourse searchTerm={searchTerm} />}
                                 />
-
+                                <Route path="/category/:categoryName" element={<Category />} />                                                           
+                                <Route path="/subcategory/:subcategoryName" element={<Category />} />                                                           
+                                <Route path="/subsubcategory/:subsubcategoryName" element={<Category />} />                                                           
                                 <Route path="/enlist-course" element={<CourseForm />} />
                                 <Route path="/admin" element={<AdminDashboard />} />
 

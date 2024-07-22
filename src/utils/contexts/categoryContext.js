@@ -10,7 +10,7 @@ export const CategoryProvider = ({ children }) => {
 
     const fetchCategories = async () => {
         try {
-            const res = await axios.get('/category/getCategory');
+            const res = await axios.get('/category/getallCategory');
             setCategories(res?.data?.categories);
             setLoading(false);
         } catch (err) {

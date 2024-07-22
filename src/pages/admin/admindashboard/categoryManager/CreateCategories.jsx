@@ -1,31 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import React, { useState, useContext} from 'react';
 import CreateCategory from './CreateCategory';
+import { CategoryContext } from '../../../../utils/contexts/categoryContext';
 
 const CreateCategories = () => {
   const [showModal, setShowModal] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
-  const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get('/category/getCategory');
-        if (response.data.success) {
-          setCategories(response.data.categories);
-        }
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-        toast.error("Failed to fetch categories. Please try again.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchCategories();
-  }, []);
+  const { categories, categoryLoading } = useContext(CategoryContext);
+  
 
   const getCategoryOptions = () => categories.map(cat => ({ value: cat._id, label: cat.categoryName }));
 
@@ -64,7 +45,7 @@ const CreateCategories = () => {
             <button
               className="w-full lg:w-auto bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-5 rounded inline-flex items-center justify-center transition duration-300"
               onClick={() => openModal(category)}
-              disabled={isLoading || (category.name !== 'Category' && categories.length === 0)}
+              disabled={categoryLoading || (category.name !== 'Category' && categories.length === 0)}
             >
               {`Create ${category.name}`}
             </button>
