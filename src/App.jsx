@@ -34,6 +34,8 @@ import { UserProvider } from './utils/contexts/userContext';
 import VideoPlayer from './pages/user/AllCourses/VideoPlayer';
 import Category from './pages/shared/categories/Category';
 import SubCategory from './pages/shared/categories/SubCategoy';
+import SubSubCategory from './pages/shared/categories/SubSubCategory';
+
 
 // axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.baseURL = "https://pcs-global360-server.vercel.app/";
@@ -62,11 +64,19 @@ const App = () => {
 
 
                                 <Route path="/dashboard/:descriptionId" element={<CourseDescription />} />
-                                <Route path="/category/:categoryName/:descriptionId" element={<CourseDescription />} />
-                                <Route path="/subcategory/:subcategoryName/:descriptionId" element={<CourseDescription />} />
                                 <Route path="/dashboard/:descriptionId/:ytPlayListId" element={<VideoPlayer />} />
+
+                                <Route path="/category/:categoryName" element={<Category />} />
+                                <Route path="/category/:categoryName/:descriptionId" element={<CourseDescription />} />
                                 <Route path="/category/:categoryName/:descriptionId/:ytPlayListId" element={<VideoPlayer />} />
+
+                                <Route path="/subcategory/:subcategoryName" element={<SubCategory />} />
+                                <Route path="/subcategory/:subcategoryName/:descriptionId" element={<CourseDescription />} />
                                 <Route path="/subcategory/:subcategoryName/:descriptionId/:ytPlayListId" element={<VideoPlayer />} />
+                                
+                                <Route path="/subsubcategory/:subsubcategoryName" element={<SubSubCategory />} />
+                                <Route path="/subsubcategory/:subsubcategoryName/:descriptionId" element={<CourseDescription />} />
+                                <Route path="/subsubcategory/:subsubcategoryName/:descriptionId/:ytPlayListId" element={<VideoPlayer />} />
 
 
                                 <Route path="/cart" element={<CartPage setCartLength={setCartLength} />} />
@@ -81,9 +91,6 @@ const App = () => {
                                     path="/my-course"
                                     element={<MyCourse searchTerm={searchTerm} />}
                                 />
-                                <Route path="/category/:categoryName" element={<Category />} />                                                           
-                                <Route path="/subcategory/:subcategoryName" element={<SubCategory />} />                                                           
-                                <Route path="/subsubcategory/:subsubcategoryName" element={<Category />} />                                                           
                                 <Route path="/enlist-course" element={<CourseForm />} />
                                 <Route path="/admin" element={<AdminDashboard />} />
 
