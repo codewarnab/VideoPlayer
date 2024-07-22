@@ -13,10 +13,12 @@ const Category = () => {
     const location = useLocation();
     const [coursesBySubCategory, setCoursesBySubCategory] = useState({});
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchCourseByCategory = async () => {
             setLoading(true);
+            setError(null); // Reset error state
             try {
                 setCoursesBySubCategory({});
                 if (!categoryName) return;
@@ -27,19 +29,28 @@ const Category = () => {
 
                 console.log('API Response:', res.data);
 
-                const courses = Array.isArray(res.data) ? res.data : [];
+                const courses = Array.isArray(res.data.courses) ? res.data.courses : [];
                 console.log('Courses:', courses);
 
-                const groupedCourses = courses.reduce((acc, course) => {
-                    if (!acc[course.subCategory]) {
-                        acc[course.subCategory] = [];
-                    }
-                    acc[course.subCategory].push(course);
-                    return acc;
-                }, {});
+                if (res.data.success) {
+                    const groupedCourses = courses.reduce((acc, course) => {
+                        if (!acc[course.subCategory]) {
+                            acc[course.subCategory] = [];
+                        }
+                        acc[course.subCategory].push(course);
+                        return acc;
+                    }, {});
 
-                setCoursesBySubCategory(groupedCourses);
+                    setCoursesBySubCategory(groupedCourses);
+                } else {
+                    setError(res.data.message || 'An error occurred while fetching courses.');
+                }
             } catch (err) {
+                if (err.response && err.response.status === 404) {
+                    setError('No courses found for the specified category.');
+                } else {
+                    setError('An error occurred while fetching courses.');
+                }
                 console.error(`Failed to fetch category courses: ${err}`);
             } finally {
                 setLoading(false);
@@ -99,7 +110,7 @@ const Category = () => {
         ]
     });
 
-    const noCourses = Object.keys(coursesBySubCategory).length === 0;
+    const noCourses = Object.keys(coursesBySubCategory).length === 0 && !error;
 
     const LoadingSkeleton = () => (
         <div className="w-full flex flex-col justify-center pt-1 mb-8 overflow-hidden">
@@ -121,6 +132,10 @@ const Category = () => {
                     <LoadingSkeleton />
                     <LoadingSkeleton />
                 </>
+            ) : error ? (
+                <div className="w-full text-center py-10">
+                    <p className="text-xl font-semibold text-gray-600">{error}</p>
+                </div>
             ) : noCourses ? (
                 <div className="w-full text-center py-10">
                     <p className="text-xl font-semibold text-gray-600">No courses exist in this category.</p>
