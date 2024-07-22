@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { UserContext } from "../contexts/userContext";
-import isValidEmail from "../shared/isValidEmail";
-import isValidPhoneNumber from "../shared/isValidPhoneNumber";
+import isValidEmail from "../functions/isValidEmail";
+import isValidPhoneNumber from "../functions/isValidPhoneNumber";
 
 const PASSWORD_REGEX = {
     minLength: 8,

@@ -1,5 +1,5 @@
 import React, { useState,  lazy, Suspense,useContext } from 'react';
-import { uploadImageToCloudinary } from '../../../../utils/user/imageUploader';
+import { uploadImageToCloudinary } from '../../../../utils/functions/imageUploader';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import PageOne from './PageOne';

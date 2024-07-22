@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import { uploadImageToCloudinary } from '../../../utils/user/imageUploader';
+import { uploadImageToCloudinary } from '../../../utils/functions/imageUploader';
 import PageOne from './PageOne';
 import PageTwo from './PageTwo';
-import isValidPhoneNumber from '../../../utils/shared/isValidPhoneNumber';
+import isValidPhoneNumber from '../../../utils/functions/isValidPhoneNumber';
 import SuccesPage from './SuccesPage';
 import { CategoryContext } from '../../../utils/contexts/categoryContext';
 
