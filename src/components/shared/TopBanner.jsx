@@ -90,7 +90,7 @@ const TopBanner = () => {
                                     rel="noopener noreferrer"
                                     className='underline hover:text-blue-400 hover:cursor-pointer'
                                 >
-                                    {todayFestival ? `Grab The ${todayFestival.name} sale Offer` : 'Grab Frontend System Design offer here '}
+                                    {todayFestival ? `${todayFestival.name}` : 'Grab Frontend System Design offer here '}
                                 </a>
 
                                 <span className="ml-2">Coupon Code:</span>
